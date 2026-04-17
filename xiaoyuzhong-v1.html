@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小语种赛道 · 内容方向手册</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#4A7C59;--primary-light:#f0f7f2;--bg:#FAF9F7;--card:#FFF;--border:#EBEBEB;--text:#1A1A1A;--text2:#555;--text3:#888}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+h1,.persona-name,.section-title{font-family:Georgia,serif}
+/* Header */
+header{background:#fff;border-bottom:1px solid var(--border);padding:48px 0}
+.header-inner{max-width:1100px;margin:0 auto;padding:0 40px;display:flex;justify-content:space-between;align-items:flex-start}
+.header-title{font-family:Georgia,serif;font-size:36px;font-weight:700;color:#1A1A1A;line-height:1.25;margin-bottom:12px}
+.header-sub{font-size:14px;color:#888;line-height:1.6}
+.header-badge{flex-shrink:0;text-align:center;padding:20px 24px;border:2px solid #4A7C59;border-radius:12px}
+.header-badge-num{font-family:Georgia,serif;font-size:48px;font-weight:700;color:#4A7C59;line-height:1}
+.header-badge-label{font-size:11px;color:#4A7C59;letter-spacing:2px;margin-top:4px}
+.formula-bar{max-width:1100px;margin:0 auto;padding:0 40px}
+.formula-bar-inner{background:#f0f7f2;border-left:3px solid #4A7C59;padding:10px 20px;font-size:13px;color:#555;margin-top:16px}
+/* Nav */
+.top-nav{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);padding:0;display:flex;align-items:center;height:52px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.nav-logo{font-family:Georgia,serif;font-size:16px;font-weight:700;color:var(--primary);margin-right:32px;white-space:nowrap}
+.nav-tabs{display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{padding:0 18px;height:52px;line-height:52px;font-size:14px;color:var(--text3);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s}
+.nav-tab:hover{color:var(--primary)}
+.nav-tab.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:600}
+/* Main */
+.main{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+.screen{display:none}.screen.active{display:block}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--primary)}
+.section-title{font-size:20px;font-weight:700;color:var(--text)}
+.section-count{font-size:13px;color:var(--text3);background:#f0eeec;padding:2px 10px;border-radius:20px}
+.group-label-bar{grid-column:1/-1;padding:4px 0 8px;font-size:13px;font-weight:600;color:#4A7C59;border-bottom:1px solid #e8f0ea;margin-bottom:4px}
+.group-label{font-size:12px;font-weight:600;color:var(--primary);background:var(--primary-light);padding:4px 12px;border-radius:4px;display:inline-block;margin-bottom:16px;letter-spacing:.5px}
+.persona-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:900px){.persona-grid{grid-template-columns:1fr}}
+/* Persona card - modal mode */
+.persona-card{background:var(--card);border-radius:8px;border:1px solid var(--border);overflow:hidden;transition:box-shadow .2s;cursor:pointer}
+.persona-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.1)}
+.persona-head{padding:16px 18px;background:#fff;transition:background .15s;position:relative}
+.persona-head:hover{background:#fafafa}
+.persona-name{font-size:17px;font-weight:700;color:var(--text);margin-bottom:4px}
+.persona-desc{font-size:13px;color:var(--text2);line-height:1.5;margin-bottom:8px}
+.persona-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:20px;border:1px solid;white-space:nowrap}
+.tag-drive{color:#722ED1;border-color:#d3adf7;background:#f9f0ff}
+.tag-intent-high{color:#389e0d;border-color:#b7eb8f;background:#f6ffed}
+.tag-intent-mid{color:#D46B08;border-color:#ffd591;background:#fff7e6}
+.tag-intent-low{color:#8c8c8c;border-color:#d9d9d9;background:#fafafa}
+.card-hint{position:absolute;bottom:10px;right:14px;font-size:12px;color:var(--primary);opacity:.7}
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;overflow-y:auto}
+.modal-overlay.open{display:block}
+.modal-box{background:#fff;border-radius:12px;max-width:800px;margin:40px auto;padding:32px;position:relative;max-height:calc(100vh - 80px);overflow-y:auto}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;background:#f5f3f0;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#555;transition:all .15s}
+.modal-close:hover{background:#e8e4e0;color:#333}
+.modal-persona-name{font-family:Georgia,serif;font-size:24px;font-weight:700;margin-bottom:4px}
+.modal-persona-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.modal-persona-desc{font-size:13px;color:var(--text2);margin-bottom:24px;line-height:1.6}
+.modal-divider{height:1px;background:var(--border);margin:0 0 24px}
+.modal-direction{margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.modal-direction:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.modal-dir-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.modal-dir-title{font-size:16px;font-weight:700;color:var(--text)}
+.dir-badge{font-size:11px;padding:2px 10px;border-radius:20px;white-space:nowrap}
+.badge-star{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7}
+.badge-opp{background:#fff8e1;color:#8d6e23;border:1px solid #ffe082}
+.badge-valley{background:#fdf3f2;color:#a0413a;border:1px solid #f0c4c0}
+.modal-dir-cta{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.7;padding-left:12px;border-left:2px solid #f0eeec}
+.notes-section-label{font-size:12px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.notes-label-client{color:#4A7C59}
+.notes-label-ugc{color:#888}
+.client-notes-scroll{display:flex;gap:10px;overflow-x:auto;padding:4px 0 12px;scrollbar-width:thin}
+.client-notes-scroll::-webkit-scrollbar{height:4px}
+.client-notes-scroll::-webkit-scrollbar-thumb{background:#ddd;border-radius:4px}
+.client-note-card{text-decoration:none;color:inherit;display:block;background:#fff;border:1px solid #ebebeb;border-radius:8px;overflow:hidden;width:155px;flex-shrink:0;transition:box-shadow .15s}
+.client-note-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.client-note-card img{width:100%;height:100px;object-fit:cover;display:block}
+.client-note-fallback{width:100%;height:100px;background:#f5f3f0;display:flex;align-items:center;justify-content:center;font-size:24px}
+.client-note-info{padding:8px}
+.client-note-title{font-size:11px;color:#1a1a1a;line-height:1.4;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.client-note-metrics{display:flex;flex-wrap:wrap;gap:3px}
+.client-note-metric{font-size:10px;padding:1px 5px;border-radius:3px}
+.ugc-notes-list{display:flex;flex-direction:column;gap:6px}
+.ugc-note-item{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#f9f8f6;border-radius:6px;text-decoration:none;color:inherit;transition:background .15s}
+.ugc-note-item:hover{background:#f0eeec}
+.ugc-note-icon{font-size:14px;flex-shrink:0}
+.ugc-note-title{font-size:13px;color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ugc-note-read{font-size:11px;color:var(--text3);white-space:nowrap}
+.ugc-note-empty{font-size:12px;color:#bbb;font-style:italic}
+.notes-empty-placeholder{font-size:12px;color:#bbb;font-style:italic;padding:8px 0}
+/* Quadrant */
+.quadrant-wrap{width:100%;margin-bottom:24px}
+.quadrant-container{position:relative;width:100%;overflow:hidden;border:1px solid #ebebeb;border-radius:8px;background:#fff}
+#quadrant-chart{width:100%;height:500px;display:block}
+.quadrant-tooltip{position:absolute;display:none;background:rgba(0,0,0,.75);color:#fff;padding:8px 12px;border-radius:6px;font-size:12px;pointer-events:none;max-width:200px;line-height:1.6;z-index:10}
+.legend-bar{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;font-size:12px}
+.legend-item{display:flex;align-items:center;gap:6px;color:var(--text3)}
+.legend-dot{width:8px;height:8px;border-radius:50%}
+.priority-board{background:var(--card);border-radius:8px;border:1px solid var(--border);padding:20px}
+.priority-title{font-family:Georgia,serif;font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.priority-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:900px){.priority-grid{grid-template-columns:1fr}}
+.priority-item{padding:14px 16px;border-radius:8px;border:1px solid}
+.priority-hot{background:#fdf3f2;border-color:#f0c4c0}
+.priority-high{background:#e8f5e9;border-color:#a5d6a7}
+.priority-mid{background:#fff8e1;border-color:#ffe082}
+.priority-item-title{font-family:Georgia,serif;font-size:14px;font-weight:700;margin-bottom:6px;color:var(--text)}
+.priority-item-desc{font-size:12px;color:var(--text2);line-height:1.5}
+.priority-item-covers{font-size:12px;color:var(--text3);margin-top:6px;padding-top:6px;border-top:1px solid rgba(0,0,0,.06)}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div>
+      <h1 class="header-title">小语种赛道<br>内容方向手册</h1>
+      <div class="header-sub">买点增速四象限 · 14类特色人群 · 内容方向推荐</div>
+    </div>
+    <div class="header-badge">
+      <div class="header-badge-num">14</div>
+      <div class="header-badge-label">PERSONAS</div>
+    </div>
+  </div>
+  <div class="formula-bar">
+    <div class="formula-bar-inner">内容公式：特色人群 × 搜索需求 × 机会买点 = 内容方向</div>
+  </div>
+</header>
+<nav class="top-nav">
+  <div style="max-width:1100px;margin:0 auto;padding:0 40px;display:flex">
+  <div class="nav-tabs" style="flex:1">
+    <div class="nav-tab active" data-tab="all">全部</div>
+    <div class="nav-tab" data-tab="riyu">日语</div>
+    <div class="nav-tab" data-tab="hanyu">韩语</div>
+    <div class="nav-tab" data-tab="ouzhou">欧洲语系</div>
+    <div class="nav-tab" data-tab="priority">选题优先级</div>
+  </div>
+  </div>
+</nav>
+<div class="main">
+  <div class="screen active" id="screen-all"></div>
+  <div class="screen" id="screen-riyu"><div id="grid-riyu"></div></div>
+  <div class="screen" id="screen-hanyu"><div id="grid-hanyu"></div></div>
+  <div class="screen" id="screen-ouzhou"><div id="grid-ouzhou"></div></div>
+  <div class="screen" id="screen-priority">
+    <div class="section-header"><div class="section-title">🔥 跨人群选题优先级</div><div class="section-count">基于买点增速四象限</div></div>
+    <div class="quadrant-wrap">
+      <div style="font-size:13px;color:#888;margin-bottom:8px">📊 买点增速四象限（横轴=搜索增速，纵轴=点击增速，气泡大小=搜索量）</div>
+      <div class="quadrant-container">
+        <canvas id="quadrant-chart" width="900" height="500"></canvas>
+        <div class="quadrant-tooltip" id="quadrant-tooltip"></div>
+      </div>
+    </div>
+    <div class="legend-bar">
+      <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>明星买点（搜索↑点击↑）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#C9AA72"></div>机会买点（新兴增速高）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#B5625A"></div>流量洼地（搜索暴增内容缺）</div>
+    </div>
+    <div class="priority-board">
+      <div class="priority-title">📋 优先级清单</div>
+      <div class="priority-grid">
+        <div class="priority-item priority-hot"><div class="priority-item-title">🔥 韩签/赴韩内容</div><div class="priority-item-desc">搜索+78.4%，点击+70.7%，双增长最强信号</div><div class="priority-item-covers">覆盖：韩签赴韩达人 / 追星破译机</div></div>
+        <div class="priority-item priority-hot"><div class="priority-item-title">🔥 动漫/日剧驱动内容</div><div class="priority-item-desc">搜索+19.9%，点击+16.4%，体量最大增量</div><div class="priority-item-covers">覆盖：动漫日剧驱动者 / 考级冲关族</div></div>
+        <div class="priority-item priority-hot"><div class="priority-item-title">🔥 留学申请内容</div><div class="priority-item-desc">搜索+52.2%，点击+42.7%，留学回暖强信号</div><div class="priority-item-covers">覆盖：留学移民规划者 / 法语德语考级族</div></div>
+        <div class="priority-item priority-high"><div class="priority-item-title">⭐ 追星应援内容</div><div class="priority-item-desc">搜索+34.3%，稳定双增长</div><div class="priority-item-covers">覆盖：追星破译机 / 韩文手写控</div></div>
+        <div class="priority-item priority-high"><div class="priority-item-title">⭐ 发音/正音内容</div><div class="priority-item-desc">体量大+65万，点击增速+4.9%，承接力强</div><div class="priority-item-covers">覆盖：五十音入门党 / 欧语零基础入门者</div></div>
+        <div class="priority-item priority-mid"><div class="priority-item-title">📌 TOPIK备考内容</div><div class="priority-item-desc">稳定存量，双维持平</div><div class="priority-item-covers">覆盖：TOPIK冲关族 / 韩语日常学习者</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box" id="modal-box">
+    <button class="modal-close" id="modal-close">×</button>
+    <div class="modal-persona-name" id="modal-persona-name"></div>
+    <div class="modal-persona-tags" id="modal-persona-tags"></div>
+    <div class="modal-persona-desc" id="modal-persona-desc"></div>
+    <div class="modal-divider"></div>
+    <div id="modal-directions"></div>
+  </div>
+</div>
+<script>
+var PERSONAS = [
+{"id": "R1", "name": "考级冲关族", "group": "riyu", "desc": "备考JLPT N1/N2，目标导向强，对备考路线图和题型技巧需求高", "drives": ["目标驱动", "焦虑驱动"], "intent": "high", "directions": [{"title": "JLPT备考路线图", "badge": "valley", "badgeText": "流量洼地", "cta": "「N2备考3个月全攻略」封面用倒计时感，强调系统规划。CTA推备考课/真题资料。"}, {"title": "各等级题型拆解", "badge": "valley", "badgeText": "流量洼地", "cta": "分N1/N2/N3系列，每篇聚焦一个题型，用户会连续消费。"}, {"title": "逆袭/上岸经验帖", "badge": "star", "badgeText": "明星买点", "cta": "「3个月N2从零到过」数字对比封面，逆袭叙事强转化。"}]},
+{"id": "R2", "name": "五十音入门党", "group": "riyu", "desc": "日语零基础，从五十音开始，对入门学习路径和发音工具需求极强", "drives": ["成长驱动", "兴趣驱动"], "intent": "mid", "directions": [{"title": "五十音速记方法", "badge": "opp", "badgeText": "机会买点", "cta": "「3天记住五十音，这个方法真的有用」，工具型，高收藏。"}, {"title": "零基础入门路线", "badge": "valley", "badgeText": "流量洼地", "cta": "「从五十音到日常对话，我用了多久」，时间预期新兴需求，早布局。"}, {"title": "发音纠正技巧", "badge": null, "badgeText": "", "cta": "「这些假名发音中国人最容易搞错」，列举型高代入感。"}]},
+{"id": "R3", "name": "动漫日剧驱动者", "group": "riyu", "desc": "因为动漫/日剧爱上日语，兴趣驱动为主，对配音/歌词/台词学习方法需求强", "drives": ["兴趣驱动", "情绪驱动"], "intent": "mid", "directions": [{"title": "动漫台词学日语", "badge": "star", "badgeText": "明星买点", "cta": "「看鬼灭学日语，这10个高频句够用了」，兴趣切入，点击率高。"}, {"title": "日剧跟读训练", "badge": "star", "badgeText": "明星买点", "cta": "「影子跟读30天，日语口音变化」before/after强转化。"}, {"title": "日语歌词精读", "badge": null, "badgeText": "", "cta": "「米津玄師这首歌的日语，听懂之后哭了」，情绪共鸣型，高互动。"}]},
+{"id": "R4", "name": "旅日生活实用派", "group": "riyu", "desc": "计划去日本旅游或生活，对日语实用口语、数字、场景会话需求强", "drives": ["实用需求", "目标驱动"], "intent": "mid", "directions": [{"title": "旅日场景口语包", "badge": "opp", "badgeText": "机会买点", "cta": "「去日本必备100句，这份收藏够了」场景工具包，收藏量极高。"}, {"title": "日语数字/金额读法", "badge": null, "badgeText": "", "cta": "「在日本买东西搞懂这些就行」，实用型，零门槛。"}, {"title": "日本生活实用攻略", "badge": null, "badgeText": "", "cta": "「在日本租房/看病/点餐日语」，场景细化，精准覆盖。"}]},
+{"id": "R5", "name": "职场日语进阶者", "group": "riyu", "desc": "需要在职场使用日语，对商务日语、翻译、日语教学方法有需求", "drives": ["目标驱动", "成长驱动"], "intent": "high", "directions": [{"title": "商务日语核心表达", "badge": "valley", "badgeText": "流量洼地", "cta": "「职场日语最常用的50个表达」，工具型高收藏，适合职场人群。"}, {"title": "日语翻译技巧", "badge": null, "badgeText": "", "cta": "「中文直译日语最容易踩的坑」，纠错类，互动率高。"}, {"title": "日语考证/资质", "badge": null, "badgeText": "", "cta": "「日语翻译证书含金量排名」，决策期刚需，CTA推课自然。"}]},
+{"id": "H1", "name": "TOPIK冲关族", "group": "hanyu", "desc": "备考TOPIK考试，目标导向强，对考级备考策略和真题解析需求高", "drives": ["目标驱动", "焦虑驱动"], "intent": "high", "directions": [{"title": "TOPIK备考路线", "badge": "valley", "badgeText": "流量洼地", "cta": "「TOPIK6级备考全攻略」封面用通过率数字，强调系统备考。"}, {"title": "真题精讲/解析", "badge": "valley", "badgeText": "流量洼地", "cta": "分听力/阅读/写作系列，每篇聚焦一个题型，用户连续消费。"}, {"title": "上岸经验分享", "badge": "star", "badgeText": "明星买点", "cta": "「3个月TOPIK6过了」数字对比封面，逆袭叙事强转化。"}]},
+{"id": "H2", "name": "追星破译机", "group": "hanyu", "desc": "因为追韩星/KPOP爱上韩语，兴趣驱动极强，对歌词/应援/偶像相关韩语需求旺", "drives": ["兴趣驱动", "情绪驱动"], "intent": "low", "directions": [{"title": "应援韩语速学", "badge": "star", "badgeText": "明星买点", "cta": "「跟着KPOP学韩语，追星党必看」，兴趣切入，传播力强。"}, {"title": "韩语梗词", "badge": "opp", "badgeText": "机会买点", "cta": "「西八到底什么意思？韩语梗大全」，热梗内容高点击，需时效性。"}, {"title": "韩语歌词精读", "badge": null, "badgeText": "", "cta": "「NewJeans这首歌的韩语，你真的懂了吗」，情绪共鸣，高互动。"}]},
+{"id": "H3", "name": "韩签赴韩达人", "group": "hanyu", "desc": "计划去韩国旅游/长居，对韩国签证攻略、旅游韩语、赴韩生活需求暴增", "drives": ["实用需求", "目标驱动"], "intent": "high", "directions": [{"title": "韩签申请全攻略", "badge": "star", "badgeText": "明星买点", "cta": "「2026韩签攻略最全版，这样申请通过率高」，时效性强，高搜索。"}, {"title": "赴韩旅游必备韩语", "badge": "star", "badgeText": "明星买点", "cta": "「去首尔旅游，这50句够用了」，场景工具包，收藏量极高。"}, {"title": "韩国生活实用指南", "badge": null, "badgeText": "", "cta": "「在韩国租房/购物/问路韩语」，场景细化，精准覆盖。"}]},
+{"id": "H4", "name": "韩文手写控", "group": "hanyu", "desc": "对韩文书写有兴趣，想学韩文手写、字帖、书写美化", "drives": ["兴趣驱动", "成长驱动"], "intent": "mid", "directions": [{"title": "韩文手写入门", "badge": "opp", "badgeText": "机会买点", "cta": "「韩文手写从零开始，这个方法好看又好记」，差异化内容机会。"}, {"title": "韩文字体美化", "badge": "opp", "badgeText": "机会买点", "cta": "「韩文手写怎么写得好看？字体美化技巧」，工具型高收藏。"}, {"title": "韩文打卡/字帖", "badge": null, "badgeText": "", "cta": "「30天韩文手写打卡，我的变化」before/after展示。"}]},
+{"id": "H5", "name": "韩语日常学习者", "group": "hanyu", "desc": "日常学韩语，对发音、日常用语、词汇记忆有稳定需求", "drives": ["成长驱动", "目标驱动"], "intent": "mid", "directions": [{"title": "韩语发音系统学", "badge": "valley", "badgeText": "流量洼地", "cta": "「韩语发音最容易搞错的10个地方」，列举型，高代入感。"}, {"title": "韩语日常用语包", "badge": null, "badgeText": "", "cta": "「在韩国最常用的100句，这份够了」，工具型高收藏。"}, {"title": "韩语词汇速记法", "badge": null, "badgeText": "", "cta": "「韩语单词记不住？用这个方法试试」，方法论型，转化强。"}]},
+{"id": "E1", "name": "留学移民规划者", "group": "ouzhou", "desc": "计划去欧洲留学/移民，对留学申请语言要求、移民备考有强烈需求", "drives": ["目标驱动", "焦虑驱动"], "intent": "high", "directions": [{"title": "留学语言备考路线", "badge": "star", "badgeText": "明星买点", "cta": "「申请法国留学，语言成绩要求大全」，决策期刚需。"}, {"title": "移民语言考试攻略", "badge": "valley", "badgeText": "流量洼地", "cta": "「PR申请语言考试，这几个考试的区别」，精准覆盖移民需求。"}, {"title": "留学机构/课程选择", "badge": null, "badgeText": "", "cta": "「选留学语言课程避坑指南」，信任背书强转化。"}]},
+{"id": "E2", "name": "法语德语考级族", "group": "ouzhou", "desc": "备考DELF/DALF/歌德考试等欧语考级，目标明确，对备考策略和题型需求高", "drives": ["目标驱动", "焦虑驱动"], "intent": "high", "directions": [{"title": "考级备考策略", "badge": "valley", "badgeText": "流量洼地", "cta": "「DELF B2备考全攻略」，系统规划型，收藏量高。"}, {"title": "真题精讲", "badge": "valley", "badgeText": "流量洼地", "cta": "分听力/阅读/写作/口语系列，精准覆盖备考需求。"}, {"title": "考级经验分享", "badge": "star", "badgeText": "明星买点", "cta": "「3个月法语B2过了」逆袭叙事，强转化。"}]},
+{"id": "E3", "name": "欧语零基础入门者", "group": "ouzhou", "desc": "法语/德语/西班牙语零基础，寻找入门路径和学习资源", "drives": ["成长驱动", "兴趣驱动"], "intent": "mid", "directions": [{"title": "欧语入门路线图", "badge": "opp", "badgeText": "机会买点", "cta": "「零基础学法语，从哪里开始？」，降低门槛，引流钩子。"}, {"title": "欧语发音入门", "badge": null, "badgeText": "", "cta": "「法语发音最难的地方，这样练就对了」，发音痛点精准覆盖。"}, {"title": "欧语学习资源推荐", "badge": null, "badgeText": "", "cta": "「零基础学德语，这几个资源够用了」，工具型高收藏。"}]},
+{"id": "E4", "name": "俄语字母探索者", "group": "ouzhou", "desc": "对俄语字母/书写感兴趣，或有俄语基础学习需求", "drives": ["兴趣驱动", "成长驱动"], "intent": "low", "directions": [{"title": "俄语字母速记", "badge": null, "badgeText": "", "cta": "「3天记住俄语字母，这个方法真的有用」，工具型，高收藏。"}, {"title": "俄语书写入门", "badge": null, "badgeText": "", "cta": "「俄语字母手写，怎么写得好看」，差异化内容。"}, {"title": "俄语学习资源", "badge": null, "badgeText": "", "cta": "「零基础学俄语，从哪里开始」，入门引导，种草转化。"}]}
+];
+
+var NOTES_DATA = {};
+
+var DIRECTION_NOTES = {"R1_0": [{"id": "68c27529000000001b01c382", "title": "🔥日语考级真相！N1-N5到底有什么区别？", "url": "https://www.xiaohongshu.com/explore/68c27529000000001b01c382", "spend": 1570.71, "ctr": 0.139762, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g34o31m9ivmj352705pa9s2ughhr6m7m1lsg?imageView2/2/w/540/format/jpg/q/75"}, {"id": "6960d3b9000000000b01000a", "title": "秒懂❗日语考级N5-N1各个阶段的真实含金量", "url": "https://www.xiaohongshu.com/explore/6960d3b9000000000b01000a", "spend": 2237.97, "ctr": 0.130094, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031r47pv5p6u0g5pk2a4rjcim8j5l7ef8?imageView2/2/w/540/format/jpg/q/75"}, {"id": "68b6981b000000001c005c08", "title": "❣️下半年重要日语考试时间表，建议收藏", "url": "https://www.xiaohongshu.com/explore/68b6981b000000001c005c08", "spend": 1922.42, "ctr": 0.127233, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031lu06g5lks005n9lmqg43nidol2bn78?imageView2/2/w/540/format/jpg/q/75"}], "R1_1": [{"id": "67dd36ec000000001d01f279", "title": "学日语必须明白只刷题和背单词是不够的😭", "url": "https://www.xiaohongshu.com/explore/67dd36ec000000001d01f279", "spend": 2336.47, "ctr": 0.105526, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g34o31femk83b76205p53p03750stbjg9adg?imageView2/2/w/540/format/jpg/q/75"}, {"id": "680b37ad000000001c003563", "title": "7.6日语N2语法题都考啥？", "url": "https://www.xiaohongshu.com/explore/680b37ad000000001c003563", "spend": 2217.57, "ctr": 0.035289, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g00831gmkpa09ji005p47svgk86mjsdffsi0?imageView2/2/w/540/format/jpg/q/75"}, {"id": "6974c37f000000002203ba40", "title": "✨ VCE日语考试内容解析｜适合哪些学生呢？", "url": "https://www.xiaohongshu.com/explore/6974c37f000000002203ba40", "spend": 1726.31, "ctr": 0.01548, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031rnmifef26005nc4cdb08f91dsss6fg?imageView2/2/w/540/format/jpg/q/75"}], "R1_2": [{"id": "69c107e7000000001d01d50f", "title": "JLPT上岸难，我骗了很多人", "url": "https://www.xiaohongshu.com/explore/69c107e7000000001d01d50f", "spend": 2437.81, "ctr": 0.196242, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g00831u25ep3i1g5g5pmeot1jcg15jllseto?imageView2/2/w/540/format/jpg/q/75"}, {"id": "69b76f59000000002200316a", "title": "已经上岸了  有人need嘛", "url": "https://www.xiaohongshu.com/explore/69b76f59000000002200316a", "spend": 8663.32, "ctr": 0.169233, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/notes_pre_post/1040g3k831toqik1e78dg5p0kbpg4c9b5qcnst18?imageView2/2/w/540/format/jpg/q/75"}, {"id": "697c1130000000000c036cb9", "title": "日本jlpt又一波合格来袭（日本特定场）", "url": "https://www.xiaohongshu.com/explore/697c1130000000000c036cb9", "spend": 4097.12, "ctr": 0.162779, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/notes_pre_post/1040g3k831rur9qlpi66g5plpl6mjcod2ufq6emg?imageView2/2/w/540/format/jpg/q/75"}], "R2_0": [{"id": "694b9cdf000000001e00b27b", "title": "😭为什么我学五十音的时候没刷到啊啊啊啊", "url": "https://www.xiaohongshu.com/explore/694b9cdf000000001e00b27b", "spend": 4154.21, "ctr": 0.178644, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/notes_pre_post/1040g3k031qfefhsbn4505p9jgbtqof24mst4es0?imageView2/2/w/540/format/jpg/q/75"}, {"id": "69cb610c0000000023023b06", "title": "为什么我学五十音时没刷到这个😭😭", "url": "https://www.xiaohongshu.com/explore/69cb610c0000000023023b06", "spend": 1739.32, "ctr": 0.162083, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/notes_pre_post/1040g3k031uc9qrgg1u005qb8dktarst7us4kd1o?imageView2/2/w/540/format/jpg/q/75"}, {"id": "6975856a0000000028009535", "title": "记住五十音的方法就是多做几套题……", "url": "https://www.xiaohongshu.com/explore/6975856a0000000028009535", "spend": 9590.68, "ctr": 0.143356, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g2sg31tk0a8iqn2h05q7tqu1iflsrg0lt62o?imageView2/2/w/540/format/jpg/q/75"}], "R2_1": [{"id": "683055ff000000002102c713", "title": "🙋日语从零开始学到不同等级需要学多久？", "url": "https://www.xiaohongshu.com/explore/683055ff000000002102c713", "spend": 3230.77, "ctr": 0.170645, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g34o31hqslm3ik22g5p53p03750stibqv3io?imageView2/2/w/540/format/jpg/q/75"}, {"id": "67c0356800000000090170f2", "title": "30天自学日语规划🔥", "url": "https://www.xiaohongshu.com/explore/67c0356800000000090170f2", "spend": 1971.86, "ctr": 0.170126, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g2sg31em5qnltlk605o2pv1fgbtt26mlt8go?imageView2/2/w/540/format/jpg/q/75"}, {"id": "6757e931000000000700cba9", "title": "🇯🇵零基础一年能拿下日语N1吗❓", "url": "https://www.xiaohongshu.com/explore/6757e931000000000700cba9", "spend": 1792.22, "ctr": 0.129205, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g34o31b7ha4a7nq2g5p53p03750st7k0mnc8?imageView2/2/w/540/format/jpg/q/75"}], "R2_2": [{"id": "69539308000000001e02b00e", "title": "四国水果读音大碰撞！", "url": "https://www.xiaohongshu.com/explore/69539308000000001e02b00e", "spend": 2173.22, "ctr": 0.065805, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031qn9ssibmu005pnl65mnccse89r33n8?imageView2/2/w/540/format/jpg/q/75"}, {"id": "687085520000000011002223", "title": "被音调数字搞晕？3分钟破解⓪①②发音规律", "url": "https://www.xiaohongshu.com/explore/687085520000000011002223", "spend": 2197.28, "ctr": 0.063346, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g34o31jphs7e93q105obqoahnvu0ktq783vg?imageView2/2/w/540/format/jpg/q/75"}, {"id": "682edad30000000021001840", "title": "日语发音不同的单词，区别到底有多大？", "url": "https://www.xiaohongshu.com/explore/682edad30000000021001840", "spend": 1481.12, "ctr": 0.052218, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g00831jdte1ls32605n4tnn14f6tqh7otabg?imageView2/2/w/540/format/jpg/q/75"}], "R3_0": [{"id": "68aff3ed000000001c03633a", "title": "🔥二次元萌妹强推！超级宝藏日语机构💯", "url": "https://www.xiaohongshu.com/explore/68aff3ed000000001c03633a", "spend": 1996.96, "ctr": 0.019773, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g2sg31lng0a82ku805n46v1j4hgprripphn8?imageView2/2/w/540/format/jpg/q/75"}, {"id": "686b80c3000000000d01862d", "title": "成都暑假日语班🔥15天高效入门看懂动漫！", "url": "https://www.xiaohongshu.com/explore/686b80c3000000000d01862d", "spend": 2131.28, "ctr": 0.016526, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g2sg31kh1mi8bio605pocerqne0mn2gc0geo?imageView2/2/w/540/format/jpg/q/75"}], "R3_1": [{"id": "6879bba700000000120154f1", "title": "个人认为目前zui有效的日语口语暴涨法（跟读", "url": "https://www.xiaohongshu.com/explore/6879bba700000000120154f1", "spend": 2240.61, "ctr": 0.104673, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g00831k2iahaa48005ojke0o8dc2e5ci3uro?imageView2/2/w/540/format/jpg/q/75"}, {"id": "685e85ab00000000120143a5", "title": "每天跟读日语，语感在慢慢长出来🌿", "url": "https://www.xiaohongshu.com/explore/685e85ab00000000120143a5", "spend": 1675.99, "ctr": 0.09916, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g00831j7vvv8336e05ojke0o8dc2elffe3n8?imageView2/2/w/540/format/jpg/q/75"}, {"id": "6749b3bd00000000070347d7", "title": "个人zui效的日语暴涨法！(跟读)", "url": "https://www.xiaohongshu.com/explore/6749b3bd00000000070347d7", "spend": 2301.35, "ctr": 0.090967, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g00831q6t4033no3g49cftf6duofc6m1ljc8?imageView2/2/w/540/format/jpg/q/75"}], "R3_2": [], "R4_0": [{"id": "685d4ded0000000013011e44", "title": "去日本旅游学会这些日语常用语就够啦✅", "url": "https://www.xiaohongshu.com/explore/685d4ded0000000013011e44", "spend": 8218.41, "ctr": 0.127792, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031j6ptte12e005o5h1v0gbk3m9h3gb2g?imageView2/2/w/540/format/jpg/q/75"}], "R4_1": [], "R4_2": [{"id": "69ae5b5a0000000022020923", "title": "东京大阪✅面向日本生活就劳者的日语课！", "url": "https://www.xiaohongshu.com/explore/69ae5b5a0000000022020923", "spend": 1713.19, "ctr": 0.069663, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031tfusal4me005ou0opg9gtf83mpksu8?imageView2/2/w/540/format/jpg/q/75"}, {"id": "69b925b1000000002302386b", "title": "双语日教 | 陪中国娃轻松适配日本生活🌸", "url": "https://www.xiaohongshu.com/explore/69b925b1000000002302386b", "spend": 2063.97, "ctr": 0.04571, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031tqf7fsk0a005q96lsisjqun179idco?imageView2/2/w/540/format/jpg/q/75"}, {"id": "69d77844000000001f0067ed", "title": "其实在日本考JLPT也没有那么难❗️", "url": "https://www.xiaohongshu.com/explore/69d77844000000001f0067ed", "spend": 1502.2, "ctr": 0.040466, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g00831unu796dig0g5pvrgeqji8rkp15ad28?imageView2/2/w/540/format/jpg/q/75"}], "R5_0": [{"id": "68ccc145000000001202e80e", "title": "恨没早学！这套“角色扮演法”让我搞定敬语", "url": "https://www.xiaohongshu.com/explore/68ccc145000000001202e80e", "spend": 13007.42, "ctr": 0.030499, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g34o31pptsm4a40105n4tnn14f6tqbne95d0?imageView2/2/w/540/format/jpg/q/75"}, {"id": "68c93e57000000000e020ff2", "title": "日语敬语/口语/考试一站式攻克，首月免费！", "url": "https://www.xiaohongshu.com/explore/68c93e57000000000e020ff2", "spend": 35992.01, "ctr": 0.030132, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031mg70f3kkq005n4tnn14f6tq6k2fkro?imageView2/2/w/540/format/jpg/q/75"}], "R5_1": [{"id": "66986a6d000000000a006cd1", "title": "日语翻译费用大揭秘🔥看这篇就够了👈", "url": "https://www.xiaohongshu.com/explore/66986a6d000000000a006cd1", "spend": 7995.24, "ctr": 0.081979, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g008315ch7h8phe005ovulkl43hv9gr336og?imageView2/2/w/540/format/jpg/q/75"}, {"id": "65de8033000000000b020e3c", "title": "日语翻译收费标准！一篇文章带你了解细节👀", "url": "https://www.xiaohongshu.com/explore/65de8033000000000b020e3c", "spend": 12953.01, "ctr": 0.071468, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g00830vmvcjeg5u005ovulkl43hv9kse9ar8?imageView2/2/w/540/format/jpg/q/75"}, {"id": "67f8dea5000000001e006a82", "title": "🇯🇵日本語雑談｜同传转文字救日企翻译大命", "url": "https://www.xiaohongshu.com/explore/67f8dea5000000001e006a82", "spend": 6454.99, "ctr": 0.062743, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g2sg31g4mvdnu1u7049o04raoq4scog2l2ao?imageView2/2/w/540/format/jpg/q/75"}], "R5_2": [{"id": "6409dc7600000000130341e4", "title": "这家日语网课是真的可以让你拿下JLPT证书", "url": "https://www.xiaohongshu.com/explore/6409dc7600000000130341e4", "spend": 13446.21, "ctr": 0.052633, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1000g00825l75bdefq0505otmg5vpt7uqc0m6ibg?imageView2/2/w/540/format/jpg/q/75"}, {"id": "68ea3e9900000000070349aa", "title": "8年日语教师带你挑战6个月，N4-N1👍🏻", "url": "https://www.xiaohongshu.com/explore/68ea3e9900000000070349aa", "spend": 9590.56, "ctr": 0.025579, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g34o31nge77kd4u105pkmeujgu9clbjs1sio?imageView2/2/w/540/format/jpg/q/75"}], "H1_0": [{"id": "68f8b97700000000040050c3", "title": "🙋提问：不知道怎么备考韩语TOPIK咋办❓", "url": "https://www.xiaohongshu.com/explore/68f8b97700000000040050c3", "spend": 1597.94, "ctr": 0.044588, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031nuih3ea52005pgu3ni0u2o8fej6dug?imageView2/2/w/540/format/jpg/q/75"}, {"id": "68c1107b000000001d00aa0d", "title": "🇰🇷韩国线下 中文授课 TOPIK备考课程", "url": "https://www.xiaohongshu.com/explore/68c1107b000000001d00aa0d", "spend": 2757.62, "ctr": 0.040691, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g00831mb0fm4bkq105q5j02i6aa618nk2eoo?imageView2/2/w/540/format/jpg/q/75"}, {"id": "67a34212000000002602f08d", "title": "3月起跑！TOPIK备考，网课神助攻来了🚀", "url": "https://www.xiaohongshu.com/explore/67a34212000000002602f08d", "spend": 5909.45, "ctr": 0.039298, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g34o31eemar50ge0g5p5fln62qma90il7vl0?imageView2/2/w/540/format/jpg/q/75"}], "H1_1": [{"id": "667a2da8000000001f00529a", "title": "不是…求求你们别再浪费TOPIK真题了", "url": "https://www.xiaohongshu.com/explore/667a2da8000000001f00529a", "spend": 1468.55, "ctr": 0.100957, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k0314evmvd4m0004a7jqfffva1fj29r7i8?imageView2/2/w/540/format/jpg/q/75"}, {"id": "68f9f254000000000301c4cf", "title": "📚 韩语等级考试全解析来了！", "url": "https://www.xiaohongshu.com/explore/68f9f254000000000301c4cf", "spend": 2078.11, "ctr": 0.097299, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/notes_pre_post/1040g3k831nujp35n58d05pfnpul3ciu26g9b028?imageView2/2/w/540/format/jpg/q/75"}, {"id": "65f2c85600000000120233f7", "title": "请停止浪费TOPIK真题的行为！因为你没有这个", "url": "https://www.xiaohongshu.com/explore/65f2c85600000000120233f7", "spend": 2782.84, "ctr": 0.052265, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g2sg310ap699lmi005p8krjk95iaiumtfoao?imageView2/2/w/540/format/jpg/q/75"}], "H1_2": [{"id": "6788e3f500000000180321cb", "title": "寒假悄悄逆袭🚀0基础学韩语✅惊艳所有人", "url": "https://www.xiaohongshu.com/explore/6788e3f500000000180321cb", "spend": 2691.74, "ctr": 0.097121, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031cna80f1gc005oag4m2gjbse90jmhc0?imageView2/2/w/540/format/jpg/q/75"}, {"id": "6943c2db000000001e001170", "title": "学韩语也有邪修🤯1v1直播带你进步逆袭！", "url": "https://www.xiaohongshu.com/explore/6943c2db000000001e001170", "spend": 1694.08, "ctr": 0.063768, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031q7rn9n770005p78dei0ifqfpfhuv98?imageView2/2/w/540/format/jpg/q/75"}, {"id": "67e502f8000000001201cd4a", "title": "🔥春日韩语逆袭|从哑巴韩语到爱豆级口语", "url": "https://www.xiaohongshu.com/explore/67e502f8000000001201cd4a", "spend": 2533.91, "ctr": 0.062171, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031fh90luvls105orn658nr7du3dj2j6o?imageView2/2/w/540/format/jpg/q/75"}], "H2_0": [{"id": "699ea7260000000022021986", "title": "无痛学韩语📣让追星女直接开挂の韩语邪修法！", "url": "https://www.xiaohongshu.com/explore/699ea7260000000022021986", "spend": 5326.0, "ctr": 0.1448, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g2sg31t0jnupg5cs05n2f2hm4jirfoln0pk8?imageView2/2/w/540/format/jpg/q/75"}, {"id": "688840c1000000002500df86", "title": "不会韩语怎么追kpop⁉️又是爽值拉满的一期！", "url": "https://www.xiaohongshu.com/explore/688840c1000000002500df86", "spend": 6424.21, "ctr": 0.118169, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g2sg31kgo0etpiae05pf2kln19k3q2i29i38?imageView2/2/w/540/format/jpg/q/75"}, {"id": "69b0d617000000002602d33c", "title": "追星学习两不误！用元宝啃生肉太爽了📺", "url": "https://www.xiaohongshu.com/explore/69b0d617000000002602d33c", "spend": 4356.62, "ctr": 0.094688, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031ticafcgl6005pgl98sgu8g1ee6mko0?imageView2/2/w/540/format/jpg/q/75"}], "H2_1": [], "H2_2": [], "H3_0": [], "H3_1": [{"id": "686f237d000000001c033d03", "title": "1r搞定🇰🇷韩国旅行语言不通问题蕞全攻略✅", "url": "https://www.xiaohongshu.com/explore/686f237d000000001c033d03", "spend": 4023.35, "ctr": 0.057907, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g2sg31jo8c6252u7046sr84d751slf1elhq8?imageView2/2/w/540/format/jpg/q/75"}], "H3_2": [{"id": "691eb411000000001b02411b", "title": "韩语vlog-半年韩国生活体验-我的韩语能力..", "url": "https://www.xiaohongshu.com/explore/691eb411000000001b02411b", "spend": 1721.44, "ctr": 0.094877, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g2sg31p3lgp3q2ol049mj7rgbs1veves5mmo?imageView2/2/w/540/format/jpg/q/75"}, {"id": "69007176000000000700cd8d", "title": "🇰🇷在韩国线下零基础学韩语🌫️", "url": "https://www.xiaohongshu.com/explore/69007176000000000700cd8d", "spend": 1748.09, "ctr": 0.066557, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/notes_pre_post/1040g3k831o63go9c50a05q5j02i6aa61b0m0iao?imageView2/2/w/540/format/jpg/q/75"}, {"id": "69a13186000000002602c58f", "title": "在韩国线下0零基础学韩语🇰🇷", "url": "https://www.xiaohongshu.com/explore/69a13186000000002602c58f", "spend": 6318.79, "ctr": 0.055408, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/notes_pre_post/1040g3k031t33fli7lc005q5j02i6aa61scfud2g?imageView2/2/w/540/format/jpg/q/75"}], "H4_0": [], "H4_1": [], "H4_2": [], "H5_0": [{"id": "68ea2246000000000301a712", "title": "韩语发音邪修技巧！让你“蹭的一下”就读对！", "url": "https://www.xiaohongshu.com/explore/68ea2246000000000301a712", "spend": 7711.46, "ctr": 0.173446, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g2sg31ngabfq66ge049mj7rgbs1ve1rhbam0?imageView2/2/w/540/format/jpg/q/75"}], "H5_1": [{"id": "68902f850000000023023765", "title": "个人认为目前zui有效的韩语口语爆涨法（跟读", "url": "https://www.xiaohongshu.com/explore/68902f850000000023023765", "spend": 1943.88, "ctr": 0.117538, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g00831kog0gjv34005pkbqt73ut64t58o98o?imageView2/2/w/540/format/jpg/q/75"}, {"id": "6787176300000000160199f2", "title": "这么好用的纠音韩语口语练习帮手没人知道？", "url": "https://www.xiaohongshu.com/explore/6787176300000000160199f2", "spend": 4093.08, "ctr": 0.094792, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g2sg31cljr2up0k004a7jqfffva1f2sdtj3o?imageView2/2/w/540/format/jpg/q/75"}, {"id": "683593cd0000000023012613", "title": "全链路拆解！我到底是怎么练韩语口语的", "url": "https://www.xiaohongshu.com/explore/683593cd0000000023012613", "spend": 3618.74, "ctr": 0.07205, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031i00bueflq005ppmkian31ii96km6u0?imageView2/2/w/540/format/jpg/q/75"}], "H5_2": [], "E1_0": [{"id": "677db98f000000000203e7c0", "title": "北美本地艺术留学作品集辅导❗GIFT圆艺术梦", "url": "https://www.xiaohongshu.com/explore/677db98f000000000203e7c0", "spend": 40092.29, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031ccev3t8h6005oeed1hk1mcg3uft7ag?imageView2/2/w/540/format/jpg/q/75"}, {"id": "68496ff7000000002100a637", "title": "欧那德语暑假班招生啦，去德国留学的宝子冲", "url": "https://www.xiaohongshu.com/explore/68496ff7000000002100a637", "spend": 3734.52, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g34o31ijd3s367q105om424umsgte8q06q5o?imageView2/2/w/540/format/jpg/q/75"}, {"id": "6870115000000000120234d3", "title": "美国艺术留学咨询| 优秀案例+专业选择推荐", "url": "https://www.xiaohongshu.com/explore/6870115000000000120234d3", "spend": 2947.05, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031jp86vncjq005oeed1hk1mcgleer1lg?imageView2/2/w/540/format/jpg/q/75"}], "E1_1": [{"id": "67354f88000000001a01fb13", "title": "转战法语TCF  学三个月课程抢先CAPR🚩", "url": "https://www.xiaohongshu.com/explore/67354f88000000001a01fb13", "spend": 152189.0, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g00831attn053n2005pn9ssa7c3rq39ur4l0?imageView2/2/w/540/format/jpg/q/75"}, {"id": "6836c60d0000000022007e43", "title": "TCF CA法语移民班开课，需要速来🌟", "url": "https://www.xiaohongshu.com/explore/6836c60d0000000022007e43", "spend": 88986.76, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031uo1rfl7hm0g5n9qjts5jqd9glr5kj8?imageView2/2/w/540/format/jpg/q/75"}, {"id": "67354df20000000019016e09", "title": "从零140小时学法语B2课  移民加拿大有捷径", "url": "https://www.xiaohongshu.com/explore/67354df20000000019016e09", "spend": 52601.34, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g34o31tlbbcnh7u0g5pn9ssa7c3rqps27f38?imageView2/2/w/540/format/jpg/q/75"}], "E1_2": [{"id": "68677dc5000000000d019f4d", "title": "被问爆的西语网课！1v1 真的牛", "url": "https://www.xiaohongshu.com/explore/68677dc5000000000d019f4d", "spend": 95869.19, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g2sg31jfgpip12i904a5qsnaeaqsoh6nq5ug?imageView2/2/w/540/format/jpg/q/75"}, {"id": "665dc0a90000000014019139", "title": "后悔报法语网课了，因为真的被催着学🥹", "url": "https://www.xiaohongshu.com/explore/665dc0a90000000014019139", "spend": 44286.76, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g008313j80c94nq6g5pfhehk195c9j5s0tq8?imageView2/2/w/540/format/jpg/q/75"}, {"id": "68ef52c100000000070210c5", "title": "6个月，挑战用一对一西语网课实现全西交流", "url": "https://www.xiaohongshu.com/explore/68ef52c100000000070210c5", "spend": 38418.87, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g2sg31nlaa9ppl0j05p0rt0v4i3ndb2kq7to?imageView2/2/w/540/format/jpg/q/75"}], "E2_0": [{"id": "68089f8e000000001c02d851", "title": "TCF Canada法语全程班开课啦~需要速来！", "url": "https://www.xiaohongshu.com/explore/68089f8e000000001c02d851", "spend": 387904.26, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031umm4a9n1u005n9qjts5jqd9eu5oa9o?imageView2/2/w/540/format/jpg/q/75"}, {"id": "6737e19d000000001b02a455", "title": "法语课🇨🇦Pr | TCF3-6月💯", "url": "https://www.xiaohongshu.com/explore/6737e19d000000001b02a455", "spend": 210615.31, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g34o31tq5hqpvnu0g5pn9ssa7c3rqm00468g?imageView2/2/w/540/format/jpg/q/75"}, {"id": "67354f88000000001a01fb13", "title": "转战法语TCF  学三个月课程抢先CAPR🚩", "url": "https://www.xiaohongshu.com/explore/67354f88000000001a01fb13", "spend": 152189.0, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g00831attn053n2005pn9ssa7c3rq39ur4l0?imageView2/2/w/540/format/jpg/q/75"}], "E2_1": [{"id": "68afac69000000001c004c0f", "title": "🔥德语学到B1 B2却做不对真题？看这里！", "url": "https://www.xiaohongshu.com/explore/68afac69000000001c004c0f", "spend": 264.91, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031ln7qscvl0005om424umsgte5861oq8?imageView2/2/w/540/format/jpg/q/75"}, {"id": "69676ec2000000001a030bcf", "title": "终于有人一次性把TCF题型和技巧说清楚了！", "url": "https://www.xiaohongshu.com/explore/69676ec2000000001a030bcf", "spend": 84.03, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g34o31rameehp0m005q7n54ftt4q1abj4jng?imageView2/2/w/540/format/jpg/q/75"}, {"id": "69a8142e000000001a02952a", "title": "📝TCF Canada写作全题型拆解！", "url": "https://www.xiaohongshu.com/explore/69a8142e000000001a02952a", "spend": 4.19, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031t9qj5nol6005q7n54ftt4q1flns978?imageView2/2/w/540/format/jpg/q/75"}], "E2_2": [{"id": "68998df40000000023019eca", "title": "下班后学法语🔥零基础轻松🔜B2", "url": "https://www.xiaohongshu.com/explore/68998df40000000023019eca", "spend": 105635.91, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g00831nve0jto58605q33k0e7990m7tvprq8?imageView2/2/w/540/format/jpg/q/75"}, {"id": "67fca8cc000000001c029fee", "title": "敢不敢挑战下德语B2⁉线上一对一收学生👩", "url": "https://www.xiaohongshu.com/explore/67fca8cc000000001c029fee", "spend": 98532.02, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g00831g8dr60hh8004a5qsnaeaqsosq1q9k8?imageView2/2/w/540/format/jpg/q/75"}, {"id": "68ede8af0000000003037488", "title": "有没有女宝想挑战6个月，法语A1-B2", "url": "https://www.xiaohongshu.com/explore/68ede8af0000000003037488", "spend": 66050.85, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/notes_pre_post/1040g3k031nirdtr1mg5g5pbpnju86n7072c2kog?imageView2/2/w/540/format/jpg/q/75"}], "E3_0": [{"id": "68998df40000000023019eca", "title": "下班后学法语🔥零基础轻松🔜B2", "url": "https://www.xiaohongshu.com/explore/68998df40000000023019eca", "spend": 105635.91, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g00831nve0jto58605q33k0e7990m7tvprq8?imageView2/2/w/540/format/jpg/q/75"}, {"id": "67354df20000000019016e09", "title": "从零140小时学法语B2课  移民加拿大有捷径", "url": "https://www.xiaohongshu.com/explore/67354df20000000019016e09", "spend": 52601.34, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g34o31tlbbcnh7u0g5pn9ssa7c3rqps27f38?imageView2/2/w/540/format/jpg/q/75"}, {"id": "677b568c000000000b00dcef", "title": "德语从零基础到A1/A2/B1/B2要学多久？🤔", "url": "https://www.xiaohongshu.com/explore/677b568c000000000b00dcef", "spend": 39887.68, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031qfmalf16u005om424umsgtegc5i03g?imageView2/2/w/540/format/jpg/q/75"}], "E3_1": [{"id": "68efad82000000000303b692", "title": "法语发音难题？超实用解析来了！🔍", "url": "https://www.xiaohongshu.com/explore/68efad82000000000303b692", "spend": 297.84, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031nlo20a44q005pn9ssa7c3rql2aa8og?imageView2/2/w/540/format/jpg/q/75"}, {"id": "690992dd0000000004007ca4", "title": "想轻松掌握日语？华东师大教你标准发音！", "url": "https://www.xiaohongshu.com/explore/690992dd0000000004007ca4", "spend": 279.84, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g0k031of14vfnku005op83gc8vnc99m3pb2o?imageView2/2/w/540/format/jpg/q/75"}, {"id": "69281735000000001e001d9b", "title": "小白救星！德语发音入门指南✨", "url": "https://www.xiaohongshu.com/explore/69281735000000001e001d9b", "spend": 191.85, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/notes_pre_post/1040g3k031pcr1c2g2a605p7ufeuh4lf6f2bdmj8?imageView2/2/w/540/format/jpg/q/75"}], "E3_2": [{"id": "6932b178000000001d03f305", "title": "别再乱买教材了！🔥 法语主流教材推荐", "url": "https://www.xiaohongshu.com/explore/6932b178000000001d03f305", "spend": 24.62, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/notes_pre_post/1040g3k831pn67mpcl0005p7ufeshmfsjn6q259g?imageView2/2/w/540/format/jpg/q/75"}], "E4_0": [], "E4_1": [], "E4_2": [{"id": "67348485000000001a01da2f", "title": "悟了👍跟着俄语小班课，学俄语真的不难！", "url": "https://www.xiaohongshu.com/explore/67348485000000001a01da2f", "spend": 23935.46, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g34o31a4v988vmo0g5ophb8tosvcq01vte90?imageView2/2/w/540/format/jpg/q/75"}, {"id": "69048afa0000000004021333", "title": "新东方俄语网课🔥学俄语真的没有那么难", "url": "https://www.xiaohongshu.com/explore/69048afa0000000004021333", "spend": 11578.02, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/spectrum/1040g34o31t1rhm145a505p53p03750stb0kn028?imageView2/2/w/540/format/jpg/q/75"}, {"id": "68fa12820000000005003045", "title": "俄语小班课，留俄教师授课，互动学俄语！", "url": "https://www.xiaohongshu.com/explore/68fa12820000000005003045", "spend": 7854.98, "ctr": 0, "cvr": 0, "cover": "https://sns-img-qn.xhscdn.com/1040g00831nvs779mmg105pblb5b6aa6ks1vn4hg?imageView2/2/w/540/format/jpg/q/75"}]};
+
+var Q_RAW_DATA = [
+  {"root": "韩签/赴韩", "recent_vol": 130861, "prev_vol": 73366, "search_speed": 78.4, "click_speed": 70.7, "click_new": 306845, "coverage": 1, "warning": false},
+  {"root": "留学申请", "recent_vol": 101710, "prev_vol": 66833, "search_speed": 52.2, "click_speed": 42.7, "click_new": 231075, "coverage": 1, "warning": false},
+  {"root": "追星应援", "recent_vol": 34307, "prev_vol": 25537, "search_speed": 34.3, "click_speed": 31.2, "click_new": 88972, "coverage": 0.8, "warning": false},
+  {"root": "动漫/日剧驱动", "recent_vol": 758731, "prev_vol": 632817, "search_speed": 19.9, "click_speed": 16.4, "click_new": 2117360, "coverage": 1, "warning": false},
+  {"root": "韩文手写", "recent_vol": 188578, "prev_vol": 168648, "search_speed": 11.8, "click_speed": -4.5, "click_new": 418235, "coverage": 0.9, "warning": false},
+  {"root": "洋名/起名", "recent_vol": 311212, "prev_vol": 279906, "search_speed": 11.2, "click_speed": 4.2, "click_new": 787984, "coverage": 1, "warning": false},
+  {"root": "娱乐/内容驱动", "recent_vol": 1778663, "prev_vol": 1569867, "search_speed": 13.3, "click_speed": 8.5, "click_new": 4903708, "coverage": 1, "warning": false},
+  {"root": "学习资源/选课", "recent_vol": 1007227, "prev_vol": 941205, "search_speed": 7.0, "click_speed": 4.6, "click_new": 3207029, "coverage": 1, "warning": false},
+  {"root": "韩语梗", "recent_vol": 135357, "prev_vol": 126638, "search_speed": 6.9, "click_speed": -13.3, "click_new": 309407, "coverage": 0.9, "warning": false},
+  {"root": "移民备考", "recent_vol": 38477, "prev_vol": 36571, "search_speed": 5.2, "click_speed": 0.9, "click_new": 109529, "coverage": 0.7, "warning": false},
+  {"root": "发音/正音", "recent_vol": 645023, "prev_vol": 626674, "search_speed": 2.9, "click_speed": 4.9, "click_new": 1356732, "coverage": 1, "warning": false},
+  {"root": "TOPIK备考", "recent_vol": 1000825, "prev_vol": 990654, "search_speed": 1.0, "click_speed": 1.4, "click_new": 2401201, "coverage": 1, "warning": false},
+  {"root": "词汇记忆", "recent_vol": 519083, "prev_vol": 524026, "search_speed": -0.9, "click_speed": 0.7, "click_new": 1457106, "coverage": 1, "warning": false},
+  {"root": "五十音/假名", "recent_vol": 285274, "prev_vol": 298779, "search_speed": -4.5, "click_speed": -2.1, "click_new": 539018, "coverage": 1, "warning": false},
+  {"root": "旅日/生活实用", "recent_vol": 215062, "prev_vol": 227364, "search_speed": -5.4, "click_speed": -4.6, "click_new": 494052, "coverage": 1, "warning": false},
+  {"root": "法语/德语考试", "recent_vol": 211628, "prev_vol": 226913, "search_speed": -6.7, "click_speed": -7.5, "click_new": 619264, "coverage": 0.9, "warning": false},
+  {"root": "JLPT备考", "recent_vol": 881296, "prev_vol": 989299, "search_speed": -10.9, "click_speed": -14.7, "click_new": 2036422, "coverage": 1, "warning": false},
+  {"root": "欧语零基础", "recent_vol": 102986, "prev_vol": 116880, "search_speed": -11.9, "click_speed": -12.3, "click_new": 272718, "coverage": 0.9, "warning": false},
+  {"root": "俄语字母/书写", "recent_vol": 74769, "prev_vol": 105377, "search_speed": -29.0, "click_speed": -30.0, "click_new": 146895, "coverage": 0.8, "warning": false}
+];
+
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function intentLabel(i){return{high:["tag-intent-high","高意向"],mid:["tag-intent-mid","中意向"],low:["tag-intent-low","低意向"]}[i]||["",""]}
+function badgeClass(b){return{star:"badge-star",opp:"badge-opp",valley:"badge-valley"}[b]||""}
+
+function renderCard(p){
+  var d='<div class="persona-card" data-pid="'+p.id+'">';
+  d+='<div class="persona-head">';
+  d+='<div class="persona-name">'+esc(p.name)+'</div>';
+  d+='<div class="persona-desc">'+esc(p.desc)+'</div>';
+  d+='<div class="persona-tags">';
+  p.drives.forEach(function(dr){d+='<span class="tag tag-drive">'+esc(dr)+'</span>'});
+  var il=intentLabel(p.intent);
+  d+='<span class="tag '+il[0]+'">'+il[1]+'</span>';
+  d+='</div>';
+  d+='<div class="card-hint">\u67e5\u770b\u5185\u5bb9\u65b9\u5411 \u2192</div>';
+  d+='</div></div>';
+  return d;
+}
+
+function renderGrid(el,personas){
+  if(!el)return;
+  var d='',lastGroup='';
+  var groups={riyu:"\u65e5\u8bed\u7ec4 \u00b7 ",hanyu:"\u97e9\u8bed\u7ec4 \u00b7 ",ouzhou:"\u6b27\u6d32\u8bed\u7cfb\u7ec4 \u00b7 "};
+  personas.forEach(function(p){
+    if(p.group!==lastGroup){lastGroup=p.group;d+='<div class="group-label-bar">'+groups[p.group]+personas.filter(function(x){return x.group===p.group}).length+'\u7c7b</div>';}
+    d+=renderCard(p);
+  });
+  el.innerHTML='<div class="persona-grid">'+d+'</div>';
+}
+
+function openModal(pid){
+  var p=PERSONAS.find(function(x){return x.id===pid});
+  if(!p)return;
+  document.getElementById('modal-persona-name').textContent=p.name;
+  var th='';
+  p.drives.forEach(function(dr){th+='<span class="tag tag-drive">'+esc(dr)+'</span>'});
+  var il=intentLabel(p.intent);th+='<span class="tag '+il[0]+'">'+il[1]+'</span>';
+  document.getElementById('modal-persona-tags').innerHTML=th;
+  document.getElementById('modal-persona-desc').textContent=p.desc;
+
+  var dh='';
+  p.directions.forEach(function(dir,idx){
+    dh+='<div class="modal-direction">';
+    dh+='<div class="modal-dir-head"><div class="modal-dir-title">'+esc(dir.title)+'</div>';
+    if(dir.badge) dh+='<div class="dir-badge '+badgeClass(dir.badge)+'">'+esc(dir.badgeText)+'</div>';
+    dh+='</div>';
+    dh+='<div class="modal-dir-cta">'+esc(dir.cta)+'</div>';
+
+    var key=p.id+'_'+idx;
+    var cn=DIRECTION_NOTES[key];
+    var hasNotes=cn&&cn.length>0;
+    if(hasNotes){
+      dh+='<div class="notes-section-label notes-label-client">\u5ba2\u6237\u5e7f\u544a\u7b14\u8bb0</div>';
+      dh+='<div class="client-notes-scroll">';
+      cn.forEach(function(n){
+        dh+='<a class="client-note-card" href="'+esc(n.url)+'" target="_blank">';
+        if(n.cover){
+          dh+='<img src="'+esc(n.cover)+'" alt="" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"><div class="client-note-fallback" style="display:none">\U0001f4c4</div>';
+        } else {
+          dh+='<div class="client-note-fallback">\U0001f4c4</div>';
+        }
+        dh+='<div class="client-note-info">';
+        dh+='<div class="client-note-title">'+esc(n.title)+'</div>';
+        dh+='<div class="client-note-metrics">';
+        dh+='<span class="client-note-metric" style="background:#f0eeec;color:#555">\u5e74\u6d88\u8017 \u00a5'+(n.spend/10000).toFixed(1)+'\u4e07</span>';
+        dh+='<span class="client-note-metric" style="background:#f6ffed;color:#389e0d">CTR '+(n.ctr*100).toFixed(2)+'%</span>';
+        dh+='<span class="client-note-metric" style="background:#fff7e6;color:#D46B08">CVR '+(n.cvr*100).toFixed(2)+'%</span>';
+        dh+='</div></div></a>';
+      });
+      dh+='</div>';
+    } else {
+      dh+='<div class="notes-section-label notes-label-client">\u5ba2\u6237\u5e7f\u544a\u7b14\u8bb0</div>';
+      dh+='<div class="notes-empty-placeholder">\u6682\u65e0\u5c0f\u8bed\u79cd\u5e7f\u544a\u7b14\u8bb0\u6570\u636e</div>';
+    }
+    dh+='</div>';
+  });
+  document.getElementById('modal-directions').innerHTML=dh;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(){
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.getElementById('modal-close').addEventListener('click',closeModal);
+document.getElementById('modal-overlay').addEventListener('click',function(e){if(e.target===this)closeModal()});
+
+document.querySelectorAll('.nav-tab').forEach(function(tab){
+  tab.addEventListener('click',function(){
+    document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active')});
+    this.classList.add('active');
+    var tn=this.getAttribute('data-tab');
+    document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});
+    var t=document.getElementById('screen-'+tn);
+    if(t){t.classList.add('active');if(tn==='priority'&&!window._qd){drawQuad();window._qd=true;}}
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function(){
+  document.addEventListener('click', function(e){
+    var card = e.target.closest('.persona-card');
+    if(card && card.dataset.pid){ openModal(card.dataset.pid); }
+  });
+
+renderGrid(document.getElementById('screen-all'),PERSONAS);
+renderGrid(document.getElementById('grid-riyu'),PERSONAS.filter(function(p){return p.group==='riyu'}));
+renderGrid(document.getElementById('grid-hanyu'),PERSONAS.filter(function(p){return p.group==='hanyu'}));
+renderGrid(document.getElementById('grid-ouzhou'),PERSONAS.filter(function(p){return p.group==='ouzhou'}));
+});
+
+/* ===== Quadrant Chart ===== */
+function drawQuad(){
+  var qc=document.getElementById('quadrant-chart');
+  if(!qc)return;
+  qc.width=qc.offsetWidth||900;
+  qc.height=500;
+  var ctx=qc.getContext('2d');
+  var W=qc.width,H=qc.height;
+  var mg={top:30,right:60,bottom:70,left:80};
+  var cW=W-mg.left-mg.right,cH=H-mg.top-mg.bottom;
+
+  var ss=Q_RAW_DATA.map(function(d){return d.search_speed});
+  var cs=Q_RAW_DATA.map(function(d){return d.click_speed});
+  var sv=Q_RAW_DATA.map(function(d){return d.recent_vol});
+  var minX=Math.min.apply(null,ss)-20,maxX=Math.max.apply(null,ss)+30;
+  var minY=Math.min.apply(null,cs)-10,maxY=Math.max.apply(null,cs)+30;
+  var sortedX=ss.slice().sort(function(a,b){return a-b});
+  var medX=sortedX[Math.floor(sortedX.length/2)],medY=0;
+
+  function sx(v){return mg.left+((v-minX)/(maxX-minX))*cW;}
+  function sy(v){return mg.top+cH-((v-minY)/(maxY-minY))*cH;}
+
+  var minV=Math.min.apply(null,sv),maxV=Math.max.apply(null,sv);
+  function rad(v){var lm=Math.log(minV),lM=Math.log(maxV);return 8+((Math.log(v)-lm)/(lM-lm))*32;}
+
+  function qcol(d){
+    if(d.search_speed>=medX&&d.click_speed>=medY)return '#22c55e';
+    if(d.search_speed<medX&&d.click_speed>=medY)return '#C9AA72';
+    if(d.search_speed>=medX&&d.click_speed<medY)return '#B5625A';
+    return '#AAA';
+  }
+
+  ctx.clearRect(0,0,W,H);
+  var mx=sx(medX),my=sy(medY);
+  ctx.fillStyle='rgba(34,197,94,0.06)';ctx.fillRect(mx,mg.top,W-mg.right-mx,my-mg.top);
+  ctx.fillStyle='rgba(201,170,114,0.06)';ctx.fillRect(mg.left,mg.top,mx-mg.left,my-mg.top);
+  ctx.fillStyle='rgba(181,98,90,0.06)';ctx.fillRect(mx,my,W-mg.right-mx,mg.top+cH-my);
+  ctx.fillStyle='rgba(170,170,170,0.06)';ctx.fillRect(mg.left,my,mx-mg.left,mg.top+cH-my);
+
+  ctx.strokeStyle='#eee';ctx.lineWidth=1;
+  function niceT(min,max,n){var r=max-min,gh=r/n,mag=Math.pow(10,Math.floor(Math.log10(gh)));var rs=gh/mag,st;if(rs<=1.5)st=mag;else if(rs<=3)st=2*mag;else if(rs<=7)st=5*mag;else st=10*mag;var t=[],s=Math.ceil(min/st)*st;for(var v=s;v<=max;v+=st)t.push(Math.round(v));return t;}
+  var xT=niceT(minX,maxX,8);
+  var yT=niceT(minY,maxY,8);
+  xT.forEach(function(t){var x=sx(t);ctx.beginPath();ctx.moveTo(x,mg.top);ctx.lineTo(x,mg.top+cH);ctx.stroke()});
+  yT.forEach(function(t){var y=sy(t);ctx.beginPath();ctx.moveTo(mg.left,y);ctx.lineTo(mg.left+cW,y);ctx.stroke()});
+
+  ctx.strokeStyle='#4A7C59';ctx.lineWidth=1.5;ctx.setLineDash([6,4]);
+  ctx.beginPath();ctx.moveTo(mx,mg.top);ctx.lineTo(mx,mg.top+cH);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(mg.left,my);ctx.lineTo(mg.left+cW,my);ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.fillStyle='#333';ctx.font='12px system-ui,sans-serif';ctx.textAlign='center';
+  xT.forEach(function(t){ctx.fillText(t.toFixed(0)+'%',sx(t),mg.top+cH+20)});
+  ctx.textAlign='right';
+  yT.forEach(function(t){ctx.fillText(t.toFixed(0)+'%',mg.left-10,sy(t)+4)});
+
+  ctx.fillStyle='#666';ctx.font='13px system-ui,sans-serif';ctx.textAlign='center';
+  ctx.fillText('\u641c\u7d22\u91cf\u589e\u901f\uff08%\uff09',mg.left+cW/2,mg.top+cH+50);
+  ctx.save();ctx.translate(18,mg.top+cH/2);ctx.rotate(-Math.PI/2);ctx.fillText('\u70b9\u51fb\u91cf\u589e\u901f\uff08%\uff09',0,0);ctx.restore();
+
+  ctx.font='bold 12px system-ui,sans-serif';
+  ctx.fillStyle='rgba(34,197,94,0.35)';ctx.textAlign='left';ctx.fillText('\u2b50 \u660e\u661f\u4e70\u70b9',mx+10,mg.top+20);
+  ctx.fillStyle='rgba(201,170,114,0.35)';ctx.fillText('\u673a\u4f1a\u4e70\u70b9',mg.left+10,mg.top+20);
+  ctx.fillStyle='rgba(181,98,90,0.35)';ctx.fillText('\u6d41\u91cf\u6d3c\u5730',mx+10,mg.top+cH-8);
+  ctx.fillStyle='rgba(170,170,170,0.35)';ctx.fillText('\u23f8 \u4f4e\u4f18\u5148\u7ea7',mg.left+10,mg.top+cH-8);
+
+  // 颜色辅助：将简写色或命名色转为带透明度的rgba
+  function colorWithAlpha(hex, alpha) {
+    var r2,g2,b2;
+    if(hex==='#AAA'||hex==='#aaa'){r2=170;g2=170;b2=170;}
+    else{
+      var h=hex.replace('#','');
+      if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      r2=parseInt(h.slice(0,2),16);g2=parseInt(h.slice(2,4),16);b2=parseInt(h.slice(4,6),16);
+    }
+    return 'rgba('+r2+','+g2+','+b2+','+alpha+')';
+  }
+
+  Q_RAW_DATA.forEach(function(d){
+    var x=sx(d.search_speed),y=sy(d.click_speed),r=rad(d.recent_vol),c=qcol(d);
+    ctx.save();
+    // 画气泡填充
+    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
+    ctx.fillStyle=colorWithAlpha(c,0.8);ctx.fill();
+    // 画气泡边框
+    ctx.strokeStyle=colorWithAlpha(c,1);ctx.lineWidth=2;ctx.stroke();
+    ctx.restore();
+
+    // 画文字
+    ctx.save();
+    ctx.font='bold 11px system-ui,sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.lineJoin='round';
+    if(r>16){
+      // 大气泡：文字在气泡内，白字+深色描边
+      var ty=y;
+      ctx.strokeStyle='rgba(0,0,0,0.55)';ctx.lineWidth=3;
+      ctx.strokeText(d.root,x,ty);
+      ctx.fillStyle='#ffffff';
+      ctx.fillText(d.root,x,ty);
+    }else{
+      // 小气泡：文字在气泡上方，深色字+白色描边
+      var ty=y-r-9;
+      ctx.strokeStyle='rgba(255,255,255,0.95)';ctx.lineWidth=3;
+      ctx.strokeText(d.root,x,ty);
+      ctx.fillStyle='#222';
+      ctx.fillText(d.root,x,ty);
+    }
+    ctx.restore();
+    if(d.warning){ctx.save();ctx.font='14px sans-serif';ctx.fillStyle='#333';ctx.fillText('\u26a0',x+r+2,y-r-4);ctx.restore();}
+  });
+
+  var bub=Q_RAW_DATA.map(function(d){return{x:sx(d.search_speed),y:sy(d.click_speed),r:rad(d.recent_vol),root:d.root,warning:d.warning,search_speed:d.search_speed,click_speed:d.click_speed,recent_vol:d.recent_vol}});
+  var tip=document.getElementById('quadrant-tooltip');
+  qc.addEventListener('mousemove',function(e){
+    var rect=qc.getBoundingClientRect(),ex=e.clientX-rect.left,ey=e.clientY-rect.top;
+    var f=null;
+    for(var i=0;i<bub.length;i++){var b=bub[i],dist=Math.sqrt((ex-b.x)*(ex-b.x)+(ey-b.y)*(ey-b.y));if(dist<=b.r+5){f=b;break;}}
+    if(f){qc.style.cursor='pointer';tip.style.display='block';
+      tip.innerHTML=(f.warning?'\u26a0 ':'')+'<b>'+esc(f.root)+'</b><br>\u8fd190\u5929\u641c\u7d22\u91cf\uff1a'+(f.recent_vol/10000).toFixed(1)+'\u4e07<br>\u641c\u7d22\u589e\u901f\uff1a'+(f.search_speed>=0?'+':'')+f.search_speed.toFixed(1)+'%<br>\u70b9\u51fb\u589e\u901f\uff1a'+(f.click_speed>=0?'+':'')+f.click_speed.toFixed(1)+'%';
+      var tx=ex+15,ty=ey-20;if(tx+220>W)tx=ex-225;if(ty<0)ty=10;
+      tip.style.left=tx+'px';tip.style.top=ty+'px';
+    }else{qc.style.cursor='default';tip.style.display='none';}
+  });
+  qc.addEventListener('mouseleave',function(){tip.style.display='none';qc.style.cursor='default'});
+}
+</script>
+</body>
+</html>
