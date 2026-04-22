@@ -366,20 +366,60 @@ function drawQuad(){
   ctx.fillStyle='rgba(181,98,90,0.35)';ctx.fillText('\ \u6d41\u91cf\u6d3c\u5730',mx+10,mg.top+cH-8);
   ctx.fillStyle='rgba(170,170,170,0.35)';ctx.fillText('\u23f8 \u4f4e\u4f18\u5148\u7ea7',mg.left+10,mg.top+cH-8);
 
-  Q_RAW_DATA.forEach(function(d){
-    var x=sx(d.search_speed),y=sy(d.click_speed),r=rad(d.recent_vol),c=qcol(d);
-    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=c+'70';ctx.fill();
-    ctx.strokeStyle=c;ctx.lineWidth=1.5;ctx.stroke();
-    ctx.save();ctx.font='bold 11px system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.lineJoin='round';
-    var ty=r>14?y:y-r-8;
-    ctx.strokeStyle='rgba(255,255,255,0.9)';ctx.lineWidth=3;ctx.strokeText(d.root,x,ty);
-    ctx.fillStyle='#222';ctx.fillText(d.root,x,ty);
-    ctx.restore();
-    if(d.warning){ctx.save();ctx.font='14px sans-serif';ctx.fillStyle='#333';ctx.fillText('\u26a0',x+r+2,y-r-4);ctx.restore();}
+  // 力导向防重叠：先计算各气泡初始位置，再迭代推开重叠
+  var bub=Q_RAW_DATA.map(function(d){
+    return{x:sx(d.search_speed),y:sy(d.click_speed),r:rad(d.recent_vol),
+           ox:sx(d.search_speed),oy:sy(d.click_speed), // 原始位置
+           root:d.root,warning:d.warning,
+           search_speed:d.search_speed,click_speed:d.click_speed,recent_vol:d.recent_vol,
+           col:qcol(d)};
+  });
+  // 力导向迭代（100次）
+  for(var iter=0;iter<100;iter++){
+    for(var i=0;i<bub.length;i++){
+      for(var j=i+1;j<bub.length;j++){
+        var bi=bub[i],bj=bub[j];
+        var dx=bi.x-bj.x,dy=bi.y-bj.y;
+        var dist=Math.sqrt(dx*dx+dy*dy)||0.001;
+        var minDist=bi.r+bj.r+4; // 4px间距
+        if(dist<minDist){
+          var push=(minDist-dist)/2;
+          var nx=dx/dist,ny=dy/dist;
+          bi.x+=nx*push; bi.y+=ny*push;
+          bj.x-=nx*push; bj.y-=ny*push;
+        }
+      }
+      // 边界约束（轻微拉回，不超出图表区域）
+      var b=bub[i];
+      var pad=b.r+2;
+      b.x=Math.max(mg.left+pad,Math.min(mg.left+cW-pad,b.x));
+      b.y=Math.max(mg.top+pad,Math.min(mg.top+cH-pad,b.y));
+    }
+  }
+
+  // 绘制连接线（从原始位置到推开后的位置）
+  bub.forEach(function(b){
+    var dx=b.x-b.ox,dy=b.y-b.oy;
+    if(Math.sqrt(dx*dx+dy*dy)>8){
+      ctx.save();ctx.strokeStyle='rgba(180,180,180,0.4)';ctx.lineWidth=0.8;ctx.setLineDash([3,3]);
+      ctx.beginPath();ctx.moveTo(b.ox,b.oy);ctx.lineTo(b.x,b.y);ctx.stroke();
+      ctx.setLineDash([]);ctx.restore();
+    }
   });
 
-  var bub=Q_RAW_DATA.map(function(d){return{x:sx(d.search_speed),y:sy(d.click_speed),r:rad(d.recent_vol),root:d.root,warning:d.warning,search_speed:d.search_speed,click_speed:d.click_speed,recent_vol:d.recent_vol}});
+  // 绘制气泡
+  bub.forEach(function(b){
+    ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
+    ctx.fillStyle=b.col+'70';ctx.fill();
+    ctx.strokeStyle=b.col;ctx.lineWidth=1.5;ctx.stroke();
+    ctx.save();ctx.font='bold 11px system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.lineJoin='round';
+    var ty=b.r>14?b.y:b.y-b.r-8;
+    ctx.strokeStyle='rgba(255,255,255,0.9)';ctx.lineWidth=3;ctx.strokeText(b.root,b.x,ty);
+    ctx.fillStyle='#222';ctx.fillText(b.root,b.x,ty);
+    ctx.restore();
+    if(b.warning){ctx.save();ctx.font='14px sans-serif';ctx.fillStyle='#333';ctx.fillText('\u26a0',b.x+b.r+2,b.y-b.r-4);ctx.restore();}
+  });
   var tip=document.getElementById('quadrant-tooltip');
   qc.addEventListener('mousemove',function(e){
     var rect=qc.getBoundingClientRect(),ex=e.clientX-rect.left,ey=e.clientY-rect.top;
