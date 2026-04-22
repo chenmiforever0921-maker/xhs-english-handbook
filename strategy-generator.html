@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教育行业客户定制化策略生成器</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --red: #FF2442;
+  --red-hover: #E51D3A;
+  --red-light: #FFF0F0;
+  --bg: #F5F6F8;
+  --card-bg: #FFFFFF;
+  --text: #1A1A1A;
+  --text-secondary: #6B7280;
+  --text-light: #9CA3AF;
+  --border: #E5E7EB;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-lg: 0 4px 14px rgba(0,0,0,0.1);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header .logo {
+  width: 32px; height: 32px;
+  background: var(--red);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 700; font-size: 16px;
+}
+.header h1 {
+  font-size: 18px; font-weight: 600; color: var(--text);
+}
+.header .badge {
+  background: var(--red-light); color: var(--red);
+  font-size: 12px; font-weight: 500; padding: 2px 8px;
+  border-radius: 10px; margin-left: auto;
+}
+
+/* Layout */
+.container {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 0;
+  min-height: calc(100vh - 65px);
+}
+
+/* Left Panel */
+.left-panel {
+  background: white;
+  border-right: 1px solid var(--border);
+  padding: 32px 28px;
+  position: sticky;
+  top: 65px;
+  height: calc(100vh - 65px);
+  overflow-y: auto;
+}
+
+.panel-title {
+  font-size: 22px; font-weight: 700; margin-bottom: 4px;
+}
+.panel-subtitle {
+  font-size: 14px; color: var(--text-secondary); margin-bottom: 28px;
+}
+
+.form-group {
+  margin-bottom: 22px;
+}
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.form-label .optional {
+  font-weight: 400; color: var(--text-light); font-size: 12px;
+}
+
+select, input[type="text"], textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text);
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+select:focus, input[type="text"]:focus, textarea:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(255,36,66,0.1);
+}
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+  user-select: none;
+}
+.checkbox-item:hover { border-color: var(--red); }
+.checkbox-item.active {
+  background: var(--red-light);
+  border-color: var(--red);
+  color: var(--red);
+}
+.checkbox-item input { display: none; }
+
+.btn-generate {
+  width: 100%;
+  padding: 14px;
+  background: var(--red);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  margin-top: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.btn-generate:hover { background: var(--red-hover); }
+.btn-generate:active { transform: scale(0.98); }
+.btn-generate:disabled { opacity: 0.7; cursor: not-allowed; }
+
+/* Spinner */
+.spinner {
+  display: none;
+  width: 20px; height: 20px;
+  border: 2.5px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 0 auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.btn-generate.loading .btn-text { visibility: hidden; }
+.btn-generate.loading .spinner { display: block; position: absolute; top: 50%; left: 50%; margin: -10px 0 0 -10px; }
+
+/* Right Panel */
+.right-panel {
+  padding: 32px;
+  overflow-y: auto;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  color: var(--text-light);
+}
+.empty-state .icon {
+  width: 80px; height: 80px;
+  background: linear-gradient(135deg, #F3F4F6, #E5E7EB);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px; margin-bottom: 20px;
+}
+.empty-state p { font-size: 15px; }
+
+/* Results */
+.results { display: none; animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+.section {
+  margin-bottom: 32px;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.section-header .num {
+  width: 28px; height: 28px;
+  background: var(--red);
+  color: white;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700;
+}
+.section-header h2 {
+  font-size: 18px; font-weight: 700;
+}
+
+/* Persona Cards Scroll */
+.personas-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.personas-scroll::-webkit-scrollbar { height: 4px; }
+.personas-scroll::-webkit-scrollbar-track { background: var(--bg); border-radius: 2px; }
+.personas-scroll::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 2px; }
+
+.persona-card {
+  min-width: 300px;
+  max-width: 300px;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+  scroll-snap-align: start;
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+}
+.persona-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+.persona-card.expanded { border-color: var(--red); }
+
+.persona-body { padding: 20px; }
+.persona-name {
+  font-size: 20px; font-weight: 700; margin-bottom: 10px;
+}
+.persona-tags {
+  display: flex; gap: 6px; margin-bottom: 12px;
+}
+.tag {
+  font-size: 11px; font-weight: 500; padding: 3px 10px;
+  border-radius: 12px;
+}
+.tag.drive { background: #EFF6FF; color: #2563EB; }
+.tag.intent { background: #ECFDF5; color: #059669; }
+.tag.intent-high { background: #FEF2F2; color: #DC2626; }
+
+.persona-scene {
+  font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;
+  line-height: 1.5;
+}
+.persona-blockers {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.blocker {
+  font-size: 12px; color: var(--text-light);
+  display: flex; align-items: center; gap: 4px;
+}
+.blocker::before { content: "⚠"; font-size: 10px; }
+
+/* Expanded section */
+.persona-expanded {
+  display: none;
+  border-top: 1px solid var(--border);
+  padding: 16px 20px;
+  background: #FAFAFA;
+}
+.persona-card.expanded .persona-expanded { display: block; }
+
+.expand-hint {
+  font-size: 12px; color: var(--text-light);
+  display: flex; align-items: center; gap: 4px;
+  margin-top: 10px;
+}
+.expand-hint::after { content: "▼"; font-size: 10px; transition: transform 0.2s; }
+.persona-card.expanded .expand-hint::after { transform: rotate(180deg); }
+
+.mini-direction {
+  margin-bottom: 12px;
+}
+.mini-direction:last-child { margin-bottom: 0; }
+.mini-dir-title {
+  font-size: 14px; font-weight: 600; margin-bottom: 4px;
+  display: flex; align-items: center; gap: 6px;
+}
+.badge-fire { color: #F59E0B; }
+.badge-star { color: #3B82F6; }
+.badge-drop { color: #06B6D4; }
+
+.mini-tips {
+  font-size: 12px; color: var(--text-secondary); margin-bottom: 6px;
+}
+.mini-keywords {
+  display: flex; flex-wrap: wrap; gap: 4px;
+}
+.kw-tag {
+  font-size: 11px; padding: 2px 8px;
+  background: white; border: 1px solid var(--border);
+  border-radius: 10px; color: var(--text-secondary);
+  cursor: pointer; transition: all 0.15s;
+}
+.kw-tag:hover { border-color: var(--red); color: var(--red); background: var(--red-light); }
+
+/* Content Strategy */
+.content-strategy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 14px;
+}
+.content-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  border: 1.5px solid var(--border);
+  transition: box-shadow 0.2s;
+}
+.content-card:hover { box-shadow: var(--shadow-lg); }
+.content-card-title {
+  font-size: 16px; font-weight: 600; margin-bottom: 8px;
+}
+.content-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 12px; font-weight: 600; padding: 4px 12px;
+  border-radius: 16px; margin-bottom: 10px;
+}
+.badge-明星买点 { background: linear-gradient(135deg, #FFF7ED, #FED7AA); color: #C2410C; }
+.badge-机会买点 { background: linear-gradient(135deg, #EFF6FF, #BFDBFE); color: #1D4ED8; }
+.badge-流量洼地 { background: linear-gradient(135deg, #ECFDF5, #A7F3D0); color: #047857; }
+
+.content-tips {
+  font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.6;
+}
+.content-keywords {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.content-kw {
+  font-size: 12px; padding: 4px 10px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 14px; color: var(--text-secondary);
+  cursor: pointer; transition: all 0.15s;
+}
+.content-kw:hover { border-color: var(--red); color: var(--red); background: var(--red-light); }
+.content-kw.copied { border-color: #059669; color: #059669; background: #ECFDF5; }
+
+/* Notes */
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+.note-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.note-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+
+.note-cover {
+  height: 160px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.note-cover .note-icon {
+  font-size: 32px; opacity: 0.5;
+}
+.note-cover .note-ctr {
+  position: absolute; top: 10px; right: 10px;
+  background: rgba(0,0,0,0.6);
+  color: white; font-size: 12px; font-weight: 600;
+  padding: 3px 10px; border-radius: 12px;
+  backdrop-filter: blur(4px);
+}
+.note-cover .note-source {
+  position: absolute; top: 10px; left: 10px;
+  background: rgba(255,255,255,0.9);
+  color: var(--text-secondary); font-size: 11px;
+  padding: 2px 8px; border-radius: 8px;
+}
+
+.note-info { padding: 14px; }
+.note-title {
+  font-size: 14px; font-weight: 600; line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* Track-specific gradient covers */
+.note-cover.lang { background: linear-gradient(135deg, #60A5FA, #34D399); }
+.note-cover.edu { background: linear-gradient(135deg, #F97316, #FBBF24); }
+.note-cover.interest { background: linear-gradient(135deg, #A78BFA, #F472B6); }
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #1F2937;
+  color: white;
+  font-size: 14px;
+  padding: 10px 24px;
+  border-radius: 24px;
+  opacity: 0;
+  transition: all 0.3s;
+  z-index: 1000;
+  pointer-events: none;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  .left-panel {
+    position: static;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .right-panel { padding: 20px; }
+  .content-strategy-grid { grid-template-columns: 1fr; }
+  .notes-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">红</div>
+  <h1>教育行业策略生成器</h1>
+  <span class="badge">小红书商业化</span>
+</div>
+
+<div class="container">
+  <!-- Left Panel -->
+  <div class="left-panel">
+    <div class="panel-title">客户策略生成器</div>
+    <div class="panel-subtitle">输入客户信息，匹配最优人群与内容策略</div>
+
+    <div class="form-group">
+      <label class="form-label">赛道选择</label>
+      <select id="track">
+        <option value="">请选择赛道</option>
+        <option value="语言培训">语言培训</option>
+        <option value="学历培训">学历培训</option>
+        <option value="兴趣培训">兴趣培训</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">核心产品/课程</label>
+      <input type="text" id="product" placeholder='如"日语N2备考课"、"MBA考研辅导"'>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">客户主要诉求</label>
+      <div class="checkbox-group" id="goalsGroup">
+        <label class="checkbox-item" data-value="拉新获客"><input type="checkbox" value="拉新获客">拉新获客</label>
+        <label class="checkbox-item" data-value="品牌种草"><input type="checkbox" value="品牌种草">品牌种草</label>
+        <label class="checkbox-item" data-value="效果转化"><input type="checkbox" value="效果转化">效果转化</label>
+        <label class="checkbox-item" data-value="人群破圈"><input type="checkbox" value="人群破圈">人群破圈</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">补充说明 <span class="optional">（选填）</span></label>
+      <textarea id="notes" placeholder="如：客户预算、投放经验、特殊要求等"></textarea>
+    </div>
+
+    <button class="btn-generate" id="btnGenerate" onclick="generate()">
+      <span class="btn-text">生成策略方案</span>
+      <div class="spinner"></div>
+    </button>
+  </div>
+
+  <!-- Right Panel -->
+  <div class="right-panel">
+    <div class="empty-state" id="emptyState">
+      <div class="icon">🎯</div>
+      <p>填写左侧信息，一键生成专属策略</p>
+    </div>
+
+    <div class="results" id="results">
+      <!-- Section 1: Personas -->
+      <div class="section">
+        <div class="section-header">
+          <span class="num">1</span>
+          <h2>推荐人群</h2>
+        </div>
+        <div class="personas-scroll" id="personasContainer"></div>
+      </div>
+
+      <!-- Section 2: Content Strategy -->
+      <div class="section">
+        <div class="section-header">
+          <span class="num">2</span>
+          <h2>内容策略</h2>
+        </div>
+        <div class="content-strategy-grid" id="contentContainer"></div>
+      </div>
+
+      <!-- Section 3: Notes -->
+      <div class="section">
+        <div class="section-header">
+          <span class="num">3</span>
+          <h2>笔记参考</h2>
+        </div>
+        <div class="notes-grid" id="notesContainer"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">数据基于小红书教育行业特色人群图谱 v2.0 · 2026 Q1</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ==================== DATA ====================
+
+const JP_PERSONAS = [
+  { id:"J1", name:"动漫日剧驱动者", drive:"兴趣驱动", intent:"中", scene:"因为爱看动漫/日剧，想直接听懂原声，从追番开始学日语", blockers:["不知道从哪里开始","学了基础不知道怎么用"], directions:[{title:"追番听力突破",badge:"明星买点",tips:"用高人气番剧做钩子，展示'学完这一课就能听懂XX台词'，强调即时满足感",keywords:["日语听力","动漫日语","日剧台词学日语"]},{title:"五十音趣味入门",badge:"机会买点",tips:"把枯燥的五十音用动漫谐音联想记忆法呈现，适合完全零基础钩子内容",keywords:["五十音入门","日语零基础","五十音记忆法"]}]},
+  { id:"J2", name:"五十音入门党", drive:"目标驱动", intent:"高", scene:"刚决定学日语，正在啃五十音，容易因为枯燥放弃", blockers:["五十音记不住","不知道学完五十音怎么继续"], directions:[{title:"五十音速通公式",badge:"明星买点",tips:"展示'7天记住五十音'的具体方法，结合打卡机制，强化成就感",keywords:["五十音怎么记","日语入门","日语零基础学习"]},{title:"从五十音到第一句话",badge:"机会买点",tips:"展示学完五十音后第一步，用'学完就能说XX'降低放弃率",keywords:["日语五十音","日语入门学习","日语自学"]}]},
+  { id:"J3", name:"JLPT冲关族", drive:"目标驱动", intent:"高", scene:"有明确考级目标，正在备考N3/N2，焦虑成绩不稳定", blockers:["语法总是记不住","真题刷了很多但分数没提升"], directions:[{title:"JLPT真题解析系列",badge:"机会买点",tips:"用高频考点+易错题型做内容，具体到'这道题90%的人会选错，原因是…'",keywords:["JLPT备考","日语N2真题","日语N3备考"]},{title:"语法速记口诀",badge:"机会买点",tips:"把易混淆语法做成对比内容，结合例句记忆，适合冲刺期学习者",keywords:["日语语法","N2语法","日语语法记忆"]}]},
+  { id:"J4", name:"留学移民规划者", drive:"目标驱动", intent:"高", scene:"有赴日留学或移民打算，语言学习和签证申请同步推进", blockers:["不知道日语要达到什么水平才够","签证/申请流程信息太分散"], directions:[{title:"留学日语备考路线图",badge:"明星买点",tips:"结合留学时间轴，给出'什么时候考N几'的具体规划，降低信息过载焦虑",keywords:["日本留学语言","留学日语要求","日语N2够用吗"]},{title:"在日生活日语速成",badge:"机会买点",tips:"展示留学后第一年必用的生活场景日语，真实感内容比课程推广更容易种草",keywords:["在日生活","日本留学准备","日语生活场景"]}]},
+  { id:"J5", name:"职场商务提升者", drive:"目标驱动", intent:"高", scene:"在涉日企业工作，需要提升商务日语能力，时间碎片化", blockers:["职场日语和考级日语差异大","没有系统学习时间"], directions:[{title:"商务邮件模板系列",badge:"机会买点",tips:"直接给模板+场景示例，强调'复制就能用'的即用性，适合碎片化学习",keywords:["商务日语","日语商务邮件","职场日语"]},{title:"涉日职场生存指南",badge:"流量洼地",tips:"从真实职场场景切入，比如日式会议文化/称呼规则，建立认知后引导课程转化",keywords:["日语职场","日企工作日语","商务日语学习"]}]}
+];
+
+const KR_PERSONAS = [
+  { id:"K1", name:"追星破译机", drive:"兴趣驱动", intent:"中", scene:"因为追韩星/K-pop，想直接看懂字幕、读懂歌词", blockers:["韩语发音太难模仿","不知道学多久才能听懂"], directions:[{title:"爱豆同款用语速学",badge:"明星买点",tips:"用流行爱豆语录/粉丝用语做钩子，展示'学会这句话就能在评论区破防'",keywords:["韩语追星","韩语入门","韩语爱豆"]},{title:"韩语歌词拆解课",badge:"机会买点",tips:"用热门kpop歌词做教学素材，结合韩语发音规则，兴趣驱动留存率高",keywords:["韩语歌词","kpop韩语","韩语发音"]}]},
+  { id:"K2", name:"韩签赴韩达人", drive:"目标驱动", intent:"高", scene:"计划赴韩旅游或长期居留，需要签证和生活韩语", blockers:["签证流程不熟悉","旅游韩语够不够用"], directions:[{title:"韩签攻略×韩语速成",badge:"明星买点",tips:"用'签证通过后第一步'做内容钩子，签证信息和语言学习双绑定，搜索增速78.4%",keywords:["韩国签证","赴韩旅游韩语","韩语旅游"]},{title:"赴韩生存韩语包",badge:"明星买点",tips:"场景化内容：机场/地铁/餐厅/购物，用真实场景视频展示即用感",keywords:["韩语旅游","韩国旅游必备","韩语日常"]}]},
+  { id:"K3", name:"TOPIK冲关族", drive:"目标驱动", intent:"高", scene:"有TOPIK考级目标，备考中级/高级，希望系统提升", blockers:["写作和听力薄弱","不知道考试重点在哪"], directions:[{title:"TOPIK高频词汇速记",badge:"机会买点",tips:"按考试出题频率整理词汇，用'这100个词覆盖70%考试'做钩子",keywords:["TOPIK备考","韩语考级","韩语TOPIK"]},{title:"韩语写作模板库",badge:"机会买点",tips:"TOPIK写作是大多数考生弱项，给出可套用的写作框架",keywords:["TOPIK写作","韩语写作","韩语作文"]}]},
+  { id:"K4", name:"韩文手写控", drive:"兴趣驱动", intent:"低", scene:"被韩文的视觉美感吸引，想学习韩文手写/字体设计", blockers:["韩文书写规则不了解","字帖资源少"], directions:[{title:"韩文手写入门美学",badge:"机会买点",tips:"展示韩文手写的美感，用'跟着写第一个词'降低门槛，吸引颜值经济受众",keywords:["韩文手写","韩文字体","韩语书法"]},{title:"韩文字体设计赏析",badge:"机会买点",tips:"从设计角度切入韩文，适合有设计/手帐/文具爱好的人群交叉种草",keywords:["韩文字体","手帐韩文","韩文装饰"]}]},
+  { id:"K5", name:"韩语日常学习者", drive:"兴趣驱动", intent:"中", scene:"长期保持韩语学习习惯，不以考级为目的，享受语言积累过程", blockers:["容易断更","不知道到什么水平算有进展"], directions:[{title:"韩语每日一句打卡",badge:"机会买点",tips:"用日常打卡机制建立用户粘性，'今天学了一句话'的内容格式传播效率高",keywords:["韩语每日","韩语打卡","韩语学习日常"]},{title:"韩剧台词韩语教学",badge:"明星买点",tips:"用热播韩剧台词做教学素材，兴趣和学习结合，适合长期学习者维持热情",keywords:["韩剧学韩语","韩语台词","韩语日常"]}]}
+];
+
+const EU_PERSONAS = [
+  { id:"E1", name:"欧语零基础入门者", drive:"目标驱动", intent:"高", scene:"刚开始学法语/德语/西语，从零开始，目标是基础日常交流", blockers:["不知道从哪开始","语法太复杂"], directions:[{title:"法语/德语/西语入门路线图",badge:"机会买点",tips:"用'学多久能达到A2'的时间轴做内容，降低决策焦虑",keywords:["法语入门","德语零基础","西班牙语入门"]},{title:"欧语发音速成",badge:"机会买点",tips:"把最难的发音用中文谐音+口型图来呈现，适合完全零基础钩子内容",keywords:["法语发音","德语发音","法语怎么学"]}]},
+  { id:"E2", name:"法德考级冲关族", drive:"目标驱动", intent:"高", scene:"备考DELF/Goethe等欧语证书，有明确时间节点", blockers:["写作和口语薄弱","考试技巧不了解"], directions:[{title:"DELF/Goethe备考攻略",badge:"明星买点",tips:"按考试板块分别出干货内容，'写作得满分的5个模板'比泛泛攻略点击率高",keywords:["DELF备考","法语考级","德语考级Goethe"]},{title:"欧语口语破冰",badge:"机会买点",tips:"用日常场景对话展示'学完能说'，减少考级焦虑",keywords:["法语口语","德语口语","欧语口语练习"]}]},
+  { id:"E3", name:"留学移民语言准备者", drive:"目标驱动", intent:"高", scene:"计划赴欧留学或移民，需要达到相应语言门槛", blockers:["不确定需要什么水平","备考时间和留学申请时间冲突"], directions:[{title:"欧洲留学语言要求全解析",badge:"明星买点",tips:"搜索增速52%，留学需求回暖，直接承接搜索意图",keywords:["法国留学语言","德国留学德语要求","欧洲留学语言"]},{title:"备考留学双线并行攻略",badge:"机会买点",tips:"解决'备考和申请冲突'的痛点，给出具体时间分配建议",keywords:["法语B2留学","留学德语备考","欧洲留学准备"]}]},
+  { id:"E4", name:"多语种探索者", drive:"兴趣驱动", intent:"中", scene:"对多种欧洲语言有兴趣，可能已有英语基础，想横向扩展", blockers:["不知道先学哪个","担心语言之间互相干扰"], directions:[{title:"第二外语选择指南",badge:"机会买点",tips:"用'有英语基础学哪个欧洲语言最容易'做钩子，帮助决策阶段用户明确方向",keywords:["学哪个语言好","第二外语","欧洲语言选择"]},{title:"英语基础扩展欧语攻略",badge:"机会买点",tips:"强调英语基础带来的优势，用对比展示捷径，降低入门焦虑",keywords:["英法双语","英语学法语","欧洲语言学习"]}]}
+];
+
+const XL_PERSONAS = [
+  { id:"X1", name:"研路迷航者", drive:"迷茫驱动", intent:"高", scene:"大三下/毕业后刚开始备考，信息过载不知从何下手", blockers:["不知道选哪个学校和专业","复习计划无从制定"], directions:[{title:"考研全流程地图",badge:"明星买点",tips:"用时间轴展示考研每个阶段该做什么，满足初期强烈的信息整合需求",<think>:[*error in generated text*]}},
+]};
