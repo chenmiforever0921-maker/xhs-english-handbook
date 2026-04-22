@@ -360,7 +360,7 @@ function drawQuad(){
   function sy(v){return mg.top+cH-((v-minY)/(maxY-minY))*cH;}
 
   var minV=Math.min.apply(null,sv),maxV=Math.max.apply(null,sv);
-  function rad(v){var lm=Math.log(minV),lM=Math.log(maxV);return 8+((Math.log(v)-lm)/(lM-lm))*32;}
+  function rad(v){var lm=Math.log(minV),lM=Math.log(maxV);return 5+((Math.log(v)-lm)/(lM-lm))*22;}
 
   function qcol(d){
     if(d.search_speed>=medX&&d.click_speed>=medY)return '#22c55e';
@@ -420,7 +420,7 @@ function drawQuad(){
     ctx.save();
     // 画气泡填充
     ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
-    ctx.fillStyle=colorWithAlpha(c,0.8);ctx.fill();
+    ctx.fillStyle=colorWithAlpha(c,0.45);ctx.fill();
     // 画气泡边框
     ctx.strokeStyle=colorWithAlpha(c,1);ctx.lineWidth=2;ctx.stroke();
     ctx.restore();
