@@ -331,7 +331,7 @@ function drawQuad(){
   function sy(v){return mg.top+cH-((v-minY)/(maxY-minY))*cH;}
 
   var minV=Math.min.apply(null,sv),maxV=Math.max.apply(null,sv);
-  function rad(v){var lm=Math.log(minV),lM=Math.log(maxV);return 5+((Math.log(v)-lm)/(lM-lm))*22;}
+  function rad(v){var sm=Math.sqrt(minV),sM=Math.sqrt(maxV);return 5+((Math.sqrt(v)-sm)/(sM-sm))*55;}
 
   function qcol(d){
     if(d.search_speed>=medX&&d.click_speed>=medY)return '#22c55e';
