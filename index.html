@@ -351,30 +351,7 @@ function drawQuad(){
            col:qcol(d)};
   });
   var mx0=sx(medX),my0=sy(medY);
-  for(var iter=0;iter<200;iter++){
-    for(var i=0;i<bub.length;i++){
-      for(var j=i+1;j<bub.length;j++){
-        var bi=bub[i],bj=bub[j];
-        var dx=bi.x-bj.x,dy=bi.y-bj.y;
-        var dist=Math.sqrt(dx*dx+dy*dy)||0.001;
-        var minDist=bi.r+bj.r+4;
-        if(dist<minDist){
-          var push=(minDist-dist)/2;
-          var nx=dx/dist,ny=dy/dist;
-          bi.x+=nx*push;bi.y+=ny*push;
-          bj.x-=nx*push;bj.y-=ny*push;
-        }
-      }
-      // 象限边界约束：气泡不得越过中线，保持在原始象限内
-      var b=bub[i],pad=b.r+2;
-      b.x=Math.max(mg.left+pad,Math.min(mg.left+cW-pad,b.x));
-      b.y=Math.max(mg.top+pad,Math.min(mg.top+cH-pad,b.y));
-      if(b.search_speed>=medX){ b.x=Math.max(mx0+pad,b.x); }
-      else{ b.x=Math.min(mx0-pad,b.x); }
-      if(b.click_speed>=medY){ b.y=Math.min(my0-pad,b.y); }
-      else{ b.y=Math.max(my0+pad,b.y); }
-    }
-  }
+  // 不做力导向，气泡严格按数据坐标定位，数据准确性第一
 
   // 构建 SVG
   var mx=mx0,my=my0;
@@ -429,13 +406,7 @@ function drawQuad(){
     el.textContent=q.text;zg.appendChild(el);
   });
 
-  // 连接线（位移超过10px的气泡）
-  bub.forEach(function(b){
-    var dx=b.x-b.ox,dy=b.y-b.oy;
-    if(Math.sqrt(dx*dx+dy*dy)>10){
-      zg.appendChild(mk('line',{x1:b.ox,y1:b.oy,x2:b.x,y2:b.y,stroke:'#aaa','stroke-width':0.8,'stroke-dasharray':'3,3',opacity:0.4}));
-    }
-  });
+  // 无力导向，无需连接线
 
   // 气泡 + 标签
   bub.forEach(function(b){
