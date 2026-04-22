@@ -292,8 +292,7 @@ function drawQuad(){
   var sv=Q_RAW_DATA.map(function(d){return d.recent_vol});
   var minX=Math.min.apply(null,ss)-20,maxX=Math.max.apply(null,ss)+30;
   var minY=Math.min.apply(null,cs)-10,maxY=Math.max.apply(null,cs)+30;
-  var sortedX=ss.slice().sort(function(a,b){return a-b});
-  var medX=sortedX[Math.floor(sortedX.length/2)],medY=0;
+  var medX=0,medY=0;
 
   function sx(v){return mg.left+((v-minX)/(maxX-minX))*cW;}
   function sy(v){return mg.top+cH-((v-minY)/(maxY-minY))*cH;}
