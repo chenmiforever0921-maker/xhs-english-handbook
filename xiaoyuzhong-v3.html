@@ -137,6 +137,7 @@ header{background:#fff;border-bottom:1px solid var(--border);padding:48px 0}
     <div class="nav-tab" data-tab="ja">🇯🇵 日语（9类）</div>
     <div class="nav-tab" data-tab="kr">🇰🇷 韩语（8类）</div>
     <div class="nav-tab" data-tab="eu">🌍 欧洲语系（5类）</div>
+    <div class="nav-tab" data-tab="priority">🔥 选题优先级</div>
   </div>
   </div>
 </nav>
@@ -145,6 +146,33 @@ header{background:#fff;border-bottom:1px solid var(--border);padding:48px 0}
   <div class="screen" id="screen-ja"></div>
   <div class="screen" id="screen-kr"></div>
   <div class="screen" id="screen-eu"></div>
+<div class="screen" id="screen-priority">
+    <div class="section-header"><div class="section-title">🔥 跨人群选题优先级</div><div class="section-count">基于买点增速四象限</div></div>
+    <div class="quadrant-wrap">
+      <div style="font-size:13px;color:#888;margin-bottom:8px">📊 买点增速四象限（横轴=搜索增速，纵轴=点击增速，气泡大小=搜索量）</div>
+      <div class="quadrant-container" id="quadrant-container">
+        <div id="quadrant-wrap" style="position:relative;width:100%;height:500px;cursor:grab;">
+          <svg id="quadrant-svg" viewBox="0 0 800 560" width="100%" height="100%" style="display:block;">
+            <g id="zoom-group"></g>
+          </svg>
+          <div class="quadrant-tooltip" id="quadrant-tooltip"></div>
+        </div>
+      </div>
+    </div>
+    <div class="priority-board">
+      <div class="priority-title">📋 优先级清单</div>
+      <div class="priority-grid">
+
+<div class="priority-item priority-hot"><div class="priority-item-title">🔥 韩签/赴韩出行内容</div><div class="priority-item-desc">搜索增速+78%，点击增速+71%，13万量，明星买点</div><div class="priority-item-covers">覆盖：旅韩实用派 / 追星破译机 / 兴趣起步族</div></div>
+<div class="priority-item priority-hot"><div class="priority-item-title">🔥 留学申请内容</div><div class="priority-item-desc">搜索增速+52%，点击增速+43%，高意向转化</div><div class="priority-item-covers">覆盖：语伴寻访者 / 韩企求职人 / 移民备考者</div></div>
+<div class="priority-item priority-hot"><div class="priority-item-title">🔥 追星应援韩语</div><div class="priority-item-desc">搜索增速+34%，点击增速+31%，追星人群明星买点</div><div class="priority-item-covers">覆盖：追星破译机 / 兴趣起步族 / 旅韩实用派</div></div>
+<div class="priority-item priority-high"><div class="priority-item-title">⭐ 动漫/日剧驱动学习</div><div class="priority-item-desc">搜索增速+20%，75万搜索体量，机会买点</div><div class="priority-item-covers">覆盖：日剧破壁人 / 日语破冰人 / 日系文化控</div></div>
+<div class="priority-item priority-high"><div class="priority-item-title">⭐ 娱乐/内容驱动入门</div><div class="priority-item-desc">搜索增速+13%，177万体量，最大流量池</div><div class="priority-item-covers">覆盖：韩语梗玩家 / 法语梗猎人 / 日剧破壁人</div></div>
+<div class="priority-item priority-mid"><div class="priority-item-title">📌 学习资源/选课推荐</div><div class="priority-item-desc">稳定增速+7%，百万级搜索，持续有量</div><div class="priority-item-covers">覆盖：JLPT死磕族 / TOPIK冲关族 / 欧语零基党</div></div>
+
+      </div>
+    </div>
+  </div>
 </div>
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal-box" id="modal-box">
@@ -230,7 +258,9 @@ document.querySelectorAll('.nav-tab').forEach(function(tab){
     document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});
     document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
     this.classList.add('active');
-    document.getElementById('screen-'+this.dataset.tab).classList.add('active');
+    var tn=this.dataset.tab;
+    document.getElementById('screen-'+tn).classList.add('active');
+    if(tn==='priority'&&!window._qd){drawQuad();window._qd=true;}
   });
 });
 
@@ -242,6 +272,217 @@ renderGrid(document.getElementById('screen-ja'),jaList);
 renderGrid(document.getElementById('screen-kr'),krList);
 renderGrid(document.getElementById('screen-eu'),euList);
 document.getElementById('screen-all').classList.add('active');
+var Q_RAW_DATA = [{"root":"韩签/赴韩","recent_vol":130861,"prev_vol":73519,"search_speed":78,"click_speed":71},{"root":"留学申请","recent_vol":101710,"prev_vol":66914,"search_speed":52,"click_speed":43},{"root":"追星应援","recent_vol":34307,"prev_vol":25456,"search_speed":34,"click_speed":31},{"root":"动漫/日剧驱动","recent_vol":758731,"prev_vol":632276,"search_speed":20,"click_speed":16},{"root":"娱乐/内容驱动","recent_vol":1778663,"prev_vol":1573161,"search_speed":13,"click_speed":8},{"root":"韩文手写","recent_vol":188578,"prev_vol":168373,"search_speed":12,"click_speed":-4},{"root":"洋名/起名","recent_vol":311212,"prev_vol":280372,"search_speed":11,"click_speed":4},{"root":"学习资源/选课","recent_vol":1007227,"prev_vol":941335,"search_speed":7,"click_speed":5},{"root":"韩语梗","recent_vol":135357,"prev_vol":126595,"search_speed":7,"click_speed":-13},{"root":"移民备考","recent_vol":38477,"prev_vol":36644,"search_speed":5,"click_speed":1},{"root":"发音/正音","recent_vol":645023,"prev_vol":626235,"search_speed":3,"click_speed":5},{"root":"TOPIK备考","recent_vol":1000825,"prev_vol":990917,"search_speed":1,"click_speed":1},{"root":"词汇记忆","recent_vol":519083,"prev_vol":524274,"search_speed":-1,"click_speed":1},{"root":"五十音/假名","recent_vol":285274,"prev_vol":297164,"search_speed":-4,"click_speed":-2},{"root":"旅日/生活实用","recent_vol":215062,"prev_vol":226381,"search_speed":-5,"click_speed":-5},{"root":"法语/德语考试","recent_vol":211628,"prev_vol":227558,"search_speed":-7,"click_speed":-8},{"root":"JLPT备考","recent_vol":881296,"prev_vol":989097,"search_speed":-11,"click_speed":-15},{"root":"欧语零基础","recent_vol":102986,"prev_vol":117029,"search_speed":-12,"click_speed":-12},{"root":"俄语字母/书写","recent_vol":74769,"prev_vol":105308,"search_speed":-29,"click_speed":-30}];
+
+function drawQuad(){
+  var container=document.getElementById('quadrant-container');
+  var wrap=document.getElementById('quadrant-wrap');
+  var svg=document.getElementById('quadrant-svg');
+  var zg=document.getElementById('zoom-group');
+  var tip=document.getElementById('quadrant-tooltip');
+  var hint=document.getElementById('zoom-hint');
+  if(!wrap||!svg||!zg)return;
+
+  var W=800,H=560;
+  var mg={top:30,right:60,bottom:70,left:80};
+  var cW=W-mg.left-mg.right,cH=H-mg.top-mg.bottom;
+
+  var ss=Q_RAW_DATA.map(function(d){return d.search_speed});
+  var cs=Q_RAW_DATA.map(function(d){return d.click_speed});
+  var sv=Q_RAW_DATA.map(function(d){return d.recent_vol});
+  var minX=Math.min.apply(null,ss)-20,maxX=Math.max.apply(null,ss)+30;
+  var minY=Math.min.apply(null,cs)-10,maxY=Math.max.apply(null,cs)+30;
+  var sortedX=ss.slice().sort(function(a,b){return a-b});
+  var medX=sortedX[Math.floor(sortedX.length/2)],medY=0;
+
+  function sx(v){return mg.left+((v-minX)/(maxX-minX))*cW;}
+  function sy(v){return mg.top+cH-((v-minY)/(maxY-minY))*cH;}
+
+  var minV=Math.min.apply(null,sv),maxV=Math.max.apply(null,sv);
+  function rad(v){var sm=Math.sqrt(minV),sM=Math.sqrt(maxV);return 5+((Math.sqrt(v)-sm)/(sM-sm))*55;}
+
+  function qcol(d){
+    if(d.search_speed>=medX&&d.click_speed>=medY)return '#22c55e';
+    if(d.search_speed<medX&&d.click_speed>=medY)return '#C9AA72';
+    if(d.search_speed>=medX&&d.click_speed<medY)return '#B5625A';
+    return '#AAA';
+  }
+
+  function niceT(min,max,n){var r=max-min,gh=r/n,mag=Math.pow(10,Math.floor(Math.log10(gh)));var rs=gh/mag,st;if(rs<=1.5)st=mag;else if(rs<=3)st=2*mag;else if(rs<=7)st=5*mag;else st=10*mag;var t=[],s=Math.ceil(min/st)*st;for(var v=s;v<=max;v+=st)t.push(Math.round(v));return t;}
+
+  // 力导向气泡计算
+  var bub=Q_RAW_DATA.map(function(d){
+    return{x:sx(d.search_speed),y:sy(d.click_speed),r:rad(d.recent_vol),
+           ox:sx(d.search_speed),oy:sy(d.click_speed),
+           root:d.root,warning:d.warning,
+           search_speed:d.search_speed,click_speed:d.click_speed,recent_vol:d.recent_vol,
+           col:qcol(d)};
+  });
+  var mx0=sx(medX),my0=sy(medY);
+  // 不做力导向，气泡严格按数据坐标定位，数据准确性第一
+
+  // 构建 SVG
+  var mx=mx0,my=my0;
+  var xT=niceT(minX,maxX,8);
+  var yT=niceT(minY,maxY,8);
+
+  var svgNS='http://www.w3.org/2000/svg';
+  function mk(tag,attrs){
+    var el=document.createElementNS(svgNS,tag);
+    for(var k in attrs)el.setAttribute(k,attrs[k]);
+    return el;
+  }
+  // 清空
+  while(zg.firstChild)zg.removeChild(zg.firstChild);
+
+  // 象限背景
+  var quadBg=[
+    {x:mx,y:mg.top,w:W-mg.right-mx,h:my-mg.top,fill:'rgba(34,197,94,0.06)'},
+    {x:mg.left,y:mg.top,w:mx-mg.left,h:my-mg.top,fill:'rgba(201,170,114,0.06)'},
+    {x:mx,y:my,w:W-mg.right-mx,h:mg.top+cH-my,fill:'rgba(181,98,90,0.06)'},
+    {x:mg.left,y:my,w:mx-mg.left,h:mg.top+cH-my,fill:'rgba(170,170,170,0.06)'}
+  ];
+  quadBg.forEach(function(q){zg.appendChild(mk('rect',{x:q.x,y:q.y,width:q.width,height:q.height,fill:q.fill}));});
+
+  // 网格线
+  xT.forEach(function(t){var x=sx(t);zg.appendChild(mk('line',{x1:x,y1:mg.top,x2:x,y2:mg.top+cH,stroke:'#eee','stroke-width':1}));});
+  yT.forEach(function(t){var y=sy(t);zg.appendChild(mk('line',{x1:mg.left,y1:y,x2:mg.left+cW,y2:y,stroke:'#eee','stroke-width':1}));});
+
+  // 分割线
+  zg.appendChild(mk('line',{x1:mx,y1:mg.top,x2:mx,y2:mg.top+cH,stroke:'#B5625A','stroke-width':1.5,'stroke-dasharray':'6,4'}));
+  zg.appendChild(mk('line',{x1:mg.left,y1:my,x2:mg.left+cW,y2:my,stroke:'#B5625A','stroke-width':1.5,'stroke-dasharray':'6,4'}));
+
+  // 坐标轴标签
+  xT.forEach(function(t){var el=mk('text',{x:sx(t),y:mg.top+cH+20,fill:'#333','font-size':12,'font-family':'system-ui,sans-serif','text-anchor':'middle'});el.textContent=t.toFixed(0)+'%';zg.appendChild(el);});
+  yT.forEach(function(t){var el=mk('text',{x:mg.left-10,y:sy(t)+4,fill:'#333','font-size':12,'font-family':'system-ui,sans-serif','text-anchor':'end'});el.textContent=t.toFixed(0)+'%';zg.appendChild(el);});
+
+  // 轴标题
+  var xLabel=mk('text',{x:mg.left+cW/2,y:mg.top+cH+50,fill:'#666','font-size':13,'font-family':'system-ui,sans-serif','text-anchor':'middle'});
+  xLabel.textContent='搜索量增速（%）';zg.appendChild(xLabel);
+  var yLabel=mk('text',{x:18,y:mg.top+cH/2,fill:'#666','font-size':13,'font-family':'system-ui,sans-serif','text-anchor':'middle',transform:'rotate(-90,18,'+(mg.top+cH/2)+')'});
+  yLabel.textContent='点击量增速（%）';zg.appendChild(yLabel);
+
+  // 象限标注
+  var quadLabels=[
+    {text:'⭐ 明星买点',x:mx+10,y:mg.top+20,fill:'rgba(34,197,94,0.35)',anchor:'start'},
+    {text:'🌱 内容机会',x:mg.left+10,y:mg.top+20,fill:'rgba(201,170,114,0.35)',anchor:'start'},
+    {text:'📉 流量洼地',x:mx+10,y:mg.top+cH-8,fill:'rgba(181,98,90,0.35)',anchor:'start'},
+    {text:'⏸ 低优先级',x:mg.left+10,y:mg.top+cH-8,fill:'rgba(170,170,170,0.35)',anchor:'start'}
+  ];
+  quadLabels.forEach(function(q){
+    var el=mk('text',{x:q.x,y:q.y,fill:q.fill,'font-size':12,'font-weight':'bold','font-family':'system-ui,sans-serif','text-anchor':q.anchor});
+    el.textContent=q.text;zg.appendChild(el);
+  });
+
+  // 无力导向，无需连接线
+
+  // 气泡 + 标签
+  bub.forEach(function(b){
+    // 气泡圆
+    zg.appendChild(mk('circle',{cx:b.x,cy:b.y,r:b.r,fill:b.col,opacity:0.45,stroke:b.col,'stroke-width':1.5,'data-root':b.root,'class':'q-bubble'}));
+
+    // 标签
+    var ty=b.r>14?b.y:b.y-b.r-9;
+    var label=mk('text',{x:b.x,y:ty,fill:'#222','font-size':11,'font-weight':'bold','font-family':'system-ui,sans-serif','text-anchor':'middle','dominant-baseline':'central','data-root':b.root,'data-r':b.r,'class':'q-label'});
+    label.textContent=b.root;
+    // 白色描边
+    label.setAttribute('stroke','white');
+    label.setAttribute('stroke-width','3');
+    label.setAttribute('paint-order','stroke');
+    zg.appendChild(label);
+
+    // 警告标记
+    if(b.warning){
+      var wx=mk('text',{x:b.x+b.r+2,y:b.y-b.r-4,fill:'#333','font-size':14,'font-family':'sans-serif','text-anchor':'middle','dominant-baseline':'central','data-root':b.root,'class':'q-warning'});
+      wx.textContent='⚠';zg.appendChild(wx);
+    }
+  });
+
+  // ====== 滚轮缩放 + 拖拽平移 ======
+  var scale=1,tx=0,ty=0;
+  var MIN_S=0.5,MAX_S=5;
+  var dragging=false,dragStartX=0,dragStartY=0,dragTX=0,dragTY=0;
+
+  function updateTransform(){
+    zg.setAttribute('transform','translate('+tx+','+ty+') scale('+scale+')');
+    var labels=zg.querySelectorAll('.q-label');
+    // 字体物理尺寸固定：逆向补偿 scale，让标签在屏幕上始终 11px
+    var fixedFs=(11/scale).toFixed(3);
+    for(var i=0;i<labels.length;i++){
+      var r=parseFloat(labels[i].getAttribute('data-r')||12);
+      // 小气泡（半径<12）在 zoom<1.5 时隐藏，放大后才显示
+      var hide=(r<12 && scale<1.5);
+      labels[i].setAttribute('visibility', hide ? 'hidden' : 'visible');
+      labels[i].setAttribute('font-size', fixedFs);
+      // stroke-width 也要补偿，保持 2px 描边
+      labels[i].setAttribute('stroke-width', (2/scale).toFixed(3));
+    }
+    hint.textContent='🔍 '+(scale).toFixed(1)+'x · 滚轮缩放 · 拖拽平移';
+  }
+
+  function getSVGPoint(e){
+    var rect=svg.getBoundingClientRect();
+    return{x:(e.clientX-rect.left)*(800/rect.width),y:(e.clientY-rect.top)*(560/rect.height)};
+  }
+
+  // 滚轮缩放
+  svg.addEventListener('wheel',function(e){
+    e.preventDefault();
+    var pt=getSVGPoint(e);
+    var delta=e.deltaY>0?0.9:1.1;
+    var newScale=Math.max(MIN_S,Math.min(MAX_S,scale*delta));
+    if(newScale===scale)return;
+    var ratio=newScale/scale;
+    tx=pt.x-(pt.x-tx)*ratio;
+    ty=pt.y-(pt.y-ty)*ratio;
+    scale=newScale;
+    updateTransform();
+  },{passive:false});
+
+  // 拖拽平移
+  wrap.addEventListener('mousedown',function(e){
+    if(e.button!==0)return;
+    dragging=true;
+    dragStartX=e.clientX;dragStartY=e.clientY;
+    dragTX=tx;dragTY=ty;
+    wrap.style.cursor='grabbing';
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove',function(e){
+    if(!dragging)return;
+    var svgRect=svg.getBoundingClientRect();
+    var dx=(e.clientX-dragStartX)*(800/svgRect.width);
+    var dy=(e.clientY-dragStartY)*(560/svgRect.height);
+    tx=dragTX+dx;ty=dragTY+dy;
+    updateTransform();
+  });
+  window.addEventListener('mouseup',function(){
+    if(dragging){dragging=false;wrap.style.cursor='grab';}
+  });
+
+  // ====== Tooltip ======
+  // 清除旧的事件监听器（通过重新创建SVG元素）
+  svg.querySelectorAll('.q-bubble').forEach(function(circ){
+    circ.addEventListener('mouseenter',function(){
+      var root=circ.getAttribute('data-root');
+      var data=bub.find(function(b){return b.root===root;});
+      if(!data)return;
+      tip.style.display='block';
+      tip.innerHTML=(data.warning?'⚠ ':'')+'<b>'+esc(data.root)+'</b><br>近90天搜索量：'+(data.recent_vol/10000).toFixed(1)+'万<br>搜索增速：'+(data.search_speed>=0?'+':'')+data.search_speed.toFixed(1)+'%<br>点击增速：'+(data.click_speed>=0?'+':'')+data.click_speed.toFixed(1)+'%';
+    });
+    circ.addEventListener('mousemove',function(e){
+      var rect=wrap.getBoundingClientRect();
+      var px=e.clientX-rect.left,py=e.clientY-rect.top;
+      var tw=tip.offsetWidth,th=tip.offsetHeight;
+      var tipX=px+15,tipY=py-20;
+      if(tipX+tw>rect.width-10)tipX=px-tw-15;
+      if(tipY<10)tipY=10;
+      tip.style.left=tipX+'px';tip.style.top=tipY+'px';
+    });
+    circ.addEventListener('mouseleave',function(){tip.style.display='none';});
+    circ.style.cursor='pointer';
+  });
+}
 </script>
 </body>
 </html>
