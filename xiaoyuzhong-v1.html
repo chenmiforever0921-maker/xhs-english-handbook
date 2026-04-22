@@ -149,9 +149,14 @@ header{background:#fff;border-bottom:1px solid var(--border);padding:48px 0}
     <div class="section-header"><div class="section-title">🔥 跨人群选题优先级</div><div class="section-count">基于买点增速四象限</div></div>
     <div class="quadrant-wrap">
       <div style="font-size:13px;color:#888;margin-bottom:8px">📊 买点增速四象限（横轴=搜索增速，纵轴=点击增速，气泡大小=搜索量）</div>
-      <div class="quadrant-container">
-        <canvas id="quadrant-chart" width="900" height="500"></canvas>
-        <div class="quadrant-tooltip" id="quadrant-tooltip"></div>
+      <div class="quadrant-container" id="quadrant-container">
+        <div id="quadrant-wrap" style="position:relative;width:100%;height:500px;cursor:grab;">
+          <svg id="quadrant-svg" viewBox="0 0 800 560" width="100%" height="100%" style="display:block;">
+            <g id="zoom-group"></g>
+          </svg>
+          <div class="quadrant-tooltip" id="quadrant-tooltip"></div>
+          <div id="zoom-hint" style="position:absolute;top:8px;right:12px;font-size:11px;color:#aaa;pointer-events:none;user-select:none;">🔍 滚轮缩放 · 拖拽平移</div>
+        </div>
       </div>
     </div>
     <div class="legend-bar">
@@ -337,14 +342,16 @@ renderGrid(document.getElementById('grid-hanyu'),PERSONAS.filter(function(p){ret
 renderGrid(document.getElementById('grid-ouzhou'),PERSONAS.filter(function(p){return p.group==='ouzhou'}));
 });
 
-/* ===== Quadrant Chart ===== */
+/* ===== Quadrant Chart (SVG + Force-Directed + Zoom/Pan) ===== */
 function drawQuad(){
-  var qc=document.getElementById('quadrant-chart');
-  if(!qc)return;
-  qc.width=qc.offsetWidth||900;
-  qc.height=500;
-  var ctx=qc.getContext('2d');
-  var W=qc.width,H=qc.height;
+  var wrap=document.getElementById('quadrant-wrap');
+  var svg=document.getElementById('quadrant-svg');
+  var zg=document.getElementById('zoom-group');
+  var tip=document.getElementById('quadrant-tooltip');
+  var hint=document.getElementById('zoom-hint');
+  if(!wrap||!svg||!zg)return;
+
+  var W=800,H=560;
   var mg={top:30,right:60,bottom:70,left:80};
   var cW=W-mg.left-mg.right,cH=H-mg.top-mg.bottom;
 
@@ -369,53 +376,11 @@ function drawQuad(){
     return '#AAA';
   }
 
-  ctx.clearRect(0,0,W,H);
-  var mx=sx(medX),my=sy(medY);
-  ctx.fillStyle='rgba(34,197,94,0.06)';ctx.fillRect(mx,mg.top,W-mg.right-mx,my-mg.top);
-  ctx.fillStyle='rgba(201,170,114,0.06)';ctx.fillRect(mg.left,mg.top,mx-mg.left,my-mg.top);
-  ctx.fillStyle='rgba(181,98,90,0.06)';ctx.fillRect(mx,my,W-mg.right-mx,mg.top+cH-my);
-  ctx.fillStyle='rgba(170,170,170,0.06)';ctx.fillRect(mg.left,my,mx-mg.left,mg.top+cH-my);
-
-  ctx.strokeStyle='#eee';ctx.lineWidth=1;
   function niceT(min,max,n){var r=max-min,gh=r/n,mag=Math.pow(10,Math.floor(Math.log10(gh)));var rs=gh/mag,st;if(rs<=1.5)st=mag;else if(rs<=3)st=2*mag;else if(rs<=7)st=5*mag;else st=10*mag;var t=[],s=Math.ceil(min/st)*st;for(var v=s;v<=max;v+=st)t.push(Math.round(v));return t;}
-  var xT=niceT(minX,maxX,8);
-  var yT=niceT(minY,maxY,8);
-  xT.forEach(function(t){var x=sx(t);ctx.beginPath();ctx.moveTo(x,mg.top);ctx.lineTo(x,mg.top+cH);ctx.stroke()});
-  yT.forEach(function(t){var y=sy(t);ctx.beginPath();ctx.moveTo(mg.left,y);ctx.lineTo(mg.left+cW,y);ctx.stroke()});
 
-  ctx.strokeStyle='#4A7C59';ctx.lineWidth=1.5;ctx.setLineDash([6,4]);
-  ctx.beginPath();ctx.moveTo(mx,mg.top);ctx.lineTo(mx,mg.top+cH);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(mg.left,my);ctx.lineTo(mg.left+cW,my);ctx.stroke();
-  ctx.setLineDash([]);
+  function colorWithAlpha(hex,alpha){var r2,g2,b2;if(hex==='#AAA'||hex==='#aaa'){r2=170;g2=170;b2=170;}else{var h=hex.replace('#','');if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];r2=parseInt(h.slice(0,2),16);g2=parseInt(h.slice(2,4),16);b2=parseInt(h.slice(4,6),16);}return 'rgba('+r2+','+g2+','+b2+','+alpha+')';}
 
-  ctx.fillStyle='#333';ctx.font='12px system-ui,sans-serif';ctx.textAlign='center';
-  xT.forEach(function(t){ctx.fillText(t.toFixed(0)+'%',sx(t),mg.top+cH+20)});
-  ctx.textAlign='right';
-  yT.forEach(function(t){ctx.fillText(t.toFixed(0)+'%',mg.left-10,sy(t)+4)});
-
-  ctx.fillStyle='#666';ctx.font='13px system-ui,sans-serif';ctx.textAlign='center';
-  ctx.fillText('\u641c\u7d22\u91cf\u589e\u901f\uff08%\uff09',mg.left+cW/2,mg.top+cH+50);
-  ctx.save();ctx.translate(18,mg.top+cH/2);ctx.rotate(-Math.PI/2);ctx.fillText('\u70b9\u51fb\u91cf\u589e\u901f\uff08%\uff09',0,0);ctx.restore();
-
-  ctx.font='bold 12px system-ui,sans-serif';
-  ctx.fillStyle='rgba(34,197,94,0.35)';ctx.textAlign='left';ctx.fillText('\u2b50 \u660e\u661f\u4e70\u70b9',mx+10,mg.top+20);
-  ctx.fillStyle='rgba(201,170,114,0.35)';ctx.fillText('\u673a\u4f1a\u4e70\u70b9',mg.left+10,mg.top+20);
-  ctx.fillStyle='rgba(181,98,90,0.35)';ctx.fillText('\u6d41\u91cf\u6d3c\u5730',mx+10,mg.top+cH-8);
-  ctx.fillStyle='rgba(170,170,170,0.35)';ctx.fillText('\u23f8 \u4f4e\u4f18\u5148\u7ea7',mg.left+10,mg.top+cH-8);
-
-  // 颜色辅助：将简写色或命名色转为带透明度的rgba
-  function colorWithAlpha(hex, alpha) {
-    var r2,g2,b2;
-    if(hex==='#AAA'||hex==='#aaa'){r2=170;g2=170;b2=170;}
-    else{
-      var h=hex.replace('#','');
-      if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
-      r2=parseInt(h.slice(0,2),16);g2=parseInt(h.slice(2,4),16);b2=parseInt(h.slice(4,6),16);
-    }
-    return 'rgba('+r2+','+g2+','+b2+','+alpha+')';
-  }
-
-  // 力导向防重叠：先计算各气泡初始位置，再迭代推开重叠
+  // 力导向气泡计算
   var bub=Q_RAW_DATA.map(function(d){
     return{x:sx(d.search_speed),y:sy(d.click_speed),r:rad(d.recent_vol),
            ox:sx(d.search_speed),oy:sy(d.click_speed),
@@ -423,8 +388,7 @@ function drawQuad(){
            search_speed:d.search_speed,click_speed:d.click_speed,recent_vol:d.recent_vol,
            col:qcol(d)};
   });
-  // 力导向迭代（100次）
-  for(var iter=0;iter<100;iter++){
+  for(var iter=0;iter<200;iter++){
     for(var i=0;i<bub.length;i++){
       for(var j=i+1;j<bub.length;j++){
         var bi=bub[i],bj=bub[j];
@@ -444,54 +408,162 @@ function drawQuad(){
     }
   }
 
-  // 绘制连接线
+  // 构建 SVG
+  var mx=sx(medX),my=sy(medY);
+  var xT=niceT(minX,maxX,8);
+  var yT=niceT(minY,maxY,8);
+
+  var svgNS='http://www.w3.org/2000/svg';
+  function mk(tag,attrs){
+    var el=document.createElementNS(svgNS,tag);
+    for(var k in attrs)el.setAttribute(k,attrs[k]);
+    return el;
+  }
+  while(zg.firstChild)zg.removeChild(zg.firstChild);
+
+  // 象限背景
+  var quadBg=[
+    {x:mx,y:mg.top,w:W-mg.right-mx,h:my-mg.top,fill:'rgba(34,197,94,0.06)'},
+    {x:mg.left,y:mg.top,w:mx-mg.left,h:my-mg.top,fill:'rgba(201,170,114,0.06)'},
+    {x:mx,y:my,w:W-mg.right-mx,h:mg.top+cH-my,fill:'rgba(181,98,90,0.06)'},
+    {x:mg.left,y:my,w:mx-mg.left,h:mg.top+cH-my,fill:'rgba(170,170,170,0.06)'}
+  ];
+  quadBg.forEach(function(q){zg.appendChild(mk('rect',{x:q.x,y:q.y,width:q.w,height:q.h,fill:q.fill}));});
+
+  // 网格线
+  xT.forEach(function(t){var x=sx(t);zg.appendChild(mk('line',{x1:x,y1:mg.top,x2:x,y2:mg.top+cH,stroke:'#eee','stroke-width':1}));});
+  yT.forEach(function(t){var y=sy(t);zg.appendChild(mk('line',{x1:mg.left,y1:y,x2:mg.left+cW,y2:y,stroke:'#eee','stroke-width':1}));});
+
+  // 分割线
+  zg.appendChild(mk('line',{x1:mx,y1:mg.top,x2:mx,y2:mg.top+cH,stroke:'#4A7C59','stroke-width':1.5,'stroke-dasharray':'6,4'}));
+  zg.appendChild(mk('line',{x1:mg.left,y1:my,x2:mg.left+cW,y2:my,stroke:'#4A7C59','stroke-width':1.5,'stroke-dasharray':'6,4'}));
+
+  // 坐标轴标签
+  xT.forEach(function(t){var el=mk('text',{x:sx(t),y:mg.top+cH+20,fill:'#333','font-size':12,'font-family':'system-ui,sans-serif','text-anchor':'middle'});el.textContent=t.toFixed(0)+'%';zg.appendChild(el);});
+  yT.forEach(function(t){var el=mk('text',{x:mg.left-10,y:sy(t)+4,fill:'#333','font-size':12,'font-family':'system-ui,sans-serif','text-anchor':'end'});el.textContent=t.toFixed(0)+'%';zg.appendChild(el);});
+
+  // 轴标题
+  var xLabel=mk('text',{x:mg.left+cW/2,y:mg.top+cH+50,fill:'#666','font-size':13,'font-family':'system-ui,sans-serif','text-anchor':'middle'});
+  xLabel.textContent='搜索量增速（%）';zg.appendChild(xLabel);
+  var yLabel=mk('text',{x:18,y:mg.top+cH/2,fill:'#666','font-size':13,'font-family':'system-ui,sans-serif','text-anchor':'middle',transform:'rotate(-90,18,'+(mg.top+cH/2)+')'});
+  yLabel.textContent='点击量增速（%）';zg.appendChild(yLabel);
+
+  // 象限标注
+  var quadLabels=[
+    {text:'⭐ 明星买点',x:mx+10,y:mg.top+20,fill:'rgba(34,197,94,0.35)',anchor:'start'},
+    {text:'🌱 内容机会',x:mg.left+10,y:mg.top+20,fill:'rgba(201,170,114,0.35)',anchor:'start'},
+    {text:'📉 流量洼地',x:mx+10,y:mg.top+cH-8,fill:'rgba(181,98,90,0.35)',anchor:'start'},
+    {text:'⏸ 低优先级',x:mg.left+10,y:mg.top+cH-8,fill:'rgba(170,170,170,0.35)',anchor:'start'}
+  ];
+  quadLabels.forEach(function(q){
+    var el=mk('text',{x:q.x,y:q.y,fill:q.fill,'font-size':12,'font-weight':'bold','font-family':'system-ui,sans-serif','text-anchor':q.anchor});
+    el.textContent=q.text;zg.appendChild(el);
+  });
+
+  // 连接线（位移超过10px的气泡）
   bub.forEach(function(b){
     var dx=b.x-b.ox,dy=b.y-b.oy;
-    if(Math.sqrt(dx*dx+dy*dy)>8){
-      ctx.save();ctx.strokeStyle='rgba(180,180,180,0.4)';ctx.lineWidth=0.8;ctx.setLineDash([3,3]);
-      ctx.beginPath();ctx.moveTo(b.ox,b.oy);ctx.lineTo(b.x,b.y);ctx.stroke();
-      ctx.setLineDash([]);ctx.restore();
+    if(Math.sqrt(dx*dx+dy*dy)>10){
+      zg.appendChild(mk('line',{x1:b.ox,y1:b.oy,x2:b.x,y2:b.y,stroke:'#aaa','stroke-width':0.8,'stroke-dasharray':'3,3',opacity:0.4}));
     }
   });
 
-  // 绘制气泡
+  // 气泡 + 标签
   bub.forEach(function(b){
-    var c=b.col;
-    ctx.save();
-    ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
-    ctx.fillStyle=colorWithAlpha(c,0.45);ctx.fill();
-    ctx.strokeStyle=colorWithAlpha(c,1);ctx.lineWidth=2;ctx.stroke();
-    ctx.restore();
+    zg.appendChild(mk('circle',{cx:b.x,cy:b.y,r:b.r,fill:colorWithAlpha(b.col,0.45),stroke:colorWithAlpha(b.col,1),'stroke-width':2,'data-root':b.root,'class':'q-bubble'}));
 
-    ctx.save();
-    ctx.font='bold 11px system-ui,sans-serif';
-    ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.lineJoin='round';
-    if(b.r>16){
-      ctx.strokeStyle='rgba(0,0,0,0.55)';ctx.lineWidth=3;
-      ctx.strokeText(b.root,b.x,b.y);
-      ctx.fillStyle='#ffffff';ctx.fillText(b.root,b.x,b.y);
-    }else{
-      var ty=b.y-b.r-9;
-      ctx.strokeStyle='rgba(255,255,255,0.95)';ctx.lineWidth=3;
-      ctx.strokeText(b.root,b.x,ty);
-      ctx.fillStyle='#222';ctx.fillText(b.root,b.x,ty);
+    var ty=b.r>16?b.y:b.y-b.r-9;
+    var label=mk('text',{x:b.x,y:ty,fill:'#222','font-size':11,'font-weight':'bold','font-family':'system-ui,sans-serif','text-anchor':'middle','dominant-baseline':'central','data-root':b.root,'class':'q-label'});
+    label.textContent=b.root;
+    label.setAttribute('stroke','white');
+    label.setAttribute('stroke-width','3');
+    label.setAttribute('paint-order','stroke');
+    zg.appendChild(label);
+
+    if(b.warning){
+      var wx=mk('text',{x:b.x+b.r+2,y:b.y-b.r-4,fill:'#333','font-size':14,'font-family':'sans-serif','text-anchor':'middle','dominant-baseline':'central','data-root':b.root,'class':'q-warning'});
+      wx.textContent='⚠';zg.appendChild(wx);
     }
-    ctx.restore();
-    if(b.warning){ctx.save();ctx.font='14px sans-serif';ctx.fillStyle='#333';ctx.fillText('\u26a0',b.x+b.r+2,b.y-b.r-4);ctx.restore();}
   });
-  var tip=document.getElementById('quadrant-tooltip');
-  qc.addEventListener('mousemove',function(e){
-    var rect=qc.getBoundingClientRect(),ex=e.clientX-rect.left,ey=e.clientY-rect.top;
-    var f=null;
-    for(var i=0;i<bub.length;i++){var b=bub[i],dist=Math.sqrt((ex-b.x)*(ex-b.x)+(ey-b.y)*(ey-b.y));if(dist<=b.r+5){f=b;break;}}
-    if(f){qc.style.cursor='pointer';tip.style.display='block';
-      tip.innerHTML=(f.warning?'\u26a0 ':'')+'<b>'+esc(f.root)+'</b><br>\u8fd190\u5929\u641c\u7d22\u91cf\uff1a'+(f.recent_vol/10000).toFixed(1)+'\u4e07<br>\u641c\u7d22\u589e\u901f\uff1a'+(f.search_speed>=0?'+':'')+f.search_speed.toFixed(1)+'%<br>\u70b9\u51fb\u589e\u901f\uff1a'+(f.click_speed>=0?'+':'')+f.click_speed.toFixed(1)+'%';
-      var tx=ex+15,ty=ey-20;if(tx+220>W)tx=ex-225;if(ty<0)ty=10;
-      tip.style.left=tx+'px';tip.style.top=ty+'px';
-    }else{qc.style.cursor='default';tip.style.display='none';}
+
+  // ====== 滚轮缩放 + 拖拽平移 ======
+  var scale=1,tx=0,ty=0;
+  var MIN_S=0.5,MAX_S=5;
+  var dragging=false,dragStartX=0,dragStartY=0,dragTX=0,dragTY=0;
+
+  function updateTransform(){
+    var fs=Math.max(11,11*scale);
+    zg.setAttribute('transform','translate('+tx+','+ty+') scale('+scale+')');
+    var labels=zg.querySelectorAll('.q-label');
+    for(var i=0;i<labels.length;i++){
+      if(scale>1.5){
+        labels[i].setAttribute('font-size',fs);
+      }else{
+        labels[i].setAttribute('font-size',11);
+      }
+    }
+    hint.textContent='🔍 '+(scale).toFixed(1)+'x · 滚轮缩放 · 拖拽平移';
+  }
+
+  function getSVGPoint(e){
+    var rect=svg.getBoundingClientRect();
+    return{x:(e.clientX-rect.left)*(800/rect.width),y:(e.clientY-rect.top)*(560/rect.height)};
+  }
+
+  svg.addEventListener('wheel',function(e){
+    e.preventDefault();
+    var pt=getSVGPoint(e);
+    var delta=e.deltaY>0?0.9:1.1;
+    var newScale=Math.max(MIN_S,Math.min(MAX_S,scale*delta));
+    if(newScale===scale)return;
+    var ratio=newScale/scale;
+    tx=pt.x-(pt.x-tx)*ratio;
+    ty=pt.y-(pt.y-ty)*ratio;
+    scale=newScale;
+    updateTransform();
+  },{passive:false});
+
+  wrap.addEventListener('mousedown',function(e){
+    if(e.button!==0)return;
+    dragging=true;
+    dragStartX=e.clientX;dragStartY=e.clientY;
+    dragTX=tx;dragTY=ty;
+    wrap.style.cursor='grabbing';
+    e.preventDefault();
   });
-  qc.addEventListener('mouseleave',function(){tip.style.display='none';qc.style.cursor='default'});
+  window.addEventListener('mousemove',function(e){
+    if(!dragging)return;
+    var svgRect=svg.getBoundingClientRect();
+    var dx=(e.clientX-dragStartX)*(800/svgRect.width);
+    var dy=(e.clientY-dragStartY)*(560/svgRect.height);
+    tx=dragTX+dx;ty=dragTY+dy;
+    updateTransform();
+  });
+  window.addEventListener('mouseup',function(){
+    if(dragging){dragging=false;wrap.style.cursor='grab';}
+  });
+
+  // ====== Tooltip ======
+  svg.querySelectorAll('.q-bubble').forEach(function(circ){
+    circ.addEventListener('mouseenter',function(){
+      var root=circ.getAttribute('data-root');
+      var data=bub.find(function(b){return b.root===root;});
+      if(!data)return;
+      tip.style.display='block';
+      tip.innerHTML=(data.warning?'⚠ ':'')+'<b>'+esc(data.root)+'</b><br>近90天搜索量：'+(data.recent_vol/10000).toFixed(1)+'万<br>搜索增速：'+(data.search_speed>=0?'+':'')+data.search_speed.toFixed(1)+'%<br>点击增速：'+(data.click_speed>=0?'+':'')+data.click_speed.toFixed(1)+'%';
+    });
+    circ.addEventListener('mousemove',function(e){
+      var rect=wrap.getBoundingClientRect();
+      var px=e.clientX-rect.left,py=e.clientY-rect.top;
+      var tw=tip.offsetWidth,th=tip.offsetHeight;
+      var tipX=px+15,tipY=py-20;
+      if(tipX+tw>rect.width-10)tipX=px-tw-15;
+      if(tipY<10)tipY=10;
+      tip.style.left=tipX+'px';tip.style.top=tipY+'px';
+    });
+    circ.addEventListener('mouseleave',function(){tip.style.display='none';});
+    circ.style.cursor='pointer';
+  });
 }
 </script>
 </body>
