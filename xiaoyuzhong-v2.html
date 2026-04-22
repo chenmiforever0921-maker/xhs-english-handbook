@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小语种赛道 · 内容方向手册 v2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#B5625A;--primary-light:#fdf3f2;--bg:#FAF9F7;--card:#FFF;--border:#EBEBEB;--text:#1A1A1A;--text2:#555;--text3:#888}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+h1,.persona-name,.section-title{font-family:Georgia,serif}
+header{background:#fff;border-bottom:1px solid var(--border);padding:48px 0}
+.header-inner{max-width:1100px;margin:0 auto;padding:0 40px;display:flex;justify-content:space-between;align-items:flex-start;gap:24px}
+.header-title{font-family:Georgia,serif;font-size:36px;font-weight:700;color:#1A1A1A;line-height:1.25;margin-bottom:12px}
+.header-sub{font-size:14px;color:#888;line-height:1.8}
+.header-badge{flex-shrink:0;text-align:center;padding:20px 24px;border:2px solid #B5625A;border-radius:12px}
+.header-badge-num{font-family:Georgia,serif;font-size:48px;font-weight:700;color:#B5625A;line-height:1}
+.header-badge-label{font-size:11px;color:#B5625A;letter-spacing:2px;margin-top:4px}
+.formula-bar{max-width:1100px;margin:0 auto;padding:0 40px}
+.formula-bar-inner{background:#fff8f6;border-left:3px solid #B5625A;padding:10px 20px;font-size:13px;color:#555;margin-top:16px}
+.top-nav{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);height:52px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.nav-tabs{display:flex;overflow-x:auto;scrollbar-width:none;max-width:1100px;margin:0 auto;padding:0 40px;height:52px;align-items:stretch}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{padding:0 18px;height:52px;line-height:52px;font-size:14px;color:var(--text3);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;flex-shrink:0}
+.nav-tab:hover{color:var(--primary)}
+.nav-tab.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:600}
+.main{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+.screen{display:none}.screen.active{display:block}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--primary)}
+.section-title{font-size:20px;font-weight:700;color:var(--text)}
+.section-count{font-size:13px;color:var(--text3);background:#f0eeec;padding:2px 10px;border-radius:20px}
+.group-divider{grid-column:1/-1;padding:8px 0 4px;font-size:13px;font-weight:700;color:var(--primary);border-bottom:1px solid #f0ebe6;margin-bottom:4px;margin-top:16px}
+.persona-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:900px){.persona-grid{grid-template-columns:1fr}}
+.persona-card{background:var(--card);border-radius:8px;border:1px solid var(--border);overflow:hidden;transition:box-shadow .2s;cursor:pointer}
+.persona-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.1)}
+.persona-head{padding:16px 18px;background:#fff;position:relative;min-height:120px}
+.persona-head:hover{background:#fafafa}
+.persona-name{font-size:17px;font-weight:700;color:var(--text);margin-bottom:2px}
+.persona-sub{font-size:11px;color:#888;margin-bottom:4px}
+.persona-scene{font-size:12px;color:var(--primary);font-style:italic;margin-bottom:6px;line-height:1.4}
+.persona-blocker{font-size:11px;color:#B5625A;background:var(--primary-light);padding:3px 8px;border-radius:4px;display:inline-block;margin-bottom:6px;line-height:1.4}
+.persona-tags{display:flex;gap:5px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:20px;border:1px solid;white-space:nowrap}
+.tag-drive{color:#722ED1;border-color:#d3adf7;background:#f9f0ff}
+.tag-intent-high{color:#389e0d;border-color:#b7eb8f;background:#f6ffed}
+.tag-intent-mid{color:#D46B08;border-color:#ffd591;background:#fff7e6}
+.tag-intent-low{color:#8c8c8c;border-color:#d9d9d9;background:#fafafa}
+.card-hint{position:absolute;bottom:10px;right:14px;font-size:11px;color:var(--primary);opacity:.6}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;overflow-y:auto}
+.modal-overlay.open{display:block}
+.modal-box{background:#fff;border-radius:12px;max-width:800px;margin:40px auto;padding:32px;position:relative;max-height:calc(100vh - 80px);overflow-y:auto}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;background:#f5f3f0;border-radius:50%;font-size:18px;cursor:pointer}
+.modal-close:hover{background:#e8e4e0}
+.modal-persona-name{font-family:Georgia,serif;font-size:24px;font-weight:700;margin-bottom:4px}
+.modal-persona-sub{font-size:13px;color:#888;margin-bottom:4px}
+.modal-persona-scene{font-size:13px;color:var(--primary);font-style:italic;margin-bottom:6px}
+.modal-persona-blocker{font-size:12px;color:#B5625A;background:var(--primary-light);padding:6px 12px;border-radius:6px;margin-bottom:6px}
+.modal-persona-data{font-size:12px;color:#555;margin-bottom:16px}
+.modal-divider{height:1px;background:var(--border);margin:0 0 20px}
+.modal-direction{margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.modal-direction:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.modal-dir-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.modal-dir-title{font-size:15px;font-weight:700;color:var(--text)}
+.dir-badge{font-size:11px;padding:2px 10px;border-radius:20px;white-space:nowrap;font-weight:600}
+.badge-star{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7}
+.badge-opp{background:#fff8e1;color:#8d6e23;border:1px solid #ffe082}
+.badge-valley{background:#fdf3f2;color:#a0413a;border:1px solid #f0c4c0}
+.badge-low{background:#f5f3f0;color:#999;border:1px solid #e0ddd9}
+.modal-dir-why{font-size:11px;color:#888;line-height:1.6;margin-bottom:8px;padding:6px 10px;background:#fafafa;border-radius:4px}
+.modal-dir-cta{font-size:13px;color:var(--text2);line-height:1.7;padding-left:12px;border-left:2px solid #f0eeec}
+.quadrant-wrap{width:100%;margin-bottom:24px}
+.quadrant-container{position:relative;width:100%;overflow:hidden;border:1px solid #ebebeb;border-radius:8px;background:#fff}
+.qtip{position:absolute;display:none;background:rgba(0,0,0,.78);color:#fff;padding:8px 12px;border-radius:6px;font-size:12px;pointer-events:none;max-width:220px;line-height:1.6;z-index:10}
+.legend-bar{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;font-size:12px}
+.legend-item{display:flex;align-items:center;gap:6px;color:var(--text3)}
+.legend-dot{width:8px;height:8px;border-radius:50%}
+.priority-board{background:var(--card);border-radius:8px;border:1px solid var(--border);padding:20px}
+.priority-title{font-family:Georgia,serif;font-size:16px;font-weight:700;margin-bottom:16px}
+.priority-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:900px){.priority-grid{grid-template-columns:1fr}}
+.priority-item{padding:14px 16px;border-radius:8px;border:1px solid}
+.priority-hot{background:#fdf3f2;border-color:#f0c4c0}
+.priority-high{background:#e8f5e9;border-color:#a5d6a7}
+.priority-mid{background:#fff8e1;border-color:#ffe082}
+.priority-item-title{font-family:Georgia,serif;font-size:14px;font-weight:700;margin-bottom:6px;color:var(--text)}
+.priority-item-desc{font-size:12px;color:var(--text2);line-height:1.5}
+.priority-item-covers{font-size:12px;color:var(--text3);margin-top:6px;padding-top:6px;border-top:1px solid rgba(0,0,0,.06)}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div>
+      <h1 class="header-title">小语种赛道<br>内容方向手册</h1>
+      <div class="header-sub">特色人群图谱 v2 · 买点增速气泡图 · 22类人群<br>日语 9类 · 韩语 8类 · 欧洲语系 5类</div>
+    </div>
+    <div class="header-badge"><div class="header-badge-num">22</div><div class="header-badge-label">PERSONAS</div></div>
+  </div>
+  <div class="formula-bar"><div class="formula-bar-inner">特色人群 × 需求痛点 × 机会买点 = 内容方向 &nbsp;｜&nbsp; 数据来源：小语种赛道买点增速气泡图</div></div>
+</header>
+<nav class="top-nav">
+  <div class="nav-tabs">
+    <div class="nav-tab active" data-tab="all">全部</div>
+    <div class="nav-tab" data-tab="ja">🇯🇵 日语（9类）</div>
+    <div class="nav-tab" data-tab="kr">🇰🇷 韩语（8类）</div>
+    <div class="nav-tab" data-tab="eu">🌍 欧洲语系（5类）</div>
+    <div class="nav-tab" data-tab="priority">选题优先级</div>
+  </div>
+</nav>
+<div class="main">
+  <div class="screen active" id="screen-all"></div>
+  <div class="screen" id="screen-ja"></div>
+  <div class="screen" id="screen-kr"></div>
+  <div class="screen" id="screen-eu"></div>
+  <div class="screen" id="screen-priority">
+    <div class="section-header"><div class="section-title">🔥 跨人群选题优先级</div><div class="section-count">基于买点增速气泡图</div></div>
+    <div class="quadrant-wrap">
+      <div style="font-size:13px;color:#888;margin-bottom:8px">📊 买点增速四象限（横轴=搜索增速，纵轴=点击增速，气泡大小=搜索量）</div>
+      <div class="quadrant-container"><div style="position:relative;width:100%;height:480px;">
+        <svg id="q-svg" viewBox="0 0 800 480" width="100%" height="100%"><g id="q-g"></g></svg>
+        <div class="qtip" id="q-tip"></div>
+      </div></div>
+    </div>
+    <div class="legend-bar">
+      <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>明星买点（搜索↑点击↑）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#C9AA72"></div>机会买点</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#B5625A"></div>流量洼地（搜索↑内容缺）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ccc"></div>低优/饱和</div>
+    </div>
+    <div class="priority-board">
+      <div class="priority-title">📋 优先级清单</div>
+      <div class="priority-grid">
+        <div class="priority-item priority-hot"><div class="priority-item-title">🔥 韩签/赴韩攻略</div><div class="priority-item-desc">搜索+78% 点击+71%，全赛道最强明星买点</div><div class="priority-item-covers">覆盖：旅韩实用派 / 兴趣起步族</div></div>
+        <div class="priority-item priority-hot"><div class="priority-item-title">🔥 留学申请攻略</div><div class="priority-item-desc">搜索+52% 点击+43%，欧语核心明星买点</div><div class="priority-item-covers">覆盖：移民备考者 / 职场精英路</div></div>
+        <div class="priority-item priority-hot"><div class="priority-item-title">🔥 追星/应援韩语</div><div class="priority-item-desc">搜索+34% 点击+31%，持续爆发有量</div><div class="priority-item-covers">覆盖：追星破译机 / 兴趣起步族</div></div>
+        <div class="priority-item priority-high"><div class="priority-item-title">⭐ 动漫/日剧驱动</div><div class="priority-item-desc">搜索+20% 点击+16%，量级最大（75万）</div><div class="priority-item-covers">覆盖：日剧破壁人 / 日系文化控</div></div>
+        <div class="priority-item priority-high"><div class="priority-item-title">⭐ 韩文手写/字帖</div><div class="priority-item-desc">搜索+12% 点击-4%，典型流量洼地</div><div class="priority-item-covers">覆盖：字帖打卡人 / 追星破译机</div></div>
+        <div class="priority-item priority-mid"><div class="priority-item-title">📌 洋名/法语起名</div><div class="priority-item-desc">搜索+11% 点击+4%，需求明确竞争少</div><div class="priority-item-covers">覆盖：洋名收藏家 / 法语梗猎人</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal"><div class="modal-box">
+  <button class="modal-close" onclick="closeModal()">✕</button>
+  <div id="modal-content"></div>
+</div></div>
+
+<script>
+var PERSONAS = [{"id": "ja-01", "lang": "ja", "group": "考级备考型", "name": "JLPT死磕族", "sub": "考级备考（含留学升学）· 初~中级", "drive": "焦虑驱动", "intent": "high", "scene": "「N2再考一次，这次一定过」", "blocker": "记忆困难、不知道找什么老师、系统学习材料选择困难", "data": "2.3亿阅读量（赛道No.1）", "dirs": [{"title": "差异化备考路线图（二战/在职版）", "badge": "low", "why": "JLPT备考搜索量88万但增速-11%，内容饱和。需差异化切入——二战攻略/在职备考，而非通用攻略。", "cta": "「N2备考90天全攻略·在职版」；强调时间管理+系统规划，与泛化备考帖区隔。CTA推备考课/真题。"}, {"title": "日语单词高效记忆法", "badge": "low", "why": "「记忆困难」是BLOCKER No.1（6058万），词汇记忆增速-1%，供给缺口在「有效方法」，非泛泛背诵。", "cta": "「这个方法让JLPT单词记忆效率翻倍」；词根、联想、艾宾浩斯卡片等具体工具，避免泛泛标题。"}, {"title": "师资/课程选择指南", "badge": "opp", "why": "「不知道找什么老师」是BLOCKER之一，「学习资源/选课」买点+7%/+5%，有机会窗口。", "cta": "「JLPT备考机构/老师怎么选？踩坑记+评分维度」；信任背书类，建立专业感。"}]}, {"id": "ja-02", "lang": "ja", "group": "入门自学型", "name": "作业求救者", "sub": "学习辅助求助 · 初~中级", "drive": "焦虑驱动", "intent": "mid", "scene": "「这道题怎么翻译，有人帮帮我吗」", "blocker": "不知道老师在哪里（610万）、作业难度大、教材逻辑复杂", "data": "1760万批改作业任务词", "dirs": [{"title": "高频语法点精讲系列", "badge": "opp", "why": "教材逻辑复杂是核心BLOCKER；「娱乐/内容驱动」+13%/+8%共振，答疑类内容有机会。", "cta": "「日语最让人头大的3个语法，一次搞清楚」；系列形式，持续钩住该人群。"}, {"title": "在哪里找日语老师/语伴", "badge": "opp", "why": "「不知道老师在哪里」（610万）是明确需求，「学习资源/选课」+7%，工具推荐型。", "cta": "「找日语外教/语伴，这几个平台真的有用」；具体APP/社群推荐，高收藏。"}, {"title": "日语作业互助话题运营", "badge": "opp", "why": "「批改作业」「求助翻译」1559万量级，互动类内容自带流量，适合品牌种草/社区运营。", "cta": "发起「日语作业互助」话题，评论区形成解答氛围。不适合硬推课，适合种草。"}]}, {"id": "ja-03", "lang": "ja", "group": "入门自学型", "name": "书写强迫症", "sub": "书写笔记记忆 · 初~中级", "drive": "焦虑驱动", "intent": "mid", "scene": "「这个汉字我到底写对了吗」", "blocker": "不确定正确书写方式（656万）、记忆困难（6058万 赛道No.1）", "data": "6058万记忆困难痛点", "dirs": [{"title": "日语汉字常见错误对比", "badge": "valley", "why": "「不确定正确书写」（656万）是核心BLOCKER；五十音增速-4%但汉字书写是垂直切口，供给少。", "cta": "「日语这10个汉字中国人最容易写错」；错/对对比图封面，视觉冲击高，收藏量高。"}, {"title": "颜值笔记+单词记忆方法", "badge": "opp", "why": "记忆困难是BLOCKER No.1；「娱乐/内容驱动」+13%显示趣味笔记内容有潜力。", "cta": "「这种笔记方法让日语单词记忆效率翻倍」；颜值笔记+记忆技巧，高收藏+学习价值双料。"}, {"title": "手写体vs印刷体区别解析", "badge": "low", "why": "手写体和印刷体混淆是高频困惑，差异化内容供给极少，科普型引流。", "cta": "「看日剧时总懵的手写体，和印刷体这样区分」；科普型，适合引流涨粉。"}]}, {"id": "ja-06", "lang": "ja", "group": "入门自学型", "name": "日语破冰人", "sub": "零基础自学入门 · 零基础", "drive": "成长驱动", "intent": "mid", "scene": "「想学日语，从哪里开始？」", "blocker": "缺乏基础不知从何开始、片假名平假名太复杂、缺乏系统计划", "data": "548万趣味性+入门便捷需求", "dirs": [{"title": "五十音差异化速记方法", "badge": "low", "why": "五十音搜索量28万但增速-4%，内容平庸——「有效速记方法」是差异化切口，非普通对照表。", "cta": "「3天记住五十音，这套方法真的快」；工具型，高收藏，和其他入门帖拉开距离。"}, {"title": "零基础入门时间预期路线图", "badge": "opp", "why": "「缺乏系统计划」是BLOCKER；「学习资源/选课」+7%，入门路线有机会窗口。", "cta": "「从零开始学日语，我花了多少时间？」；时间预期+系统路径，降低门槛感，引流钩子强。"}, {"title": "平假名vs片假名一图搞懂", "badge": "low", "why": "「两套假名太复杂」是核心困惑，内容供给少，精准覆盖入门人群。", "cta": "「一张图搞懂平假名和片假名的用法区别」；信息密度高，收藏率高，适合图文格式。"}]}, {"id": "ja-04", "lang": "ja", "group": "文化兴趣型", "name": "日剧破壁人", "sub": "娱乐内容理解 · 无需基础", "drive": "兴趣驱动", "intent": "low", "scene": "「这首歌歌词什么意思，求翻译」", "blocker": "平台不支持日文评论翻译（399万）、容易混淆歌词（1397万）", "data": "1397万混淆歌词痛点", "dirs": [{"title": "日剧/动漫台词精读系列", "badge": "opp", "why": "「动漫/日剧驱动」+20%/+16%，量级758万，是小语种赛道最大机会买点，内容供给相对不足。", "cta": "「看《虎与龙》学日语，这10句台词够用了」；兴趣切入，传播力强。绑定爆款，时效性高。"}, {"title": "日语歌词精读/情感拆解", "badge": "opp", "why": "「混淆歌词」1397万痛点，内容供给严重不足，与动漫/日剧驱动机会买点共振。", "cta": "「米津玄師这首歌真正的意思，看完哭了」；情绪共鸣型，每首歌单独成篇，系列感强。"}, {"title": "日文评论/弹幕翻译解读", "badge": "valley", "why": "「平台不支持日文评论翻译」（399万）是明确需求，内容供给少，典型流量洼地。", "cta": "「这些日文弹幕你真的看懂了吗？」；搬运+翻译，互动率极高，评论区活跃。"}]}, {"id": "ja-05", "lang": "ja", "group": "文化兴趣型", "name": "日系文化控", "sub": "日语文化兴趣 · 无需~初级", "drive": "兴趣驱动", "intent": "low", "scene": "「日语里这个谐音梗也太妙了」", "blocker": "文化差异理解难、不确定是否为俳句（376万）", "data": "5849万兴趣爱好目标量级", "dirs": [{"title": "日语谐音梗/语言彩蛋", "badge": "opp", "why": "「娱乐/内容驱动」+13%/+8%，谐音梗是小语种赛道传播力最高的内容格式。", "cta": "「日语这些谐音梗，学会了超有话题感」；逗趣封面，传播性强，评论区跟帖活跃。系列出。"}, {"title": "俳句/日本文化冷知识", "badge": "opp", "why": "「不确定是否为俳句」（376万）是明确知识需求，文化解密类在兴趣人群中高转发。", "cta": "「日本人说的这句话，其实是俳句」；文化探秘型，系列感强，适合涨粉和品牌种草。"}, {"title": "中日汉字趣味差异对比", "badge": "opp", "why": "中日汉字差异是经典高热话题，入门门槛低，传播范围广。", "cta": "「这些中文字，日本人看了会误解的」；反常识感强，适合短视频和图文双格式。"}]}, {"id": "ja-07", "lang": "ja", "group": "旅游实用型", "name": "旅日生存派", "sub": "旅行生活实用 · 无需基础", "drive": "目标驱动", "intent": "high", "scene": "「去日本旅游，点餐用语速成」", "blocker": "担心点到奇怪菜品（750万）、语言障碍、签证信息不明", "data": "279万学习日语点餐任务词", "dirs": [{"title": "旅日垂直场景日语速成包", "badge": "low", "why": "「旅日/生活实用」整体-5%，但「担心点餐错误」（750万）是明确痛点——垂直场景切入比泛旅游日语更有机会。", "cta": "「去日本旅游，这30句点餐用语够用了」；按场景细分出：餐厅/便利店/居酒屋，工具包型。"}, {"title": "日本旅游语言避坑指南", "badge": "opp", "why": "「担心点错菜/签证信息」是具体担忧，「娱乐/内容驱动」趋势中旅游内容有机会。", "cta": "「去日本旅游，这5件事不做会后悔」；避坑型高点击，结合时效信息（签证、汇率等）。"}, {"title": "日本菜单完全解读", "badge": "low", "why": "「担心点到奇怪菜品」750万量级证明需求强，垂直内容供给缺口大。", "cta": "「日本居酒屋菜单完全解读，点这些不会错」；工具性强，图文效果好，系列出。"}]}, {"id": "ja-08", "lang": "ja", "group": "生活职场型", "name": "语伴寻访者", "sub": "口语社交 · 初~中级", "drive": "目标驱动", "intent": "mid", "scene": "「想找日本人练口语，有没有语伴」", "blocker": "找不到合适语言伙伴（561万 No.1）、担心发音不准", "data": "561万找日本朋友任务词（No.1）", "dirs": [{"title": "在哪里找日语语伴（平台推荐）", "badge": "opp", "why": "「找日本朋友」561万量级No.1，内容供给极少；「学习资源/选课」+7%，工具推荐类有机会。", "cta": "「找日语语伴，这3个平台真的好用」；具体APP/社群推荐，解决核心痛点，高收藏+高转化。"}, {"title": "和日本人交流的礼仪雷区", "badge": "opp", "why": "「担心发音不准」背后是「担心失礼」；文化礼仪类内容在语伴人群中高度相关。", "cta": "「和日本人交流，这些礼仪雷区千万别踩」；反常识封面，教育型内容，建立账号权威感。"}, {"title": "日语敬语速成指南", "badge": "opp", "why": "敬语是日语社交核心障碍，「学习资源/选课」+7%，实用工具型有空间。", "cta": "「日语敬语搞懂这3组，职场社交不尴尬」；刚需工具型，系列出更好。"}]}, {"id": "ja-09", "lang": "ja", "group": "生活职场型", "name": "职场突围者", "sub": "职业专业应用 · 中级以上", "drive": "目标驱动", "intent": "high", "scene": "「日语N2过了，怎么在职场用起来」", "blocker": "缺乏实际职场应用场景、商务日语不专业", "data": "N2后职场应用需求", "dirs": [{"title": "商务日语核心场景表达", "badge": "opp", "why": "「学习资源/选课」+7%，职场日语是成熟需求但内容质量参差，高质量实用内容仍有机会。", "cta": "「日语职场必用50句，一份够用了」；按场景出：商务邮件/电话/会议分类。"}, {"title": "日企求职/面试攻略", "badge": "star", "why": "「留学申请」明星买点（+52%/+43%）背景下职业路径需求旺；N2后「如何进日企」内容供给少。", "cta": "「日企面试自我介绍模板，这个用了3年」；真实经验类，高信任感，转化路径短。"}, {"title": "日语口译/翻译接单指南", "badge": "opp", "why": "高阶需求是「把日语变成收入」，切入变现路径，高意向度，内容供给少。", "cta": "「日语口译接单怎么开始，我的第一单经历」；经验分享型，适合长期品牌种草。"}]}, {"id": "ko-01", "lang": "kr", "group": "追星破圈型", "name": "追星破译机", "sub": "追星内容理解 · 无需基础", "drive": "情感驱动", "intent": "high", "scene": "「偶像手写签名是什么意思？」", "blocker": "不认识韩文（1415万）、不认识韩语手写体（235万）", "data": "4805万韩语手写+翻译需求（赛道No.1）", "dirs": [{"title": "应援韩语速学包", "badge": "star", "why": "「追星应援」+34%/+31%，是韩语赛道最强明星买点，量级3.4万持续增长。", "cta": "「跟着KPOP学韩语，这30句应援用语够用了」；追星切入，传播力极强。绑定热门团体，时效性高。"}, {"title": "韩语手写体完全解读", "badge": "valley", "why": "「韩文手写」+12%但点击-4%，典型流量洼地——看得懂签名的内容需求强但供给不足。", "cta": "「idol签名到底写的什么？韩语手写体完全解读」；精准解决追星痛点，热门idol签名+释义。"}, {"title": "演唱会/专辑物料韩文解读", "badge": "star", "why": "「不认识韩文」（1415万）是最大BLOCKER，与追星应援明星买点高度共振，具备时效性。", "cta": "「这次演唱会周边上的韩文，你看懂了吗？」；结合时效性物料，每次新专辑/周边都是出内容机会。"}]}, {"id": "ko-02", "lang": "kr", "group": "考级备考型", "name": "TOPIK冲关族", "sub": "TOPIK备考 · 初~中级", "drive": "焦虑驱动", "intent": "high", "scene": "「TOPIK三级，这次一定过」", "blocker": "词汇量不足（729万）、缺乏系统学习材料、记忆困难", "data": "7147万考试目标量级", "dirs": [{"title": "差异化TOPIK备考路线", "badge": "low", "why": "TOPIK备考搜索量100万但增速+1%，内容成熟但质量参差——「在职版」「60天速成版」等差异化切口有机会。", "cta": "「TOPIK3级备考60天全攻略，在职党版」；强调时间规划+具体方法，和泛化帖区隔。"}, {"title": "TOPIK高频词汇记忆方法", "badge": "low", "why": "「词汇量不足」（729万）是BLOCKER No.1；词汇记忆-1%但量级大，有效方法是供给缺口。", "cta": "「TOPIK高频词500个，这样记最快」；具体词汇清单+记忆方法，工具型强收藏。"}, {"title": "TOPIK真题精讲（分题型）", "badge": "low", "why": "缺乏系统学习材料是核心BLOCKER，真题解析类内容供给少，高意向刚需。", "cta": "「TOPIK写作大题满分怎么写，真题拆解」；分题型系列出，持续钩住备考人群。"}]}, {"id": "ko-03", "lang": "kr", "group": "文化兴趣型", "name": "韩语纠偏者", "sub": "学习辅助求助 · 初~中级", "drive": "焦虑驱动", "intent": "mid", "scene": "「这句话翻译成韩语对不对？」", "blocker": "不确定翻译软件准确性（225万）、担心表达不礼貌", "data": "441万准确翻译+礼貌表达需求", "dirs": [{"title": "韩语直译vs地道表达对比", "badge": "valley", "why": "「不确定翻译软件准确性」（225万）是明确需求；「娱乐/内容驱动」+13%趣味对比类有空间，但需新鲜切角。", "cta": "「Google翻译的韩语，韩国人看了会尴尬」；反常识封面，高点击率。列举常见翻译错误+正确表达。"}, {"title": "韩语敬语vs非敬语使用场景", "badge": "opp", "why": "「担心表达不礼貌」是核心焦虑，文化礼仪类在韩语学习者中需求旺。", "cta": "「韩语该用敬语的场合，这张表够用了」；工具型，场景分类清晰，适合收藏。"}, {"title": "韩语翻译纠错互动内容", "badge": "opp", "why": "「咨询翻译」「确认韩语表达」是核心任务词，互动型内容自带流量，建立社区感。", "cta": "「韩语翻译投稿计划：晒出你翻译的，我来纠正」；评论区互动型，提升账号活跃度。"}]}, {"id": "ko-04", "lang": "kr", "group": "文化兴趣型", "name": "字帖打卡人", "sub": "书写字帖兴趣 · 初级", "drive": "兴趣驱动", "intent": "mid", "scene": "「韩文字帖练起来，今天的打卡」", "blocker": "不知道如何正确书写（156万）、不认识手写体（235万）", "data": "1096万正宗好看练习需求（韩语No.1）", "dirs": [{"title": "韩文手写好看的方法对比", "badge": "valley", "why": "「韩文手写」+12%/点击-4%，最大流量洼地——「好看的手写方法」是供给缺口，不是简单字帖推荐。", "cta": "「韩文手写怎么写得好看？我对比了5种方法」；before/after对比图，高收藏。结合具体字帖产品推荐。"}, {"title": "30天韩文手写打卡挑战", "badge": "valley", "why": "「打卡/练字成果」是核心任务，互动型内容与流量洼地结合，双向提升。", "cta": "「30天韩文手写打卡，第1天vs第30天」；进步对比型，情绪价值高，鼓励跟帖打卡。"}, {"title": "手写韩文vs印刷字体区别", "badge": "opp", "why": "「不认识手写体」（235万）是明确痛点，解密手写体的科普类内容需求旺，供给少。", "cta": "「韩国人手写和打字差这么多？一对比就懂了」；科普型涨粉。"}]}, {"id": "ko-05", "lang": "kr", "group": "考级备考型", "name": "兴趣起步族", "sub": "零基础自学 · 零基础", "drive": "成长驱动", "intent": "mid", "scene": "「因为追星开始学韩语，从哪里入门」", "blocker": "自学难度大、缺乏系统性学习、不同体系冲突", "data": "93万免费+系统+趣味需求", "dirs": [{"title": "追星党零基础学韩语路线", "badge": "star", "why": "「追星应援」明星买点（+34%/+31%）与零基础结合，是最强流量入口，追星叙事天然低门槛。", "cta": "「因为追星开始学韩语，我用了多久？」；追星叙事+时间预期，降低心理门槛。"}, {"title": "韩语自学资源/APP精选", "badge": "opp", "why": "「免费+系统」是核心诉求（93万），「学习资源/选课」+7%，工具推荐有机会。", "cta": "「自学韩语，这3个免费资源就够了」；具体推荐+使用攻略，避坑型高收藏。"}, {"title": "四十音高效速记方法", "badge": "opp", "why": "「自学难度大」起点是四十音，速记方法有稳定需求。", "cta": "「韩语四十音3天记住，我用的是这套方法」；结合助记图，收藏率高。"}]}, {"id": "ko-06", "lang": "kr", "group": "旅游实用型", "name": "旅韩实用派", "sub": "旅行实用 · 无需基础", "drive": "目标驱动", "intent": "high", "scene": "「韩国旅游必学！点餐和购物用语」", "blocker": "语言障碍、翻译菜单不准确", "data": "291万语言沟通+方便旅游需求", "dirs": [{"title": "韩签申请全攻略", "badge": "star", "why": "「韩签/赴韩」是全赛道最强明星买点（+78%/+71%），量级13万持续爆发，小语种全赛道最大机会。", "cta": "「2026韩签申请全攻略，这样做通过率高」；时效性强，高搜索。封面用通过率/审批时间数字。"}, {"title": "赴韩旅游实用语速成包", "badge": "star", "why": "「韩签/赴韩」明星买点持续，旅行场景语言需求与签证需求同步爆发。", "cta": "「去首尔旅游，这50句够用了」；场景工具包，收藏量极高。按场景细化：餐厅/地铁/购物/酒店。"}, {"title": "韩国旅游避坑实用攻略", "badge": "star", "why": "「翻译菜单不准确」是明确痛点，赴韩需求爆发背景下避坑类有充分市场。", "cta": "「韩国旅游第一次，这5件事提前做」；避坑型高点击，结合语言包+实用工具推荐。"}]}, {"id": "ko-07", "lang": "kr", "group": "职场升学型", "name": "韩企求职人", "sub": "升学就业 · 中级以上", "drive": "目标驱动", "intent": "high", "scene": "「韩语专业出来能做什么？」", "blocker": "缺乏实际应用场景（1142万）、高考失利志愿困难", "data": "18202万兴趣爱好目标（赛道No.1）", "dirs": [{"title": "韩语专业就业方向数据解析", "badge": "star", "why": "「缺乏实际应用场景」（1142万）是核心BLOCKER；「留学申请」+52%/+43%显示职业路径类内容需求旺。", "cta": "「韩语专业毕业能做什么？真实就业数据+薪资」；数据型，精准覆盖决策期人群。"}, {"title": "韩企面试准备指南", "badge": "star", "why": "「韩企求职」是高意向场景，中高级人群购买力强，内容供给少。", "cta": "「韩企面试必问5题+韩语答案模板」；工具型，高意向收藏+转化双高。"}, {"title": "学韩语能考哪些证书", "badge": "opp", "why": "「选择升学路径」是核心任务，资格证类内容帮助决策，刚需。", "cta": "「学韩语能考哪些证书？含金量排名」；决策期刚需，科普型，适合引流。"}]}, {"id": "ko-08", "lang": "kr", "group": "文化兴趣型", "name": "韩语梗玩家", "sub": "韩流文化兴趣 · 无需~初级", "drive": "兴趣驱动", "intent": "low", "scene": "「这个韩语梗也太好笑了吧」", "blocker": "不了解网络用语含义（204万）、缺乏趣味学习材料", "data": "1060万化妆+学韩语任务词", "dirs": [{"title": "韩语热梗深度解读", "badge": "valley", "why": "「韩语梗」+7%但点击-13%，是典型流量洼地——现有内容点击率差，说明封面/切入角度需优化而非需求不存在。", "cta": "「'이게 뭐야'到底什么意思？韩语梗完全解读」；韩文直接做封面，解读要有趣，不能干巴巴翻译。"}, {"title": "韩流综艺/影视梗词典", "badge": "opp", "why": "「娱乐/内容驱动」+13%/+8%，综艺梗是当下流量最强的趣味内容形式。", "cta": "「看《黑暗荣耀》这些梗你看懂了吗？」；结合爆款剧/综，时效性高。系列出，每部剧/综一篇。"}, {"title": "韩语网络用语速记词典", "badge": "opp", "why": "「不了解网络用语含义」（204万）是明确痛点，工具型高收藏。", "cta": "「韩国人聊天常用的20个缩写，中文版词典」；配合评论区互动（你还知道哪些？）。"}]}, {"id": "eu-01", "lang": "eu", "group": "留学移民型", "name": "移民备考者", "sub": "留学移民备考 · 初~中级", "drive": "目标驱动", "intent": "high", "scene": "「法语B2考过，移民通道就开了」", "blocker": "政策频繁变动（876万）、不知道哪里有合适学校（865万）", "data": "876万了解政策变化+规划留学路径需求", "dirs": [{"title": "欧洲留学语言成绩要求大全", "badge": "star", "why": "「留学申请」+52%/+43%是欧语最强明星，政策频繁变动（876万）导致信息需求持续旺盛。", "cta": "「申请法国留学，DELF/DALF成绩要求最新版」；时效性强，决策期刚需。按国家/学校系列出。"}, {"title": "移民签证语言考试攻略", "badge": "star", "why": "「移民备考」现有搜索量3.8万+5%，「留学申请」明星买点背景下移民类内容同步获益。", "cta": "「法国/加拿大移民语言考试怎么准备？对比DELF/TEF」；精准覆盖移民决策人群。"}, {"title": "留学/移民语言学校选择", "badge": "opp", "why": "「不知道哪里有合适学校」（865万）是核心BLOCKER；「学习资源/选课」+7%，选校攻略类有机会。", "cta": "「法语零基础到B2，机构怎么选？这3个评估维度」；信任背书型，覆盖核心决策障碍。"}]}, {"id": "eu-02", "lang": "eu", "group": "职场专业型", "name": "职场精英路", "sub": "职业专业应用 · 中~高级", "drive": "目标驱动", "intent": "high", "scene": "「法语口译接单，如何做到精准表达」", "blocker": "陌生化词汇难以理解（258万）、缺乏实际应用场景（278万）", "data": "223万专业认可+实践经验需求", "dirs": [{"title": "法语口译/翻译接单指南", "badge": "star", "why": "「留学申请」明星买点（+52%/+43%）背景下职业变现类需求提升；「缺乏实际应用场景」（278万）明确需求。", "cta": "「法语口译接单第一步，我的真实经历」；经验分享型，建立专业感，高意向人群转化。"}, {"title": "法语职场/行业专业词汇", "badge": "opp", "why": "「陌生化词汇难理解」（258万）是BLOCKER，专业词汇在高级学习者中需求强供给少。", "cta": "「法语职场必备50个专业词，跨行业通用版」；按行业细化：法律/医疗/商务，工具型高收藏。"}, {"title": "法语翻译资质证书含金量", "badge": "star", "why": "终极目标是「专业认可」（223万），资质证书类是决策期刚需，「留学申请」明星背景加成。", "cta": "「法语翻译证书含金量排名，2026最新版」；引流效果好，转化路径短。"}]}, {"id": "eu-03", "lang": "eu", "group": "文化兴趣型", "name": "法语梗猎人", "sub": "文化梗娱乐 · 无需基础", "drive": "兴趣驱动", "intent": "low", "scene": "「法语这个发音也太好笑了哈哈哈」", "blocker": "缺乏更多法语梗素材（1492万）、缺乏趣味性", "data": "1492万分享法语梗任务词（欧洲No.1）", "dirs": [{"title": "法语发音谐音梗系列", "badge": "opp", "why": "「缺乏更多法语梗素材」（1492万）是欧洲最大BLOCKER；「娱乐/内容驱动」+13%/+8%持续有量。", "cta": "「法语这个单词的发音，中国人听了都会笑」；逗趣封面，传播力极强。系列出，每期聚焦一个发音点。"}, {"title": "法语文化标志/语言彩蛋", "badge": "opp", "why": "「收集法语标识」是核心任务，文化探秘类在欧语兴趣人群中高转发。", "cta": "「巴黎街头这些法文标识，你知道什么意思吗？」；旅游+语言结合，适合种草。"}, {"title": "中法文化差异冷知识", "badge": "opp", "why": "文化差异是持续有趣的内容方向，适合建立账号IP感，「娱乐/内容驱动」共振。", "cta": "「法国人这些习惯，中国人看了直呼不理解」；文化冲突型，传播性强，评论区讨论活跃。"}]}, {"id": "eu-04", "lang": "eu", "group": "文化兴趣型", "name": "洋名收藏家", "sub": "起名取名 · 无需基础", "drive": "兴趣驱动", "intent": "mid", "scene": "「给孩子取个法语名字，好听又有文化」", "blocker": "难以找到满意的名字（2210万）", "data": "2210万好听的名字需求（欧洲No.1）", "dirs": [{"title": "法语/欧洲洋名推荐合集", "badge": "valley", "why": "「洋名/起名」+11%/+4%，需求增长但内容质量参差——「有文化感的名字+来历解释」是供给缺口。", "cta": "「10个好听的法语名字+来历，给孩子/给自己」；结合名字含义解释，文化感强。系列出：女生/男生/小孩分类。"}, {"title": "洋名背后的文化故事", "badge": "opp", "why": "「娱乐/内容驱动」+13%/+8%，文化故事类内容在兴趣驱动人群中高传播。", "cta": "「为什么法国人都叫这几个名字？背后的文化」；文化科普型，转发率高，适合引流涨粉。"}, {"title": "根据性格/喜好推荐洋名", "badge": "opp", "why": "起名有主观喜好，「根据个性推荐」是差异化服务，互动型内容自带流量。", "cta": "「发你的星座，给你推荐最适合的法语名字」；互动型，评论区带节奏，高互动率。"}]}, {"id": "eu-05", "lang": "eu", "group": "入门自学型", "name": "欧语零基党", "sub": "零基础自学 · 零基础", "drive": "成长驱动", "intent": "mid", "scene": "「三十岁开始学法语，来得及吗」", "blocker": "零基础大龄学习难（180万）、多邻国缺乏系统教学（280万）", "data": "280万系统教学+发音规律需求", "dirs": [{"title": "大龄零基础学欧语的真实路径", "badge": "opp", "why": "「欧语零基础」整体-12%，泛化内容饱和；但「大龄学习」是差异化切口，「学习资源/选课」+7%共振。", "cta": "「30岁开始学法语，1年后是什么水平？」；真实经历型，打破「学不了」障碍。时间预期是核心信息。"}, {"title": "多邻国之外的欧语入门路线", "badge": "opp", "why": "「多邻国缺乏系统教学」（280万）是核心BLOCKER，系统化入门路线填补APP痛点，差异化定位强。", "cta": "「零基础学法语，多邻国之外还需要做什么」；以APP局限性为钩子，引出系统化方法。"}, {"title": "法语发音最难的几个点", "badge": "valley", "why": "「发音规律」是280万量级需求；「发音/正音」增速+3%但量大（64万），高质量发音内容有机会。", "cta": "「法语发音最让中国人头大的3个点，这样练」；精准痛点型，每篇聚焦一个发音难关。"}]}];
+var BUBBLES = [{"root": "韩签/赴韩", "ss": 78.4, "cs": 70.7, "vol": 130861, "type": "star", "personas": "旅韩实用派/兴趣起步族"}, {"root": "留学申请", "ss": 52.2, "cs": 42.7, "vol": 101710, "type": "star", "personas": "移民备考者/职场精英路"}, {"root": "追星应援", "ss": 34.3, "cs": 31.2, "vol": 34307, "type": "star", "personas": "追星破译机/兴趣起步族"}, {"root": "动漫/日剧驱动", "ss": 19.9, "cs": 16.4, "vol": 758731, "type": "opp", "personas": "日剧破壁人/日系文化控"}, {"root": "娱乐/内容驱动", "ss": 13.2, "cs": 8.1, "vol": 1778663, "type": "opp", "personas": "法语梗猎人/韩语梗玩家/日系文化控"}, {"root": "韩文手写", "ss": 11.8, "cs": -4.5, "vol": 188578, "type": "valley", "personas": "字帖打卡人/追星破译机"}, {"root": "洋名/起名", "ss": 11.3, "cs": 4.2, "vol": 311212, "type": "valley", "personas": "洋名收藏家"}, {"root": "学习资源/选课", "ss": 7.1, "cs": 5.4, "vol": 1007227, "type": "opp", "personas": "作业求救者/语伴寻访者/欧语零基党"}, {"root": "韩语梗", "ss": 7.0, "cs": -13.2, "vol": 135357, "type": "valley", "personas": "韩语梗玩家/韩语纠偏者"}, {"root": "移民备考", "ss": 4.9, "cs": 1.3, "vol": 38477, "type": "opp", "personas": "移民备考者"}, {"root": "发音/正音", "ss": 2.9, "cs": 4.7, "vol": 645023, "type": "low", "personas": "书写强迫症/日语破冰人"}, {"root": "TOPIK备考", "ss": 1.2, "cs": 1.4, "vol": 1000825, "type": "low", "personas": "TOPIK冲关族"}, {"root": "词汇记忆", "ss": -1.2, "cs": 0.8, "vol": 519083, "type": "low", "personas": "JLPT死磕族/TOPIK冲关族"}, {"root": "五十音/假名", "ss": -4.1, "cs": -2.3, "vol": 285274, "type": "low", "personas": "日语破冰人/书写强迫症"}, {"root": "旅日/生活实用", "ss": -4.8, "cs": -4.9, "vol": 215062, "type": "low", "personas": "旅日生存派"}, {"root": "法语/德语考试", "ss": -6.9, "cs": -7.5, "vol": 211628, "type": "low", "personas": "移民备考者"}, {"root": "JLPT备考", "ss": -11.2, "cs": -15.4, "vol": 881296, "type": "low", "personas": "JLPT死磕族"}, {"root": "欧语零基础", "ss": -12.0, "cs": -12.0, "vol": 102986, "type": "low", "personas": "欧语零基党"}, {"root": "俄语字母/书写", "ss": -29.0, "cs": -30.0, "vol": 74769, "type": "low", "personas": "字帖打卡人"}];
+
+var COLOR={star:'#22c55e',opp:'#C9AA72',valley:'#B5625A',low:'#ccc'};
+var BT={star:'\u2605 \u660e\u661f\u4e70\u70b9',opp:'\u25c6 \u673a\u4f1a\u4e70\u70b9',valley:'\u25b2 \u6d41\u91cf\u6d3c\u5730',low:'\u2014 \u4f4e\u4f18\u5148\u7ea7'};
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function renderGrid(el,list){
+  if(!el)return;
+  var groups={},order=[];
+  list.forEach(function(p){
+    if(!groups[p.group]){groups[p.group]=[];order.push(p.group);}
+    groups[p.group].push(p);
+  });
+  var html='<div class="persona-grid">';
+  order.forEach(function(g){
+    html+='<div class="group-divider">'+esc(g)+'</div>';
+    groups[g].forEach(function(p){
+      var ic=p.intent==='high'?'tag-intent-high':(p.intent==='mid'?'tag-intent-mid':'tag-intent-low');
+      var il=p.intent==='high'?'\u610f\u5411\u9ad8':(p.intent==='mid'?'\u610f\u5411\u4e2d':'\u610f\u5411\u4f4e');
+      html+='<div class="persona-card" data-pid="'+p.id+'"><div class="persona-head">';
+      html+='<div class="persona-name">'+esc(p.name)+'</div>';
+      html+='<div class="persona-sub">'+esc(p.sub)+'</div>';
+      html+='<div class="persona-scene">'+esc(p.scene)+'</div>';
+      html+='<div class="persona-blocker">BLOCKER: '+esc(p.blocker.length>44?p.blocker.slice(0,44)+'\u2026':p.blocker)+'</div>';
+      html+='<div class="persona-tags"><span class="tag tag-drive">'+esc(p.drive)+'</span><span class="tag '+ic+'">'+il+'</span></div>';
+      html+='<div class="card-hint">\u70b9\u51fb\u67e5\u770b\u5185\u5bb9\u65b9\u5411 \u2192</div></div></div>';
+    });
+  });
+  html+='</div>';
+  el.innerHTML=html;
+}
+
+document.addEventListener('click',function(e){
+  var card=e.target.closest('[data-pid]');
+  if(card){openModal(card.dataset.pid);}
+  else if(e.target.id==='modal'||e.target.classList.contains('modal-overlay')){closeModal();}
+});
+
+function openModal(id){
+  var p=PERSONAS.find(function(x){return x.id===id;});
+  if(!p)return;
+  var html='';
+  html+='<div class="modal-persona-name">'+esc(p.name)+'</div>';
+  html+='<div class="modal-persona-sub">'+esc(p.sub)+'</div>';
+  html+='<div class="modal-persona-scene">'+esc(p.scene)+'</div>';
+  html+='<div class="modal-persona-blocker">BLOCKER\uff1a'+esc(p.blocker)+'</div>';
+  html+='<div style="font-size:12px;color:#888;margin:10px 0 14px">\ud83d\udcca '+esc(p.data)+'</div>';
+  html+='<div class="modal-divider"></div>';
+  p.dirs.forEach(function(d,i){
+    var bc=d.badge?'badge-'+d.badge:'badge-low';
+    var bt=d.badge?BT[d.badge]:'\u2014';
+    html+='<div class="modal-direction">';
+    html+='<div class="modal-dir-head"><span class="modal-dir-title">'+(i+1)+'. '+esc(d.title)+'</span>';
+    if(d.badge)html+=' <span class="dir-badge '+bc+'">'+bt+'</span>';
+    html+='</div>';
+    html+='<div class="modal-dir-why">\ud83d\udca1 \u4e3a\u4ec0\u4e48\u9009\u8fd9\u4e2a\u65b9\u5411\uff1a'+esc(d.why)+'</div>';
+    html+='<div class="modal-dir-cta">\u270d\ufe0f \u5185\u5bb9\u5efa\u8bae\uff1a'+esc(d.cta)+'</div></div>';
+  });
+  document.getElementById('modal-content').innerHTML=html;
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+
+function renderQuadrant(){
+  var g=document.getElementById('q-g');
+  if(!g)return;
+  var W=800,H=480,PAD=72;
+  var maxSs=Math.max.apply(null,BUBBLES.map(function(b){return Math.abs(b.ss);}))+10;
+  var maxCs=Math.max.apply(null,BUBBLES.map(function(b){return Math.abs(b.cs);}))+10;
+  var maxVol=Math.max.apply(null,BUBBLES.map(function(b){return b.vol;}));
+  function sx(v){return PAD+(v+maxSs)/(maxSs*2)*(W-PAD*2);}
+  function sy(v){return H-PAD-(v+maxCs)/(maxCs*2)*(H-PAD*2);}
+  function sr(v){return 6+Math.sqrt(v/maxVol)*26;}
+  var x0=sx(0),y0=sy(0);
+  var inner='';
+  inner+='<line x1="'+x0+'" y1="'+PAD+'" x2="'+x0+'" y2="'+(H-PAD)+'" stroke="#ddd" stroke-width="1.5" stroke-dasharray="4,3"/>';
+  inner+='<line x1="'+PAD+'" y1="'+y0+'" x2="'+(W-PAD)+'" y2="'+y0+'" stroke="#ddd" stroke-width="1.5" stroke-dasharray="4,3"/>';
+  inner+='<text x="'+(x0+6)+'" y="'+(PAD+14)+'" font-size="10" fill="#22c55e">\u660e\u661f\u4e70\u70b9\u2197</text>';
+  inner+='<text x="'+(PAD+4)+'" y="'+(PAD+14)+'" font-size="10" fill="#B5625A">\u6d41\u91cf\u6d3c\u5730\u2196</text>';
+  inner+='<text x="'+(PAD+4)+'" y="'+(H-PAD-6)+'" font-size="10" fill="#bbb">\u4f4e\u4f18\u2199</text>';
+  inner+='<text x="'+(x0+6)+'" y="'+(H-PAD-6)+'" font-size="10" fill="#C9AA72">\u673a\u4f1a\u4e70\u70b9\u2198</text>';
+  inner+='<text x="'+W/2+'" y="'+(H-4)+'" font-size="11" fill="#888" text-anchor="middle">\u2190 \u641c\u7d22\u589e\u901f \u2192</text>';
+  g.innerHTML=inner;
+  var tip=document.getElementById('q-tip');
+  BUBBLES.forEach(function(b){
+    var cx=sx(b.ss),cy=sy(b.cs),r=sr(b.vol);
+    var c={star:'#22c55e',opp:'#C9AA72',valley:'#B5625A',low:'#ccc'}[b.type]||'#ccc';
+    var circ=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    circ.setAttribute('cx',cx);circ.setAttribute('cy',cy);circ.setAttribute('r',r);
+    circ.setAttribute('fill',c);circ.setAttribute('fill-opacity','0.72');
+    circ.setAttribute('stroke',c);circ.setAttribute('stroke-width','1.5');
+    circ.style.cursor='pointer';
+    circ.addEventListener('mouseenter',function(e){
+      tip.style.display='block';
+      tip.innerHTML='<b>'+b.root+'</b><br>\u641c\u7d22\u589e\u901f\uff1a'+(b.ss>0?'+':'')+b.ss+'%<br>\u70b9\u51fb\u589e\u901f\uff1a'+(b.cs>0?'+':'')+b.cs+'%<br>\u641c\u7d22\u91cf\uff1a'+Math.round(b.vol/10000)+'\u4e07<br>\u5173\u8054\u4eba\u7fa4\uff1a'+b.personas;
+      tip.style.left=(e.offsetX+12)+'px';tip.style.top=(e.offsetY-10)+'px';
+    });
+    circ.addEventListener('mousemove',function(e){tip.style.left=(e.offsetX+12)+'px';tip.style.top=(e.offsetY-10)+'px';});
+    circ.addEventListener('mouseleave',function(){tip.style.display='none';});
+    g.appendChild(circ);
+    if(r>14){
+      var txt=document.createElementNS('http://www.w3.org/2000/svg','text');
+      txt.setAttribute('x',cx);txt.setAttribute('y',cy+4);
+      txt.setAttribute('text-anchor','middle');txt.setAttribute('font-size','9');
+      txt.setAttribute('fill','#fff');txt.setAttribute('pointer-events','none');
+      txt.textContent=b.root.length>6?b.root.slice(0,6)+'\u2026':b.root;
+      g.appendChild(txt);
+    }
+  });
+}
+
+document.querySelectorAll('.nav-tab').forEach(function(tab){
+  tab.addEventListener('click',function(){
+    document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});
+    document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+    this.classList.add('active');
+    document.getElementById('screen-'+this.dataset.tab).classList.add('active');
+    if(this.dataset.tab==='priority')renderQuadrant();
+  });
+});
+
+var jaList=PERSONAS.filter(function(p){return p.lang==='ja';});
+var krList=PERSONAS.filter(function(p){return p.lang==='kr';});
+var euList=PERSONAS.filter(function(p){return p.lang==='eu';});
+renderGrid(document.getElementById('screen-all'),PERSONAS);
+renderGrid(document.getElementById('screen-ja'),jaList);
+renderGrid(document.getElementById('screen-kr'),krList);
+renderGrid(document.getElementById('screen-eu'),euList);
+
+</script>
+</body>
+</html>
