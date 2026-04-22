@@ -350,6 +350,7 @@ function drawQuad(){
            search_speed:d.search_speed,click_speed:d.click_speed,recent_vol:d.recent_vol,
            col:qcol(d)};
   });
+  var mx0=sx(medX),my0=sy(medY);
   for(var iter=0;iter<200;iter++){
     for(var i=0;i<bub.length;i++){
       for(var j=i+1;j<bub.length;j++){
@@ -364,14 +365,19 @@ function drawQuad(){
           bj.x-=nx*push;bj.y-=ny*push;
         }
       }
+      // 象限边界约束：气泡不得越过中线，保持在原始象限内
       var b=bub[i],pad=b.r+2;
       b.x=Math.max(mg.left+pad,Math.min(mg.left+cW-pad,b.x));
       b.y=Math.max(mg.top+pad,Math.min(mg.top+cH-pad,b.y));
+      if(b.search_speed>=medX){ b.x=Math.max(mx0+pad,b.x); }
+      else{ b.x=Math.min(mx0-pad,b.x); }
+      if(b.click_speed>=medY){ b.y=Math.min(my0-pad,b.y); }
+      else{ b.y=Math.max(my0+pad,b.y); }
     }
   }
 
   // 构建 SVG
-  var mx=sx(medX),my=sy(medY);
+  var mx=mx0,my=my0;
   var xT=niceT(minX,maxX,8);
   var yT=niceT(minY,maxY,8);
 
