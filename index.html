@@ -438,7 +438,7 @@ function drawQuad(){
 
     // 标签
     var ty=b.r>14?b.y:b.y-b.r-9;
-    var label=mk('text',{x:b.x,y:ty,fill:'#222','font-size':11,'font-weight':'bold','font-family':'system-ui,sans-serif','text-anchor':'middle','dominant-baseline':'central','data-root':b.root,'class':'q-label'});
+    var label=mk('text',{x:b.x,y:ty,fill:'#222','font-size':11,'font-weight':'bold','font-family':'system-ui,sans-serif','text-anchor':'middle','dominant-baseline':'central','data-root':b.root,'data-r':b.r,'class':'q-label'});
     label.textContent=b.root;
     // 白色描边
     label.setAttribute('stroke','white');
@@ -459,18 +459,19 @@ function drawQuad(){
   var dragging=false,dragStartX=0,dragStartY=0,dragTX=0,dragTY=0;
 
   function updateTransform(){
-    // 动态调整标签字体（zoom > 1.5时放大）
-    var fs=Math.max(11,11*scale);
     zg.setAttribute('transform','translate('+tx+','+ty+') scale('+scale+')');
     var labels=zg.querySelectorAll('.q-label');
+    // 字体物理尺寸固定：逆向补偿 scale，让标签在屏幕上始终 11px
+    var fixedFs=(11/scale).toFixed(3);
     for(var i=0;i<labels.length;i++){
-      if(scale>1.5){
-        labels[i].setAttribute('font-size',fs);
-      }else{
-        labels[i].setAttribute('font-size',11);
-      }
+      var r=parseFloat(labels[i].getAttribute('data-r')||12);
+      // 小气泡（半径<12）在 zoom<1.5 时隐藏，放大后才显示
+      var hide=(r<12 && scale<1.5);
+      labels[i].setAttribute('visibility', hide ? 'hidden' : 'visible');
+      labels[i].setAttribute('font-size', fixedFs);
+      // stroke-width 也要补偿，保持 2px 描边
+      labels[i].setAttribute('stroke-width', (2/scale).toFixed(3));
     }
-    // 缩放提示
     hint.textContent='🔍 '+(scale).toFixed(1)+'x · 滚轮缩放 · 拖拽平移';
   }
 
