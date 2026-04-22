@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教育行业内容种草 · 2026</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    color: #333;
+    background: #fff;
+    overflow-x: hidden;
+    font-size: 14px;
+  }
+
+  /* ── Panel Base ── */
+  .panel {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 48px 24px;
+    position: relative;
+  }
+  .panel-inner {
+    max-width: 1100px;
+    width: 100%;
+  }
+
+  /* ── Fade-in animation ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .fade-in.delay-1 { transition-delay: 0.15s; }
+  .fade-in.delay-2 { transition-delay: 0.3s; }
+  .fade-in.delay-3 { transition-delay: 0.45s; }
+
+  /* ── Typography ── */
+  .big-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.15;
+    color: #1a1a1a;
+    letter-spacing: -0.02em;
+  }
+  .sub-title {
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-weight: 400;
+    color: #666;
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+  .section-title {
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+  .section-title span { color: #FF2442; }
+  .small-label {
+    font-size: 0.85rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
+  }
+
+  /* ── Colors ── */
+  .red { color: #FF2442; }
+  .white { color: #fff; }
+
+  /* ── Link button ── */
+  .link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #FF2442;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 16px;
+    transition: background 0.2s ease;
+  }
+  .link-btn:hover {
+    background: #e61e3a;
+  }
+
+  /* ═══════════════════════════════════════
+     PANEL 0 — 封面
+  ═══════════════════════════════════════ */
+  .panel-cover {
+    background: #fff;
+    position: relative;
+  }
+  .panel-cover::before {
+    content: '';
+    position: absolute;
+    left: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 200px;
+    background: #FF2442;
+    border-radius: 2px;
+  }
+  .cover-content { padding-left: 40px; }
+  .cover-year {
+    margin-top: 32px;
+    font-size: 0.95rem;
+    color: #bbb;
+    letter-spacing: 0.08em;
+  }
+
+  /* ═══════════════════════════════════════
+     PANEL 1 — 开场反问
+  ═══════════════════════════════════════ */
+  .panel-dark {
+    background: #1a1a1a;
+    color: #fff;
+  }
+  .panel-dark .big-quote {
+    font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.5;
+    position: relative;
+    padding-left: 32px;
+  }
+  .panel-dark .big-quote::before {
+    content: '"';
+    position: absolute;
+    left: -8px;
+    top: -20px;
+    font-size: 6rem;
+    color: #FF2442;
+    font-family: Georgia, serif;
+    line-height: 1;
+  }
+  .panel-dark .follow-up {
+    margin-top: 32px;
+    font-size: 1.1rem;
+    color: #FF2442;
+    font-weight: 500;
+    padding-left: 32px;
+  }
+
+  /* ═══════════════════════════════════════
+     PANEL 2 — 为什么要做这件事 (3 cards)
+  ═══════════════════════════════════════ */
+  .pain-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .pain-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 32px 28px;
+    border-top: 4px solid #FF2442;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .pain-card:nth-child(2) { border-top-color: #FF9800; }
+  .pain-card:nth-child(3) { border-top-color: #2196F3; }
+  .pain-card .card-icon { font-size: 2rem; margin-bottom: 16px; }
+  .pain-card h3 {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .pain-card p {
+    font-size: 0.9rem;
+    color: #888;
+    line-height: 1.7;
+  }
+
+  /* ═══════════════════════════════════════
+     PANEL 3 — 四步闭环
+  ═══════════════════════════════════════ */
+  .flow-steps {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .flow-step {
+    text-align: center;
+    width: 200px;
+    position: relative;
+  }
+  .flow-step-box {
+    background: #fff;
+    border: 2px solid #FF2442;
+    border-radius: 14px;
+    padding: 24px 16px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #FF2442;
+    margin-bottom: 12px;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .flow-step-box:hover { background: #FF2442; color: #fff; }
+  .flow-step-desc {
+    font-size: 0.82rem;
+    color: #999;
+    line-height: 1.5;
+  }
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #ccc;
+    width: 40px;
+    padding-top: 20px;
+  }
+  .flow-bottom-note {
+    text-align: center;
+    margin-top: 48px;
+    font-size: 0.9rem;
+    color: #FF2442;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  /* ═══════════════════════════════════════
+     STEP PANELS (P4-P7) — Shared Styles
+  ═══════════════════════════════════════ */
+
+  /* Step panel upper row: title + badge/number */
+  .step-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .step-header-title {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 800;
+    color: #1a1a1a;
+    line-height: 1.2;
+  }
+  .step-header-title span { color: #FF2442; }
+  .step-badge {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .step-big-num {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: #FF2442;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .step-big-num .unit { font-size: 0.35em; color: #999; font-weight: 400; }
+  .step-sub-nums {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #666;
+  }
+  .step-sub-nums strong { color: #1a1a1a; font-weight: 700; }
+
+  /* SOP pills row */
+  .sop-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .sop-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #f0f0f0;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    white-space: nowrap;
+  }
+  .sop-pill .sop-num {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #FF2442;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  .sop-arrow {
+    color: #ccc;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  /* SOP sub-labels */
+  .sop-sublabels {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .sop-sublabel {
+    width: calc(25% - 6px);
+    min-width: 120px;
+    text-align: center;
+    font-size: 11px;
+    color: #999;
+    line-height: 1.3;
+  }
+
+  /* Application scenario */
+  .app-scenario {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.6;
+    padding: 10px 14px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    border-left: 3px solid #FF2442;
+  }
+  .app-scenario strong { color: #1a1a1a; }
+
+  /* Middle row: SOP + Scenario */
+  .step-mid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  /* Key finding block */
+  .key-finding {
+    background: #FF2442;
+    color: #fff;
+    border-radius: 10px;
+    padding: 16px 24px;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  /* Crowd cards (Step1) */
+  .crowd-cards-v5 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .crowd-card-v5 {
+    background: #fafafa;
+    border-radius: 12px;
+    padding: 18px 20px;
+    border-left: 4px solid #FF2442;
+    position: relative;
+  }
+  .crowd-card-v5:nth-child(2) { border-left-color: #FF9800; }
+  .crowd-card-v5 .cc-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+  }
+  .crowd-card-v5 .cc-tags {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .crowd-card-v5 .cc-ugc {
+    font-style: italic;
+    color: #888;
+    font-size: 12px;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    padding: 6px 0;
+    border-bottom: 1px dashed #e8e8e8;
+  }
+  .crowd-card-v5 .cc-insight {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.5;
+  }
+  .crowd-card-v5 .cc-insight strong { color: #1a1a1a; }
+
+  /* Case cards (Step3) */
+  .case-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .case-card {
+    background: #fafafa;
+    border-radius: 12px;
+    padding: 18px 20px;
+    border-left: 4px solid #FF2442;
+  }
+  .case-card:nth-child(2) { border-left-color: #FF9800; }
+  .case-card .cc-row {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 4px;
+  }
+  .case-card .cc-row strong { color: #1a1a1a; }
+  .case-card .cc-hook {
+    font-style: italic;
+    color: #888;
+    font-size: 12px;
+    line-height: 1.4;
+    margin-top: 8px;
+    padding: 6px 0;
+    border-top: 1px dashed #e8e8e8;
+  }
+
+  /* Workflow cards (Step4) */
+  .workflow-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 10px;
+    align-items: stretch;
+    margin-bottom: 20px;
+  }
+  .wf-card {
+    background: #fafafa;
+    border-radius: 12px;
+    padding: 16px 18px;
+    border: 1px solid #eee;
+  }
+  .wf-card .wf-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #FF2442;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .wf-card .wf-row {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.6;
+  }
+  .wf-card .wf-row strong { color: #1a1a1a; }
+  .wf-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #ccc;
+    font-weight: 700;
+  }
+
+  /* Efficiency display (Step4) */
+  .efficiency-display {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .eff-old {
+    font-size: 1.1rem;
+    color: #bbb;
+    text-decoration: line-through;
+    margin-bottom: 2px;
+  }
+  .eff-new {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 900;
+    color: #FF2442;
+    line-height: 1;
+  }
+  .eff-new .unit { font-size: 0.4em; color: #999; font-weight: 400; }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .pain-cards { grid-template-columns: 1fr; }
+    .opp-cards { grid-template-columns: 1fr; }
+    .split-row { grid-template-columns: 1fr; gap: 32px; }
+    .crowd-cards { grid-template-columns: 1fr; }
+    .flow-steps { flex-direction: column; align-items: center; }
+    .flow-arrow { transform: rotate(90deg); width: auto; padding: 4px 0; }
+    .flow-step { width: auto; }
+    .funnel-row { flex-direction: column; }
+    .funnel-arrow { transform: rotate(90deg); }
+    .panel-cover::before { left: 24px; }
+    .cover-content { padding-left: 16px; }
+    .step-header { flex-direction: column; }
+    .step-mid { grid-template-columns: 1fr; }
+    .crowd-cards-v5, .case-cards { grid-template-columns: 1fr; }
+    .workflow-row { grid-template-columns: 1fr; }
+    .wf-arrow { transform: rotate(90deg); }
+    .efficiency-display { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ P0 · 封面 ═══ -->
+<section class="panel panel-cover">
+  <div class="panel-inner cover-content">
+    <div class="fade-in">
+      <div class="small-label">XHS Commercialization</div>
+      <h1 class="big-title">教育行业<br>内容种草</h1>
+      <p class="sub-title">从「赛道人群」到「85类特色人群」</p>
+      <p class="cover-year">2026 · 小红书商业化教育行业</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ P1 · 开场反问 ═══ -->
+<section class="panel panel-dark">
+  <div class="panel-inner">
+    <div class="fade-in">
+      <div class="big-quote">在座哪位最近一次给客户做策划，第一步是先问<br><em style="font-style:normal;">「我的目标人群是谁」？</em></div>
+      <p class="follow-up">那我们今天聊的就是——这个「谁」怎么从「25-35岁女性」变成85类有具体场景的人</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ P2 · 为什么要做这件事 ═══ -->
+<section class="panel">
+  <div class="panel-inner">
+    <div class="fade-in">
+      <h2 class="section-title">为什么要做<span>这件事</span></h2>
+    </div>
+    <div class="pain-cards">
+      <div class="pain-card fade-in delay-1">
+        <div class="card-icon">📊</div>
+        <h3>平台通案要求深度理解人群</h3>
+        <p>「SPU × 买点 × 人群」不只是画像标签，而是谁在什么情绪、什么场景接受种草</p>
+      </div>
+      <div class="pain-card fade-in delay-2">
+        <div class="card-icon">❓</div>
+        <h3>现有人群体系答不了"我的广告投给谁"</h3>
+        <p>答案还是"25-35岁有学习意愿的女性"——套在90%客户身上，没有意义</p>
+      </div>
+      <div class="pain-card fade-in delay-3">
+        <div class="card-icon">🔧</div>
+        <h3>1.0版本靠手搓，没法规模化</h3>
+        <p>人工阅读8万+UGC笔记→提炼→拆解，准确但太慢，无法复制到学历/兴趣赛道</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ P3 · 四步闭环 ═══ -->
+<section class="panel" style="background:#fafafa;">
+  <div class="panel-inner">
+    <div class="fade-in">
+      <h2 class="section-title" style="text-align:center;">四步<span>闭环</span></h2>
+    </div>
+    <div class="flow-steps fade-in delay-1">
+      <div class="flow-step">
+        <div class="flow-step-box">人群探索</div>
+        <div class="flow-step-desc">从UGC到人群公式</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-box">买点洞察</div>
+        <div class="flow-step-desc">搜索词四象限分析</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-box">内容手册</div>
+        <div class="flow-step-desc">方向×笔记达标库</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-box">内容策略定制器</div>
+        <div class="flow-step-desc">天级→分钟级赋能</div>
+      </div>
+    </div>
+    <p class="flow-bottom-note fade-in delay-2">这85类人群不是给老板汇报用的，是给一线CBD当场拿去匹配客户用的</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     P4 · Step 1 人群探索 (重构)
+═══════════════════════════════════════ -->
+<section class="panel">
+  <div class="panel-inner">
+    <!-- 上部：步骤名 + 成果数字 -->
+    <div class="step-header fade-in">
+      <div class="step-header-title">Step 1 · <span>人群探索</span></div>
+      <div class="step-badge">
+        <div class="step-big-num">85<span class="unit"> 类特色人群</span></div>
+        <div class="step-sub-nums">
+          <span>语言 <strong>41</strong></span>
+          <span>学历 <strong>16</strong></span>
+          <span>兴趣 <strong>28</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 中部：SOP + 应用场景 -->
+    <div class="step-mid fade-in delay-1">
+      <div>
+        <div class="sop-row">
+          <span class="sop-pill"><span class="sop-num">①</span> 取数</span>
+          <span class="sop-arrow">→</span>
+          <span class="sop-pill"><span class="sop-num">②</span> 标注</span>
+          <span class="sop-arrow">→</span>
+          <span class="sop-pill"><span class="sop-num">③</span> 交叉</span>
+          <span class="sop-arrow">→</span>
+          <span class="sop-pill"><span class="sop-num">④</span> 输出</span>
+        </div>
+        <div class="sop-sublabels">
+          <span class="sop-sublabel">取数=8万UGC笔记</span>
+          <span class="sop-sublabel">标注=情境×卡点×情绪</span>
+          <span class="sop-sublabel">交叉=驱动类型×意向度</span>
+          <span class="sop-sublabel">输出=人群档案</span>
+        </div>
+      </div>
+      <div>
+        <div class="app-scenario">
+          📍 <strong>CBD拜访客户前</strong>，按赛道调出对应人群档案，不再拍脑袋定"谁在看"
+        </div>
+      </div>
+    </div>
+
+    <!-- 下部：2列人群卡片 -->
+    <div class="crowd-cards-v5 fade-in delay-2">
+      <div class="crowd-card-v5">
+        <div class="cc-name">「研路迷航者」</div>
+        <div class="cc-tags">🎓 大三女生 · 信息焦虑 · 还没下决心报班</div>
+        <div class="cc-ugc">"大三备考日语N2，每天刷10个单词够吗？"</div>
+        <div class="cc-insight">大三下信息过载，决策期 → 需要信息整合，<strong>不适合直推课</strong></div>
+      </div>
+      <div class="crowd-card-v5">
+        <div class="cc-name">「追星破译机」</div>
+        <div class="cc-tags">🎵 95后女生 · 娱乐驱动 · 冲动型意向</div>
+        <div class="cc-ugc">"因为防弹少年团开始学韩语，现在能听懂歌词了"</div>
+        <div class="cc-insight">因追韩星学韩语 → 爱豆同款用语做钩子，<strong>功利推课会流失</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     P5 · Step 2 买点洞察 (重构)
+═══════════════════════════════════════ -->
+<section class="panel" style="background:#fafafa;">
+  <div class="panel-inner">
+    <!-- 上部：步骤名 + SOP + 核心发现 -->
+    <div class="step-header fade-in" style="margin-bottom:16px;">
+      <div class="step-header-title">Step 2 · <span>买点洞察</span></div>
+    </div>
+
+    <div class="fade-in delay-1" style="margin-bottom:16px;">
+      <div class="sop-row">
+        <span class="sop-pill"><span class="sop-num">①</span> 取数</span>
+        <span class="sop-arrow">→</span>
+        <span class="sop-pill"><span class="sop-num">②</span> 清洗</span>
+        <span class="sop-arrow">→</span>
+        <span class="sop-pill"><span class="sop-num">③</span> 聚类</span>
+        <span class="sop-arrow">→</span>
+        <span class="sop-pill"><span class="sop-num">④</span> 四象限</span>
+      </div>
+      <div class="sop-sublabels">
+        <span class="sop-sublabel">20万行搜索词</span>
+        <span class="sop-sublabel">去重去噪</span>
+        <span class="sop-sublabel">44个买点词根</span>
+        <span class="sop-sublabel">搜索增速×点击增速</span>
+      </div>
+    </div>
+
+    <div class="step-mid fade-in delay-2" style="margin-bottom:16px;">
+      <div></div>
+      <div>
+        <div class="app-scenario">
+          📍 <strong>内容选题时</strong>，按象限判断哪些买点值得押注，哪些已过窗口期
+        </div>
+      </div>
+    </div>
+
+    <div class="key-finding fade-in delay-2">
+      搜索全面扩张，<strong>30个词根点击为负</strong>——内容窗口期还在
+    </div>
+
+    <!-- 下部：气泡图 iframe -->
+    <div class="fade-in delay-3">
+      <div style="width:100%;height:380px;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);margin-top:16px;">
+        <iframe src="https://chenmiforever0921-maker.github.io/xhs-english-handbook/" width="100%" height="100%" frameborder="0" loading="lazy" style="border:none;"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     P6 · Step 3 内容手册 (重构)
+═══════════════════════════════════════ -->
+<section class="panel">
+  <div class="panel-inner">
+    <!-- 上部：步骤名 + 成果数字 -->
+    <div class="step-header fade-in">
+      <div class="step-header-title">Step 3 · <span>内容手册</span></div>
+      <div class="step-badge">
+        <div class="step-big-num">58<span class="unit"> 个内容方向</span></div>
+        <div class="step-sub-nums">
+          <span>每方向 <strong>3条</strong> 达标笔记</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 中部：SOP + 应用场景 -->
+    <div class="step-mid fade-in delay-1">
+      <div>
+        <div class="sop-row">
+          <span class="sop-pill"><span class="sop-num">①</span> 交叉匹配</span>
+          <span class="sop-arrow">→</span>
+          <span class="sop-pill"><span class="sop-num">②</span> 筛选笔记</span>
+          <span class="sop-arrow">→</span>
+          <span class="sop-pill"><span class="sop-num">③</span> 提炼规律</span>
+          <span class="sop-arrow">→</span>
+          <span class="sop-pill"><span class="sop-num">④</span> 输出手册</span>
+        </div>
+        <div class="sop-sublabels">
+          <span class="sop-sublabel">人群×买点组合</span>
+          <span class="sop-sublabel">CTR/CVR双达标</span>
+          <span class="sop-sublabel">内容结构+钩子+CTA</span>
+          <span class="sop-sublabel">按赛道分Tab</span>
+        </div>
+      </div>
+      <div>
+        <div class="app-scenario">
+          📍 <strong>CBD出方案时</strong>，按客户卖点直接调出内容方向，不从0想内容
+        </div>
+      </div>
+    </div>
+
+    <!-- 下部：2个案例横排 -->
+    <div class="case-cards fade-in delay-2">
+      <div class="case-card">
+        <div class="cc-row"><strong>人群：</strong>「研路迷航者」× <strong>买点：</strong>「备考攻略/计划」</div>
+        <div class="cc-row"><strong>内容方向：</strong>备考时间轴 · 信息整合型</div>
+        <div class="cc-hook">"N2 200天备考计划，这份时间表我照着做过了"</div>
+      </div>
+      <div class="case-card">
+        <div class="cc-row"><strong>人群：</strong>「追星破译机」× <strong>买点：</strong>「日常/实用韩语」</div>
+        <div class="cc-row"><strong>内容方向：</strong>爱豆同款用语 · 娱乐渗透型</div>
+        <div class="cc-hook">"BTS最常说的10句话，学会了和爱豆说同款韩语"</div>
+      </div>
+    </div>
+
+    <div class="fade-in delay-3">
+      <a href="https://chenmiforever0921-maker.github.io/xhs-english-handbook/" target="_blank" class="link-btn">
+        🔗 查看完整内容手册 →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     P7 · Step 4 内容策略定制器 (重构)
+═══════════════════════════════════════ -->
+<section class="panel" style="background:#fafafa;">
+  <div class="panel-inner">
+    <!-- 上部：步骤名 + 效率对比 -->
+    <div class="step-header fade-in">
+      <div class="step-header-title">Step 4 · <span>内容策略定制器</span></div>
+      <div class="efficiency-display">
+        <div class="eff-old">天级</div>
+        <div class="eff-new">→ <strong>分钟级</strong></div>
+      </div>
+    </div>
+
+    <!-- 中部：SOP + 应用场景 -->
+    <div class="step-mid fade-in delay-1">
+      <div>
+        <div class="sop-row">
+          <span class="sop-pill"><span class="sop-num">①</span> 输入</span>
+          <span class="sop-arrow">→</span>
+          <span class="sop-pill"><span class="sop-num">②</span> 匹配</span>
+          <span class="sop-arrow">→</span>
+          <span class="sop-pill"><span class="sop-num">③</span> 生成</span>
+          <span class="sop-arrow">→</span>
+          <span class="sop-pill"><span class="sop-num">④</span> 导出</span>
+        </div>
+        <div class="sop-sublabels">
+          <span class="sop-sublabel">赛道+产品+客户诉求</span>
+          <span class="sop-sublabel">85类人群匹配</span>
+          <span class="sop-sublabel">内容方向+搜索词包+参考笔记</span>
+          <span class="sop-sublabel">一键复制给客户</span>
+        </div>
+      </div>
+      <div>
+        <div class="app-scenario">
+          📍 <strong>CBD拜访当场</strong>，客户提需求→5分钟出定制策略（vs 之前2天）
+        </div>
+      </div>
+    </div>
+
+    <!-- 下部：使用流程3步 -->
+    <div class="workflow-row fade-in delay-2">
+      <div class="wf-card">
+        <div class="wf-label">输入</div>
+        <div class="wf-row"><strong>赛道：</strong>语言培训 · 日语</div>
+        <div class="wf-row"><strong>产品：</strong>N2备考课</div>
+        <div class="wf-row"><strong>诉求：</strong>提高报名转化</div>
+      </div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-card">
+        <div class="wf-label">匹配</div>
+        <div class="wf-row"><strong>人群：</strong>研路迷航者 / 学历焦虑族</div>
+        <div class="wf-row"><strong>方向：</strong>备考攻略型 / 时间规划型</div>
+      </div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-card">
+        <div class="wf-label">输出</div>
+        <div class="wf-row"><strong>词包：</strong>日语N2备考 / 日语学习计划…</div>
+        <div class="wf-row"><strong>参考笔记：</strong>3条CTR达标笔记</div>
+      </div>
+    </div>
+
+    <div class="fade-in delay-3" style="text-align:center;">
+      <a href="https://chenmiforever0921-maker.github.io/xhs-english-handbook/strategy-generator.html" target="_blank" class="link-btn">
+        🔗 查看定制器 →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ P8 · 我们看到了什么 ═══ -->
+<section class="panel" style="background:#fafafa;">
+  <div class="panel-inner">
+    <h2 class="section-title fade-in">我们看到了<span>什么</span></h2>
+    <div class="insights-list">
+      <div class="insight-item fade-in delay-1">
+        <div class="insight-num">01</div>
+        <div class="insight-text">
+          <h4>用户需求在「场景化」</h4>
+          <p>搜"英语"背后是19种不同动机，赛道人群投放=对19类人说同一件事，注定低效</p>
+        </div>
+      </div>
+      <div class="insight-item fade-in delay-2">
+        <div class="insight-num">02</div>
+        <div class="insight-text">
+          <h4>内容供给严重落后于需求</h4>
+          <p>44词根搜索全面扩张，30个点击没跟上，窗口期还在</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ P9 · 结尾 ═══ -->
+<section class="panel panel-end">
+  <div class="panel-inner" style="text-align:center;">
+    <div class="fade-in">
+      <h1 class="big-title">谢谢</h1>
+      <p class="end-sub">教育行业商业化策划 · 2026</p>
+    </div>
+  </div>
+</section>
+
+<script>
+// IntersectionObserver for fade-in animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, {
+  threshold: 0.15,
+  rootMargin: '0px 0px -50px 0px'
+});
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
