@@ -1,0 +1,2841 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教育行业 · 特色人群图谱 V1.0</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#FAF9F7;font-family:system-ui,-apple-system,sans-serif;color:#1A1A1A;line-height:1.6;padding-bottom:80px}
+header{background:#FFFFFF;border-bottom:1px solid #EBEBEB;padding:48px 0}
+.header-inner{max-width:1200px;margin:0 auto;padding:0 48px;display:flex;justify-content:space-between;align-items:center}
+.header-eyebrow{font-size:12px;letter-spacing:1.5px;color:#888;margin-bottom:8px}
+.header-title{font-family:Georgia,serif;font-size:36px;font-weight:700;color:#1A1A1A;line-height:1.25;margin-bottom:12px}
+.header-meta{font-size:13px;color:#555;letter-spacing:.3px}
+.header-badge{flex-shrink:0;text-align:center;padding:20px 24px;border:2px solid #B5625A;border-radius:12px}
+.overview{max-width:1200px;margin:32px auto 0;padding:0 48px}
+.overview-title{font-family:Georgia,serif;font-size:20px;font-weight:700;margin-bottom:20px;color:#1A1A1A}
+.overview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.overview-col{background:#FFFFFF;border:1px solid #EBEBEB;border-radius:8px;padding:20px}
+.overview-col h3{font-family:Georgia,serif;font-size:16px;font-weight:700;margin-bottom:4px;color:#1A1A1A}
+.overview-col .sec-num{font-family:Georgia,serif;font-size:13px;color:#888;margin-bottom:14px}
+.overview-chip{display:inline-block;padding:4px 10px;border:1px solid #EBEBEB;border-radius:20px;font-size:12px;color:#1A1A1A;text-decoration:none;margin:2px 4px 2px 0;transition:all .15s;cursor:pointer}
+.overview-chip:hover{border-color:#B5625A;color:#B5625A;background:#FDF5F4}
+.overview-group-label{
+  font-size:10px;
+  letter-spacing:1.5px;
+  color:#888;
+  font-weight:500;
+  margin:10px 0 4px;
+  display:block;
+}
+.overview-group-label:first-child{margin-top:0}
+
+.tab-nav{max-width:1200px;margin:32px auto 0;padding:0 48px;display:flex;gap:32px;border-bottom:1px solid #EBEBEB}
+.tab-btn{background:none;border:none;font-size:14px;color:#888;padding:12px 0;cursor:pointer;position:relative;font-family:system-ui,sans-serif;transition:color .15s}
+.tab-btn:hover{color:#1A1A1A}
+.tab-btn.active{color:#1A1A1A;font-weight:600}
+.tab-btn.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:#B5625A}
+.tab-btn .count{font-size:11px;color:#888;margin-left:4px}
+.section{max-width:1200px;margin:0 auto;padding:48px 48px 0;display:none}
+.section.active{display:block}
+.section-header{display:flex;align-items:center;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #E0E0E0}
+.section-deco{font-family:Georgia,serif;font-size:72px;font-weight:700;color:#EDE8E4;line-height:1;margin-right:16px;flex-shrink:0}
+.section-info h2{font-family:Georgia,serif;font-size:22px;font-weight:700;color:#1A1A1A;margin-bottom:2px}
+.section-info p{font-size:13px;color:#888}
+.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+.card{background:#FFF;border:1px solid #EBEBEB;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s}
+.card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.card-body{padding:20px;flex:1;display:flex;flex-direction:column}
+.card-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.card-id{font-family:Georgia,serif;font-size:14px;font-weight:700;color:#B5625A}
+.intention-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot-green{background:#7BAF8A}
+.dot-yellow{background:#C9AA72}
+.dot-gray{background:#B0B0A8}
+.card-name{font-family:Georgia,serif;font-size:17px;font-weight:700;color:#1A1A1A;margin-bottom:8px}
+.pill{display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;letter-spacing:.5px;font-weight:500;align-self:flex-start;margin-bottom:10px}
+.pill-anxious{background:#E8D5D0;color:#7A4A44}
+.pill-interest{background:#D5CDD5;color:#5A3D65}
+.pill-growth{background:#C8D5CC;color:#2D5038}
+.pill-goal{background:#CDD5DC;color:#3D5265}
+.pill-emotion{background:#D5CCC8;color:#654030}
+.pill-demand{background:#CDD5DC;color:#3D5265}
+.card-divider{height:1px;background:#E0E0E0;margin:8px 0 12px}
+.card-sub{font-size:12px;color:#888;margin-bottom:6px}
+.card-scene{font-family:Georgia,serif;font-size:14px;font-style:italic;color:#1A1A1A;margin-bottom:12px;line-height:1.5}
+.card-blocker-label{font-size:10px;letter-spacing:1.5px;color:#888;text-transform:uppercase;margin-bottom:4px}
+.card-blocker{font-size:13px;color:#555;margin-bottom:10px;line-height:1.5}
+.card-emotion-tag{display:inline-block;font-size:12px;color:#B5625A;margin-bottom:12px}
+.card-data{margin-bottom:14px;padding:8px 0;border-top:1px dashed #E0E0E0}
+.card-data-num{font-family:Georgia,serif;font-size:22px;font-weight:700;color:#B5625A}
+.card-data-unit{font-size:12px;color:#888;margin-left:4px}
+.card-toggle{background:none;border:1px solid #EBEBEB;border-radius:6px;padding:6px 14px;font-size:12px;color:#555;cursor:pointer;font-family:system-ui,sans-serif;transition:all .15s;align-self:flex-start}
+.card-toggle:hover{border-color:#B5625A;color:#B5625A}
+.card-detail{margin-top:14px;padding-top:14px;border-top:1px solid #E0E0E0}
+.card-detail-label{font-size:11px;color:#888;letter-spacing:.5px;margin-bottom:6px;margin-top:10px}
+.card-detail-label:first-child{margin-top:0}
+.card-detail-tags{display:flex;flex-wrap:wrap;gap:6px}
+.card-detail-tag{display:inline-block;padding:3px 8px;background:#F5F3F0;border-radius:4px;font-size:11px;color:#555}
+.matrix-table{width:100%;border-collapse:collapse;background:#FFFFFF;border-radius:8px;overflow:hidden;border:1px solid #EBEBEB;margin-top:20px}
+.matrix-table th,.matrix-table td{padding:14px 20px;text-align:left;font-size:13px;border-bottom:1px solid #E0E0E0;vertical-align:top}
+.matrix-table th{background:#F5F3F0;font-weight:600;color:#1A1A1A;font-size:12px}
+.matrix-table td{color:#555}
+.matrix-table tr:last-child td{border-bottom:none}
+.matrix-title{font-family:Georgia,serif;font-size:22px;font-weight:700;color:#1A1A1A;margin-bottom:4px}
+.matrix-sub{font-size:13px;color:#888}
+.lang-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;letter-spacing:1px;font-weight:600;margin-right:6px;vertical-align:middle}
+.lang-en{background:#E8EFD5;color:#3D5020}
+.lang-ja{background:#F0E8D5;color:#6B4A1A}
+.lang-ko{background:#F0D5E8;color:#6B1A4A}
+.lang-eu{background:#D5E0F0;color:#1A3A6B}
+
+.group-header{
+  grid-column:1/-1;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  margin:8px 0 4px;
+}
+.group-header-line{flex:1;height:1px;background:#E0E0E0}
+.group-header-label{
+  font-size:12px;
+  letter-spacing:1.5px;
+  color:#888;
+  white-space:nowrap;
+  font-weight:500;
+}
+.group-header-count{
+  font-size:11px;
+  color:#B5625A;
+  background:#FDF5F4;
+  border:1px solid #E8D0CB;
+  border-radius:10px;
+  padding:1px 8px;
+  margin-left:4px;
+}
+
+
+.group-section{min-width:0;width:100%}
+.group-card-grid{display:grid;grid-template-columns:1fr;gap:20px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="header-eyebrow">RedBI · 语言留学看板 · 学科教育情境专项 · 情绪看板</div>
+      <h1 class="header-title">教育行业<br>特色人群图谱</h1>
+      <div class="header-meta">语言培训 41类 + 学历赛道 16类 + 兴趣赛道 28类，共 85 类特色人群</div>
+      <div class="header-formula" style="margin-top:10px;padding:8px 16px;background:#f5f0ef;border-radius:8px;display:inline-block;font-size:13px;color:#B5625A;letter-spacing:0.3px;font-weight:500;">
+        人群 &nbsp;=&nbsp; 二级情境 &nbsp;×&nbsp; 卡点 &nbsp;×&nbsp; 情绪 &nbsp;+&nbsp; 驱动类型 &nbsp;+&nbsp; 意向度
+      </div>
+    </div>
+    <div class="header-badge">
+      <div style="font-size:48px;font-family:Georgia;font-weight:700;color:#B5625A">86</div>
+      <div style="font-size:12px;color:#888;letter-spacing:1px">PERSONAS</div>
+    </div>
+  </div>
+</header>
+
+<div id="track-nav" style="max-width:1200px;margin:0 auto;padding:0 48px;border-bottom:2px solid #1A1A1A;display:flex;gap:32px;">
+  <button class="track-tab active" id="track-lang" onclick="switchTrack('lang')" style="background:none;border:none;font-family:Georgia,serif;font-size:16px;font-weight:700;padding:16px 0;cursor:pointer;color:#1A1A1A;border-bottom:3px solid #B5625A;margin-bottom:-2px;">📚 语言培训 <span style="font-size:12px;color:#888;">41类</span></button>
+  <button class="track-tab" id="track-edu" onclick="switchTrack('edu')" style="background:none;border:none;font-family:Georgia,serif;font-size:16px;font-weight:700;padding:16px 0;cursor:pointer;color:#888;border-bottom:3px solid transparent;margin-bottom:-2px;">🎓 学历赛道 <span style="font-size:12px;color:#888;">16类</span></button>
+  <button class="track-tab" id="track-fun" onclick="switchTrack('fun')" style="background:none;border:none;font-family:Georgia,serif;font-size:16px;font-weight:700;padding:16px 0;cursor:pointer;color:#888;border-bottom:3px solid transparent;margin-bottom:-2px;">🎨 兴趣赛道 <span style="font-size:12px;color:#888;">28类</span></button>
+</div>
+<div id="track-lang-content">
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('sec-overview')">全景总览</button>
+  <button class="tab-btn" onclick="switchTab('sec-en')">英语赛道<span class="count">(19)</span></button>
+  <button class="tab-btn" onclick="switchTab('sec-ja')">日语赛道<span class="count">(9)</span></button>
+  <button class="tab-btn" onclick="switchTab('sec-ko')">韩语赛道<span class="count">(8)</span></button>
+  <button class="tab-btn" onclick="switchTab('sec-eu')">欧洲语系<span class="count">(5)</span></button>
+  <button class="tab-btn" onclick="switchTab('sec-compare')">横向对比</button>
+</div>
+
+<!-- ===== 英语赛道 ===== -->
+<div class="section active" id="sec-overview">
+  <div class="section-header">
+    <span class="section-deco">全</span>
+    <div class="section-info">
+      <h2>全景总览</h2>
+      <p>41 类特色人群 · 英语19 + 日语9 + 韩语8 + 欧洲语系5</p>
+    </div>
+  </div>
+  <div style="margin-top:0">
+
+  <div class="overview-title">全景总览</div>
+  <div class="overview-grid">
+    <div class="overview-col">
+      <h3>英语赛道</h3>
+      <div class="sec-num">19 类人群</div>
+      <span class="overview-group-label">备考冲刺型</span>
+      <a class="overview-chip" href="#en-01">01 高分野心家</a>
+      <a class="overview-chip" href="#en-02">02 雅思死磕族</a>
+      <a class="overview-chip" href="#en-03">03 逆袭冲刺党</a>
+      <a class="overview-chip" href="#en-04">04 经验贴续命族</a>
+      <a class="overview-chip" href="#en-05">05 写作卡分族</a>
+      <a class="overview-chip" href="#en-06">06 口语突围者</a>
+      <span class="overview-group-label">系统提升型</span>
+      <a class="overview-chip" href="#en-07">07 攻略收藏家</a>
+      <a class="overview-chip" href="#en-08">08 工具纠结族</a>
+      <a class="overview-chip" href="#en-09">09 打卡续命族</a>
+      <a class="overview-chip" href="#en-10">10 单词速忘族</a>
+      <a class="overview-chip" href="#en-11">11 快乐学习派</a>
+      <a class="overview-chip" href="#en-12">12 口音自救者</a>
+      <a class="overview-chip" href="#en-13">13 哑巴英语族</a>
+      <span class="overview-group-label">表达实用型</span>
+      <a class="overview-chip" href="#en-14">14 美剧腔追求者</a>
+      <a class="overview-chip" href="#en-15">15 口语实践派</a>
+      <a class="overview-chip" href="#en-16">16 场景翻译党</a>
+      <span class="overview-group-label">留学全链路型</span>
+      <a class="overview-chip" href="#en-17">17 全链路申请人</a>
+      <a class="overview-chip" href="#en-18">18 海漂生存者</a>
+      <a class="overview-chip" href="#en-19">19 课堂追赶者</a>
+    </div>
+    <div class="overview-col">
+      <h3>日语赛道</h3>
+      <div class="sec-num">9 类人群</div>
+      <span class="overview-group-label">考级备考型</span>
+      <a class="overview-chip" href="#ja-01">01 JLPT死磕族</a>
+      <a class="overview-chip" href="#ja-02">02 作业求救者</a>
+      <span class="overview-group-label">入门自学型</span>
+      <a class="overview-chip" href="#ja-03">03 书写强迫症</a>
+      <a class="overview-chip" href="#ja-06">06 日语破冰人</a>
+      <span class="overview-group-label">文化兴趣型</span>
+      <a class="overview-chip" href="#ja-04">04 日剧破壁人</a>
+      <a class="overview-chip" href="#ja-05">05 日系文化控</a>
+      <span class="overview-group-label">旅游实用型</span>
+      <a class="overview-chip" href="#ja-07">07 旅日生存派</a>
+      <span class="overview-group-label">生活职场型</span>
+      <a class="overview-chip" href="#ja-08">08 语伴寻访者</a>
+      <a class="overview-chip" href="#ja-09">09 职场突围者</a>
+    </div>
+    <div class="overview-col">
+      <h3>韩语赛道</h3>
+      <div class="sec-num">8 类人群</div>
+      <span class="overview-group-label">追星破圈型</span>
+      <a class="overview-chip" href="#ko-01">01 追星破译机</a>
+      <a class="overview-chip" href="#ko-05">05 兴趣起步族</a>
+      <a class="overview-chip" href="#ko-08">08 韩语梗玩家</a>
+      <span class="overview-group-label">考级备考型</span>
+      <a class="overview-chip" href="#ko-02">02 TOPIK冲关族</a>
+      <a class="overview-chip" href="#ko-03">03 韩语纠偏者</a>
+      <span class="overview-group-label">文化兴趣型</span>
+      <a class="overview-chip" href="#ko-04">04 字帖打卡人</a>
+      <span class="overview-group-label">旅游实用型</span>
+      <a class="overview-chip" href="#ko-06">06 旅韩实用派</a>
+      <span class="overview-group-label">职场升学型</span>
+      <a class="overview-chip" href="#ko-07">07 韩企求职人</a>
+    </div>
+    <div class="overview-col">
+      <h3>欧洲语系</h3>
+      <div class="sec-num">5 类人群（法/德）</div>
+      <span class="overview-group-label">留学移民型</span>
+      <a class="overview-chip" href="#eu-01">01 移民备考者</a>
+      <span class="overview-group-label">职场专业型</span>
+      <a class="overview-chip" href="#eu-02">02 职场精英路</a>
+      <span class="overview-group-label">文化兴趣型</span>
+      <a class="overview-chip" href="#eu-03">03 法语梗猎人</a>
+      <a class="overview-chip" href="#eu-04">04 洋名收藏家</a>
+      <span class="overview-group-label">入门自学型</span>
+      <a class="overview-chip" href="#eu-05">05 欧语零基党</a>
+    </div>
+  </div>
+
+  </div>
+</div>
+
+<div class="section" id="sec-en">
+  <div class="section-header">
+    <span class="section-deco">EN</span>
+    <div class="section-info">
+      <h2>英语赛道</h2>
+      <p>19 类人群 · 成人英语 + 雅思备考 + 留学全链路</p>
+    </div>
+  </div>
+  <div class="card-grid">
+
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">备考冲刺型</span>
+      <span class="group-header-count">6 类</span>
+      <div class="group-header-line"></div>
+    </div>
+    <div class="card" id="en-01">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">01</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">高分野心家</div>
+        <span class="pill pill-goal">目标驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">雅思通用备考</div>
+        <div class="card-scene">「我要一次上岸，目标7.0+」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">考官偏好不确定</div>
+        <div class="card-emotion-tag">期待 + 困惑</div>
+        <div class="card-data"><span class="card-data-num">1.5亿</span><span class="card-data-unit">备考需求</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">雅思备考路线图</span><span class="card-detail-tag">各题型攻略</span><span class="card-detail-tag">Simon方法论</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">雅思备考攻略</span><span class="card-detail-tag">雅思几分难</span><span class="card-detail-tag">雅思备考计划</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="en-02">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">02</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">雅思死磕族</div>
+        <span class="pill pill-anxious">焦虑驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">雅思通用备考（再战）</div>
+        <div class="card-scene">「考了三次了，这次一定要过」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">单科卡分无法突破</div>
+        <div class="card-emotion-tag">无奈 + 挫败 + 不甘</div>
+        <div class="card-data"><span class="card-data-num">1.28亿</span><span class="card-data-unit">负向情绪总量</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">二战经验贴</span><span class="card-detail-tag">单科突破方法</span><span class="card-detail-tag">心态调整</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">雅思二战</span><span class="card-detail-tag">雅思口语6.5怎么过</span><span class="card-detail-tag">雅思写作卡分</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="en-03">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">03</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">逆袭冲刺党</div>
+        <span class="pill pill-goal">目标驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">雅思通用备考（基础阶段）</div>
+        <div class="card-scene">「基础很差但必须考，时间也不多了」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">基础薄弱+时间紧，不知先补基础还是先刷题</div>
+        <div class="card-emotion-tag">急迫 + 困惑</div>
+        <div class="card-data"><span class="card-data-num">8千万</span><span class="card-data-unit">零基础需求</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">雅思基础班推荐</span><span class="card-detail-tag">零基础到6.5路线</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">雅思基础薄弱怎么备考</span><span class="card-detail-tag">雅思词汇书推荐</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="en-04">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">04</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">经验贴续命族</div>
+        <span class="pill pill-anxious">焦虑驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">雅思通用备考（情绪维持）</div>
+        <div class="card-scene">「看到别人7.5我好像也能行」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">容易受挫放弃，需要外部激励</div>
+        <div class="card-emotion-tag">钦佩 + 信念感</div>
+        <div class="card-data"><span class="card-data-num">1994万</span><span class="card-data-unit">钦佩感</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">雅思高分经验贴</span><span class="card-detail-tag">备考逆袭故事</span><span class="card-detail-tag">打卡记录</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">雅思备考经验</span><span class="card-detail-tag">雅思7分经验分享</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="en-05">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">05</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">写作卡分族</div>
+        <span class="pill pill-anxious">焦虑驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">雅思写作冲分</div>
+        <div class="card-scene">「其他都过了，就差写作差半分」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">写作素材模板不足，不理解评分标准</div>
+        <div class="card-emotion-tag">无奈 + 困惑</div>
+        <div class="card-data"><span class="card-data-num">5千万</span><span class="card-data-unit">写作痛点</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">雅思写作评分标准解析</span><span class="card-detail-tag">高分范文拆解</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">雅思写作模板</span><span class="card-detail-tag">雅思大作文7分</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="en-06">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">06</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">口语突围者</div>
+        <span class="pill pill-anxious">焦虑驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">雅思口语冲分</div>
+        <div class="card-scene">「口语6分卡了三次，考官想听什么」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">不确定考官偏好话题，发音影响评分</div>
+        <div class="card-emotion-tag">担心 + 急迫</div>
+        <div class="card-data"><span class="card-data-num">5834万</span><span class="card-data-unit">考官偏好不确定痛点</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">雅思口语话题预测</span><span class="card-detail-tag">高分回答示范</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">雅思口语题库</span><span class="card-detail-tag">雅思口语7分</span></div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">系统提升型</span>
+      <span class="group-header-count">7 类</span>
+      <div class="group-header-line"></div>
+    </div>
+    <div class="card" id="en-07">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">07</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">攻略收藏家</div>
+        <span class="pill pill-anxious">焦虑驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">系统学习路径规划</div>
+        <div class="card-scene">「收藏了100个攻略，一个都没用上」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">缺乏系统方法，信息过载</div>
+        <div class="card-emotion-tag">困惑 + 迷茫</div>
+        <div class="card-data"><span class="card-data-num">4.3亿</span><span class="card-data-unit">方法迷茫痛点</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">英语学习路线图</span><span class="card-detail-tag">从零到进阶系统规划</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">英语学习计划</span><span class="card-detail-tag">自学英语路线</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="en-08">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">08</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">工具纠结族</div>
+        <span class="pill pill-anxious">焦虑驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">学习工具选择</div>
+        <div class="card-scene">「哪个软件背单词最好用，买了四个都没坚持」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">不同工具各有优缺点难以选择</div>
+        <div class="card-emotion-tag">困惑 + 纠结</div>
+        <div class="card-data"><span class="card-data-num">1.7亿</span><span class="card-data-unit">工具选择痛点</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">工具横评</span><span class="card-detail-tag">不同需求对应工具推荐</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">英语学习工具推荐</span><span class="card-detail-tag">最好用的英语课程</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="en-09">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">09</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">打卡续命族</div>
+        <span class="pill pill-growth">成长驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">系统学习（情绪消费）</div>
+        <div class="card-scene">「每天看别人打卡，自己的计划没动」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">坚持困难，容易放弃</div>
+        <div class="card-emotion-tag">启迪 + 信念感</div>
+        <div class="card-data"><span class="card-data-num">7264万</span><span class="card-data-unit">启迪感</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">英语学习打卡</span><span class="card-detail-tag">逆袭故事</span><span class="card-detail-tag">学习vlog</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">英语学习打卡</span><span class="card-detail-tag">坚持学英语</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="en-10">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">10</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">单词速忘族</div>
+        <span class="pill pill-anxious">焦虑驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">系统词汇积累</div>
+        <div class="card-scene">「背了三年单词，词汇量还是高中水平」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">记忆困难，缺乏高效方法</div>
+        <div class="card-emotion-tag">无奈 + 困惑</div>
+        <div class="card-data"><span class="card-data-num">5.4亿</span><span class="card-data-unit">词汇需求</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">记忆方法测评</span><span class="card-detail-tag">词根词缀法</span><span class="card-detail-tag">工具对比</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">背单词方法</span><span class="card-detail-tag">英语单词记忆技巧</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="en-11">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">11</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-gray" title="低意向"></span></div>
+        <div class="card-name">快乐学习派</div>
+        <span class="pill pill-interest">兴趣驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">趣味记忆单词法</div>
+        <div class="card-scene">「学英语要好玩才能学得进去」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">趣味方法难以持续，系统性不足</div>
+        <div class="card-emotion-tag">逗趣 + 好奇</div>
+        <div class="card-data"><span class="card-data-num">6千万</span><span class="card-data-unit">趣味记忆需求</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">趣味词汇故事</span><span class="card-detail-tag">联想记忆法</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">有趣的英语学习方法</span><span class="card-detail-tag">英语游戏记单词</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="en-12">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">12</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">口音自救者</div>
+        <span class="pill pill-anxious">焦虑驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">发音矫正与音标</div>
+        <div class="card-scene">「每次开口说英语都想找个地缝钻进去」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">发音不准确（全赛道最大痛点13523万）</div>
+        <div class="card-emotion-tag">尴尬 + 担心</div>
+        <div class="card-data"><span class="card-data-num">5.0亿</span><span class="card-data-unit">发音需求</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">音标系统讲解</span><span class="card-detail-tag">发音对比纠错</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">英语发音纠正</span><span class="card-detail-tag">音标学习</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="en-13">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">13</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">哑巴英语族</div>
+        <span class="pill pill-anxious">焦虑驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">口语流利度突破</div>
+        <div class="card-scene">「读了十年英语，一开口什么都忘了」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">缺乏真实对话场景，理论会但开口就卡</div>
+        <div class="card-emotion-tag">无奈 + 尴尬</div>
+        <div class="card-data"><span class="card-data-num">3.5亿</span><span class="card-data-unit">口语需求</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">口语实战场景</span><span class="card-detail-tag">AI口语练习</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">英语口语练习</span><span class="card-detail-tag">如何开口说英语</span></div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">表达实用型</span>
+      <span class="group-header-count">3 类</span>
+      <div class="group-header-line"></div>
+    </div>
+    <div class="card" id="en-14">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">14</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-gray" title="低意向"></span></div>
+        <div class="card-name">美剧腔追求者</div>
+        <span class="pill pill-interest">兴趣驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">美剧/日常地道口语</div>
+        <div class="card-scene">「用教科书英语说话像个机器人」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">缺乏地道学习资源，俚语难以用出来</div>
+        <div class="card-emotion-tag">逗趣 + 启迪</div>
+        <div class="card-data"><span class="card-data-num">7.6亿</span><span class="card-data-unit">地道口语需求（赛道第一）</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">俚语趣味解析</span><span class="card-detail-tag">美剧金句</span><span class="card-detail-tag">教科书vs地道对比</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">英语俚语</span><span class="card-detail-tag">美剧英语</span><span class="card-detail-tag">地道英语表达</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="en-15">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">15</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">口语实践派</div>
+        <span class="pill pill-goal">目标驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">地道口语实践</div>
+        <div class="card-scene">「想找到靠谱的资源系统练口语」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">不知哪些资源质量好，学了但用不出来</div>
+        <div class="card-emotion-tag">困惑 + 期待</div>
+        <div class="card-data"><span class="card-data-num">7.6亿</span><span class="card-data-unit">同赛道需求</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">资源推荐</span><span class="card-detail-tag">学习路径攻略</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">地道英语学习方法</span><span class="card-detail-tag">英语口语资源推荐</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="en-16">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">16</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">场景翻译党</div>
+        <span class="pill pill-goal">目标驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">日常翻译与理解</div>
+        <div class="card-scene">「出差要用英语谈合同，完全不知道怎么说」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">不确定翻译是否准确，难以把握文化差异</div>
+        <div class="card-emotion-tag">担心 + 急迫</div>
+        <div class="card-data"><span class="card-data-num">3.0亿</span><span class="card-data-unit">翻译需求</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">场景化翻译技巧</span><span class="card-detail-tag">工具翻译对比</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">英语翻译技巧</span><span class="card-detail-tag">如何准确翻译英语</span></div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">留学全链路型</span>
+      <span class="group-header-count">3 类</span>
+      <div class="group-header-line"></div>
+    </div>
+    <div class="card" id="en-17">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">17</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">全链路申请人</div>
+        <span class="pill pill-goal">目标驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">留学申请规划</div>
+        <div class="card-scene">「选校文书雅思同步来，脑子要炸了」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">信息不对称，不知申请流程，家人不支持</div>
+        <div class="card-emotion-tag">担心 + 急迫</div>
+        <div class="card-data"><span class="card-data-num">1.8亿</span><span class="card-data-unit">留学申请需求</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">留学申请时间线</span><span class="card-detail-tag">选校攻略</span><span class="card-detail-tag">家长说服指南</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">留学申请流程</span><span class="card-detail-tag">英国留学申请</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="en-18">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">18</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">海漂生存者</div>
+        <span class="pill pill-goal">目标驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">海外生活适应</div>
+        <div class="card-scene">「超市结账听不懂，只好一直点头」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">生活场景英语不地道，文化差异造成误解</div>
+        <div class="card-emotion-tag">孤独 + 无奈</div>
+        <div class="card-data"><span class="card-data-num">1.3亿</span><span class="card-data-unit">海外适应痛点</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">海外生活英语实战</span><span class="card-detail-tag">跨文化误区</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">留学生活英语</span><span class="card-detail-tag">海外租房英语</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="en-19">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">19</span><span class="lang-badge lang-en">英语</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">课堂追赶者</div>
+        <span class="pill pill-anxious">焦虑驱动</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">海外学术英语</div>
+        <div class="card-scene">「教授说了啥没听懂，作业也不会写」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">专业词汇量不足，论文写作不规范</div>
+        <div class="card-emotion-tag">担心 + 挫败</div>
+        <div class="card-data"><span class="card-data-num">5624万</span><span class="card-data-unit">缺乏专业词汇痛点</span></div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">学术英语词汇表</span><span class="card-detail-tag">论文写作指南</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">学术英语</span><span class="card-detail-tag">英文论文写作</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== 日语赛道 ===== -->
+<div class="section" id="sec-ja">
+  <div class="section-header">
+    <span class="section-deco">JA</span>
+    <div class="section-info">
+      <h2>日语赛道</h2>
+      <p>9 类人群 · 考级备考 + 文化兴趣 + 生活职场</p>
+    </div>
+  </div>
+  <div class="card-grid">
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">考级备考型</span>
+      <span class="group-header-count">2 类</span>
+      <div class="group-header-line"></div>
+    </div>
+
+    <div class="card" id="ja-01">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">01</span><span class="lang-badge lang-ja">日语</span><span class="intention-dot dot-green"></span></div>
+            <div class="card-name">JLPT死磕族</div>
+            <span class="pill pill-anxious">焦虑驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">考级备考（含留学升学）· 初~中级</div>
+            <div class="card-scene">「N2再考一次，这次一定过」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">记忆困难、不知道找什么老师、系统学习材料选择困难</div>
+            <div class="card-emotion-tag">困惑感 → 无奈 → 担心感</div>
+            <div class="card-data"><span class="card-data-num">2.3亿</span><span class="card-data-unit">考试目标阅读量（赛道No.1）</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">初~中级</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">备考/背单词/做真题</span><span class="card-detail-tag">学习语法</span><span class="card-detail-tag">报名考试</span></div>
+            </div>
+          </div>
+        </div>
+
+    <div class="card" id="ja-02">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">02</span><span class="lang-badge lang-ja">日语</span><span class="intention-dot dot-yellow"></span></div>
+            <div class="card-name">作业求救者</div>
+            <span class="pill pill-anxious">焦虑驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">学习辅助求助 · 初~中级</div>
+            <div class="card-scene">「这道题怎么翻译，有人帮帮我吗」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">不知道老师在哪里（610万）、作业难度大、教材逻辑复杂</div>
+            <div class="card-emotion-tag">困惑感 → 无奈 → 期待感</div>
+            <div class="card-data"><span class="card-data-num">1760万</span><span class="card-data-unit">批改作业任务词</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">初~中级</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">批改作业</span><span class="card-detail-tag">找人翻译1559万</span><span class="card-detail-tag">求助翻译</span></div>
+            </div>
+          </div>
+        </div>
+
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">入门自学型</span>
+      <span class="group-header-count">2 类</span>
+      <div class="group-header-line"></div>
+    </div>
+
+    <div class="card" id="ja-03">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">03</span><span class="lang-badge lang-ja">日语</span><span class="intention-dot dot-yellow"></span></div>
+            <div class="card-name">书写强迫症</div>
+            <span class="pill pill-anxious">焦虑驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">书写笔记记忆 · 初~中级</div>
+            <div class="card-scene">「这个汉字我到底写对了吗」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">不确定正确书写方式（656万）、记忆困难（6058万 日语No.1）</div>
+            <div class="card-emotion-tag">困惑感 → 挫败感 → 成就感</div>
+            <div class="card-data"><span class="card-data-num">6058万</span><span class="card-data-unit">记忆困难痛点（赛道No.1）</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">初~中级</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">纠正书写错误</span><span class="card-detail-tag">记忆日语单词</span><span class="card-detail-tag">查找正确读音</span></div>
+            </div>
+          </div>
+        </div>
+
+    <div class="card" id="ja-06">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">06</span><span class="lang-badge lang-ja">日语</span><span class="intention-dot dot-yellow"></span></div>
+            <div class="card-name">日语破冰人</div>
+            <span class="pill pill-growth">成长驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">零基础自学入门 · 零基础</div>
+            <div class="card-scene">「想学日语，从哪里开始？」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">缺乏基础不知从何开始、片假名平假名太复杂、缺乏系统计划</div>
+            <div class="card-emotion-tag">期待感 → 困惑感 → 启迪感</div>
+            <div class="card-data"><span class="card-data-num">548万</span><span class="card-data-unit">趣味性+入门便捷需求</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">零基础</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">学习五十音</span><span class="card-detail-tag">背诵平假名</span><span class="card-detail-tag">使用APP自学</span></div>
+            </div>
+          </div>
+        </div>
+
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">文化兴趣型</span>
+      <span class="group-header-count">2 类</span>
+      <div class="group-header-line"></div>
+    </div>
+
+    <div class="card" id="ja-04">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">04</span><span class="lang-badge lang-ja">日语</span><span class="intention-dot dot-gray"></span></div>
+            <div class="card-name">日剧破壁人</div>
+            <span class="pill pill-interest">兴趣驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">娱乐内容理解 · 无需基础</div>
+            <div class="card-scene">「这首歌歌词什么意思，求翻译」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">平台不支持日文评论翻译（399万）、容易混淆歌词（1397万）</div>
+            <div class="card-emotion-tag">逗趣感 → 欣赏感 → 困惑感</div>
+            <div class="card-data"><span class="card-data-num">1397万</span><span class="card-data-unit">混淆歌词痛点</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">无需基础</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">找人翻译歌词</span><span class="card-detail-tag">翻译日文评论</span><span class="card-detail-tag">阅读漫画</span></div>
+            </div>
+          </div>
+        </div>
+
+    <div class="card" id="ja-05">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">05</span><span class="lang-badge lang-ja">日语</span><span class="intention-dot dot-gray"></span></div>
+            <div class="card-name">日系文化控</div>
+            <span class="pill pill-interest">兴趣驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">日语文化兴趣 · 无需~初级</div>
+            <div class="card-scene">「日语里这个谐音梗也太妙了」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">文化差异理解难、不确定是否为俳句（376万）</div>
+            <div class="card-emotion-tag">逗趣感 → 欣赏感 → 探秘感</div>
+            <div class="card-data"><span class="card-data-num">5849万</span><span class="card-data-unit">兴趣爱好目标量级</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">无需~初级</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">分享日语谐音梗</span><span class="card-detail-tag">学习俳句</span><span class="card-detail-tag">了解日本文化</span></div>
+            </div>
+          </div>
+        </div>
+
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">旅游实用型</span>
+      <span class="group-header-count">1 类</span>
+      <div class="group-header-line"></div>
+    </div>
+
+    <div class="card" id="ja-07">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">07</span><span class="lang-badge lang-ja">日语</span><span class="intention-dot dot-gray"></span></div>
+            <div class="card-name">旅日生存派</div>
+            <span class="pill pill-goal">目标驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">旅行生活实用 · 无需基础</div>
+            <div class="card-scene">「去日本旅游，点餐用语速成」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">担心点到奇怪菜品（750万）、语言障碍、签证信息不明</div>
+            <div class="card-emotion-tag">期待感 → 担心感</div>
+            <div class="card-data"><span class="card-data-num">279万</span><span class="card-data-unit">学习日语点餐任务词</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">无需基础</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">学日语点餐</span><span class="card-detail-tag">学旅行用语</span><span class="card-detail-tag">办理签证</span></div>
+            </div>
+          </div>
+        </div>
+
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">生活职场型</span>
+      <span class="group-header-count">2 类</span>
+      <div class="group-header-line"></div>
+    </div>
+
+    <div class="card" id="ja-08">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">08</span><span class="lang-badge lang-ja">日语</span><span class="intention-dot dot-yellow"></span></div>
+            <div class="card-name">语伴寻访者</div>
+            <span class="pill pill-goal">目标驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">口语社交 · 初~中级</div>
+            <div class="card-scene">「想找日本人练口语，有没有语伴」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">找不到合适语言伙伴（561万 No.1）、担心发音不准</div>
+            <div class="card-emotion-tag">期待感 → 归属感 → 困惑感</div>
+            <div class="card-data"><span class="card-data-num">561万</span><span class="card-data-unit">找日本朋友任务词（No.1）</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">初~中级</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">找日本朋友</span><span class="card-detail-tag">与日本人聊天</span><span class="card-detail-tag">学习日语敬语</span></div>
+            </div>
+          </div>
+        </div>
+
+    <div class="card" id="ja-09">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">09</span><span class="lang-badge lang-ja">日语</span><span class="intention-dot dot-green"></span></div>
+            <div class="card-name">职场突围者</div>
+            <span class="pill pill-goal">目标驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">工作职业应用 · 中~高级</div>
+            <div class="card-scene">「进日企必备，商务日语怎么学」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">对职业发展不确定（348万）、职场语言不通</div>
+            <div class="card-emotion-tag">期待感 → 担心感 → 知足感</div>
+            <div class="card-data"><span class="card-data-num">732万</span><span class="card-data-unit">求职就业目标分类</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">中~高级</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">学习日语邮件表达</span><span class="card-detail-tag">找工作</span><span class="card-detail-tag">学习商务日语</span></div>
+            </div>
+          </div>
+        </div>
+
+  </div>
+</div>
+
+<div class="section" id="sec-ko">
+  <div class="section-header">
+    <span class="section-deco">KO</span>
+    <div class="section-info">
+      <h2>韩语赛道</h2>
+      <p>8 类人群 · 追星破圈 + 考级 + 文化 + 旅游 + 职场</p>
+    </div>
+  </div>
+  <div class="card-grid">
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">追星破圈型</span>
+      <span class="group-header-count">3 类</span>
+      <div class="group-header-line"></div>
+    </div>
+
+    <div class="card" id="ko-01">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">01</span><span class="lang-badge lang-ko">韩语</span><span class="intention-dot dot-gray"></span></div>
+            <div class="card-name">追星破译机</div>
+            <span class="pill pill-emotion">情感驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">追星内容理解 · 无需基础</div>
+            <div class="card-scene">「偶像手写签名是什么意思？」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">不认识韩文（1415万）、不认识韩语手写体（235万）</div>
+            <div class="card-emotion-tag">反感（No.1，看不懂的无力感）→ 欣赏感</div>
+            <div class="card-data"><span class="card-data-num">4805万</span><span class="card-data-unit">韩语手写+翻译需求（赛道No.1）</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">无需基础</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">翻译韩文</span><span class="card-detail-tag">看懂物料手写</span><span class="card-detail-tag">看韩剧/综艺</span></div>
+            </div>
+          </div>
+        </div>
+
+    <div class="card" id="ko-05">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">05</span><span class="lang-badge lang-ko">韩语</span><span class="intention-dot dot-yellow"></span></div>
+            <div class="card-name">兴趣起步族</div>
+            <span class="pill pill-growth">成长驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">零基础自学 · 零基础</div>
+            <div class="card-scene">「因为追星开始学韩语，从哪里入门」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">自学难度大、缺乏系统性学习、不同体系冲突</div>
+            <div class="card-emotion-tag">信念感 → 激励感 → 困惑感</div>
+            <div class="card-data"><span class="card-data-num">93万</span><span class="card-data-unit">免费+系统+趣味需求</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">零基础</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">学习四十音</span><span class="card-detail-tag">使用APP学习</span><span class="card-detail-tag">自学韩语</span></div>
+            </div>
+          </div>
+        </div>
+
+    <div class="card" id="ko-08">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">08</span><span class="lang-badge lang-ko">韩语</span><span class="intention-dot dot-gray"></span></div>
+            <div class="card-name">韩语梗玩家</div>
+            <span class="pill pill-interest">兴趣驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">韩流文化兴趣 · 无需~初级</div>
+            <div class="card-scene">「这个韩语梗也太好笑了吧」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">不了解网络用语含义（204万）、缺乏趣味学习材料</div>
+            <div class="card-emotion-tag">逗趣感 → 欣赏感 → 期待感</div>
+            <div class="card-data"><span class="card-data-num">1060万</span><span class="card-data-unit">化妆+学韩语任务词</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">无需~初级</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">讨论爱豆</span><span class="card-detail-tag">看韩语梗图</span><span class="card-detail-tag">化妆学韩语</span></div>
+            </div>
+          </div>
+        </div>
+
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">考级备考型</span>
+      <span class="group-header-count">2 类</span>
+      <div class="group-header-line"></div>
+    </div>
+
+    <div class="card" id="ko-02">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">02</span><span class="lang-badge lang-ko">韩语</span><span class="intention-dot dot-green"></span></div>
+            <div class="card-name">TOPIK冲关族</div>
+            <span class="pill pill-anxious">焦虑驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">TOPIK备考 · 初~中级</div>
+            <div class="card-scene">「TOPIK三级，这次一定过」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">词汇量不足（729万）、缺乏系统学习材料、记忆困难</div>
+            <div class="card-emotion-tag">困惑感 → 无奈 → 急迫感</div>
+            <div class="card-data"><span class="card-data-num">7147万</span><span class="card-data-unit">考试目标量级</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">初~中级</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">查看考试日程</span><span class="card-detail-tag">做练习</span><span class="card-detail-tag">写大作文</span></div>
+            </div>
+          </div>
+        </div>
+
+    <div class="card" id="ko-03">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">03</span><span class="lang-badge lang-ko">韩语</span><span class="intention-dot dot-yellow"></span></div>
+            <div class="card-name">韩语纠偏者</div>
+            <span class="pill pill-anxious">焦虑驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">学习辅助求助 · 初~中级</div>
+            <div class="card-scene">「这句话翻译成韩语对不对？」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">不确定翻译软件准确性（225万）、担心表达不礼貌</div>
+            <div class="card-emotion-tag">困惑感 → 无奈 → 担心感</div>
+            <div class="card-data"><span class="card-data-num">441万</span><span class="card-data-unit">准确翻译+礼貌表达需求</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">初~中级</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">查询翻译</span><span class="card-detail-tag">咨询翻译</span><span class="card-detail-tag">确认韩语表达</span></div>
+            </div>
+          </div>
+        </div>
+
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">文化兴趣型</span>
+      <span class="group-header-count">1 类</span>
+      <div class="group-header-line"></div>
+    </div>
+
+    <div class="card" id="ko-04">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">04</span><span class="lang-badge lang-ko">韩语</span><span class="intention-dot dot-gray"></span></div>
+            <div class="card-name">字帖打卡人</div>
+            <span class="pill pill-interest">兴趣驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">书写字帖兴趣 · 初级</div>
+            <div class="card-scene">「韩文字帖练起来，今天的打卡」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">不知道如何正确书写（156万）、不认识手写体（235万）</div>
+            <div class="card-emotion-tag">欣赏感 → 钦佩感 → 信念感</div>
+            <div class="card-data"><span class="card-data-num">1096万</span><span class="card-data-unit">正宗好看练习需求（韩语No.1）</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">初级</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">写韩文字帖</span><span class="card-detail-tag">选字帖</span><span class="card-detail-tag">分享练字成果</span></div>
+            </div>
+          </div>
+        </div>
+
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">旅游实用型</span>
+      <span class="group-header-count">1 类</span>
+      <div class="group-header-line"></div>
+    </div>
+
+    <div class="card" id="ko-06">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">06</span><span class="lang-badge lang-ko">韩语</span><span class="intention-dot dot-gray"></span></div>
+            <div class="card-name">旅韩实用派</div>
+            <span class="pill pill-goal">目标驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">旅行实用 · 无需基础</div>
+            <div class="card-scene">「韩国旅游必学！点餐和购物用语」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">语言障碍、翻译菜单不准确</div>
+            <div class="card-emotion-tag">期待感 → 担心感</div>
+            <div class="card-data"><span class="card-data-num">291万</span><span class="card-data-unit">语言沟通+方便旅游需求</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">无需基础</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">学韩语点餐</span><span class="card-detail-tag">翻译菜单</span></div>
+            </div>
+          </div>
+        </div>
+
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">职场升学型</span>
+      <span class="group-header-count">1 类</span>
+      <div class="group-header-line"></div>
+    </div>
+
+    <div class="card" id="ko-07">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">07</span><span class="lang-badge lang-ko">韩语</span><span class="intention-dot dot-green"></span></div>
+            <div class="card-name">韩企求职人</div>
+            <span class="pill pill-goal">目标驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">升学就业 · 中级以上</div>
+            <div class="card-scene">「韩语专业出来能做什么？」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">缺乏实际应用场景（1142万）、高考失利志愿困难</div>
+            <div class="card-emotion-tag">期待感 → 无奈 → 信念感</div>
+            <div class="card-data"><span class="card-data-num">18202万</span><span class="card-data-unit">兴趣爱好目标（赛道No.1）</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">中级以上</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">选择升学路径</span><span class="card-detail-tag">填报志愿</span><span class="card-detail-tag">韩企求职</span></div>
+            </div>
+          </div>
+        </div>
+
+  </div>
+</div>
+
+<div class="section" id="sec-eu">
+  <div class="section-header">
+    <span class="section-deco">EU</span>
+    <div class="section-info">
+      <h2>欧洲语系（法/德）</h2>
+      <p>5 类人群 · 留学移民导向 + 文化兴趣</p>
+    </div>
+  </div>
+  <div class="card-grid">
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">留学移民型</span>
+      <span class="group-header-count">1 类</span>
+      <div class="group-header-line"></div>
+    </div>
+
+    <div class="card" id="eu-01">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">01</span><span class="lang-badge lang-eu">欧洲</span><span class="intention-dot dot-green"></span></div>
+            <div class="card-name">移民备考者</div>
+            <span class="pill pill-goal">目标驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">留学移民备考 · 初~中级</div>
+            <div class="card-scene">「法语B2考过，移民通道就开了」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">政策频繁变动（876万）、不知道哪里有合适学校（865万）</div>
+            <div class="card-emotion-tag">期待感 → 信念感 → 担心感</div>
+            <div class="card-data"><span class="card-data-num">876万</span><span class="card-data-unit">了解政策变化+规划留学路径需求</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">初~中级</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">研究政策</span><span class="card-detail-tag">找学校</span><span class="card-detail-tag">备考参加考试</span></div>
+            </div>
+          </div>
+        </div>
+
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">职场专业型</span>
+      <span class="group-header-count">1 类</span>
+      <div class="group-header-line"></div>
+    </div>
+
+    <div class="card" id="eu-02">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">02</span><span class="lang-badge lang-eu">欧洲</span><span class="intention-dot dot-green"></span></div>
+            <div class="card-name">职场精英路</div>
+            <span class="pill pill-goal">目标驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">职业专业应用 · 中~高级</div>
+            <div class="card-scene">「法语口译接单，如何做到精准表达」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">陌生化词汇难以理解（258万）、缺乏实际应用场景（278万）</div>
+            <div class="card-emotion-tag">钦佩感 → 归属感 → 信念感</div>
+            <div class="card-data"><span class="card-data-num">223万</span><span class="card-data-unit">专业认可+实践经验需求</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">中~高级</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">完成口译任务</span><span class="card-detail-tag">学习法律术语</span><span class="card-detail-tag">参加活动</span></div>
+            </div>
+          </div>
+        </div>
+
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">文化兴趣型</span>
+      <span class="group-header-count">2 类</span>
+      <div class="group-header-line"></div>
+    </div>
+
+    <div class="card" id="eu-03">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">03</span><span class="lang-badge lang-eu">欧洲</span><span class="intention-dot dot-gray"></span></div>
+            <div class="card-name">法语梗猎人</div>
+            <span class="pill pill-interest">兴趣驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">文化梗娱乐 · 无需基础</div>
+            <div class="card-scene">「法语这个发音也太好笑了哈哈哈」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">缺乏更多法语梗素材（1492万）、缺乏趣味性</div>
+            <div class="card-emotion-tag">欣赏感 → 逗趣感 → 探秘感</div>
+            <div class="card-data"><span class="card-data-num">1492万</span><span class="card-data-unit">分享法语梗任务词（欧洲No.1）</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">无需基础</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">分享法语梗</span><span class="card-detail-tag">收集法语标识</span><span class="card-detail-tag">看综艺</span></div>
+            </div>
+          </div>
+        </div>
+
+    <div class="card" id="eu-04">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">04</span><span class="lang-badge lang-eu">欧洲</span><span class="intention-dot dot-gray"></span></div>
+            <div class="card-name">洋名收藏家</div>
+            <span class="pill pill-interest">兴趣驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">起名取名 · 无需基础</div>
+            <div class="card-scene">「给孩子取个法语名字，好听又有文化」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">难以找到满意的名字（2210万）</div>
+            <div class="card-emotion-tag">探秘感 → 惊喜</div>
+            <div class="card-data"><span class="card-data-num">2210万</span><span class="card-data-unit">好听的名字需求（欧洲No.1）</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">无需基础</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">选择法语名字</span><span class="card-detail-tag">生成名字</span></div>
+            </div>
+          </div>
+        </div>
+
+
+    <div class="group-header">
+      <div class="group-header-line"></div>
+      <span class="group-header-label">入门自学型</span>
+      <span class="group-header-count">1 类</span>
+      <div class="group-header-line"></div>
+    </div>
+
+    <div class="card" id="eu-05">
+          <div class="card-body">
+            <div class="card-header"><span class="card-id">05</span><span class="lang-badge lang-eu">欧洲</span><span class="intention-dot dot-yellow"></span></div>
+            <div class="card-name">欧语零基党</div>
+            <span class="pill pill-growth">成长驱动</span>
+            <div class="card-divider"></div>
+            <div class="card-sub">零基础自学 · 零基础</div>
+            <div class="card-scene">「三十岁开始学法语，来得及吗」</div>
+            <div class="card-blocker-label">BLOCKER</div>
+            <div class="card-blocker">零基础大龄学习难（180万）、多邻国缺乏系统教学（280万）</div>
+            <div class="card-emotion-tag">信念感 → 期待感 → 无奈</div>
+            <div class="card-data"><span class="card-data-num">280万</span><span class="card-data-unit">系统教学+发音规律需求</span></div>
+            <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+            <div class="card-detail" style="display:none">
+              <div class="card-detail-label">学习基础</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">零基础</span></div>
+              <div class="card-detail-label">典型任务</div>
+              <div class="card-detail-tags"><span class="card-detail-tag">自学法语</span><span class="card-detail-tag">学习法语发音</span><span class="card-detail-tag">使用APP学习</span></div>
+            </div>
+          </div>
+        </div>
+
+  </div>
+</div>
+
+<div class="section" id="sec-compare">
+  <div class="section-header">
+    <span class="section-deco">VS</span>
+    <div class="section-info">
+      <h2>横向对比</h2>
+      <p>四大语种赛道 · 人群特征与策略差异</p>
+    </div>
+  </div>
+  <div class="matrix-title">赛道特征对比矩阵</div>
+  <div class="matrix-sub" style="margin-bottom:16px">数据来源：RedBI 语言留学看板 + 情绪看板，2025-10-01～2026-04-13</div>
+  <table class="matrix-table">
+    <thead>
+      <tr>
+        <th>维度</th>
+        <th>🇺🇸 英语赛道</th>
+        <th>🇯🇵 日语赛道</th>
+        <th>🇰🇷 韩语赛道</th>
+        <th>🇪🇺 欧洲语系</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>最大情境</strong></td>
+        <td>口语表达突破（7.6亿）</td>
+        <td>考级备考（2.3亿）</td>
+        <td>追星内容理解（4805万）</td>
+        <td>移民备考（留学移民）</td>
+      </tr>
+      <tr>
+        <td><strong>特有人群</strong></td>
+        <td>海漂生存者、美剧腔追求者、课堂追赶者</td>
+        <td>书写强迫症、职场突围者、语伴寻访者</td>
+        <td>追星破译机、字帖打卡人、韩语梗玩家</td>
+        <td>法语梗猎人、洋名收藏家</td>
+      </tr>
+      <tr>
+        <td><strong>主导情绪</strong></td>
+        <td>困惑感 + 无奈（学习焦虑为主）</td>
+        <td>困惑感 No.1（3867万收藏量）</td>
+        <td>反感 No.1（追星看不懂的无力感）</td>
+        <td>欣赏感 + 期待感（正向驱动为主）</td>
+      </tr>
+      <tr>
+        <td><strong>零基础特征</strong></td>
+        <td>方法迷茫、工具选择困难</td>
+        <td>五十音卡点、片假名平假名混淆</td>
+        <td>谚文识别卡点、不认识手写体</td>
+        <td>大龄学习者多、依赖APP、系统性不足</td>
+      </tr>
+      <tr>
+        <td><strong>商业化高意向</strong></td>
+        <td>备考冲刺型6类（01-06）</td>
+        <td>01 JLPT死磕族、03书写强迫症、09职场突围者</td>
+        <td>02 TOPIK冲关族、01追星破译机、07韩企求职人</td>
+        <td>01 移民备考者、02 职场精英路</td>
+      </tr>
+      <tr>
+        <td><strong>驱动类型分布</strong></td>
+        <td>焦虑驱动为主（10/19类）</td>
+        <td>焦虑 + 目标驱动（各3类）</td>
+        <td>情感 + 焦虑驱动（各2类）</td>
+        <td>目标 + 兴趣驱动（各2类）</td>
+      </tr>
+      <tr>
+        <td><strong>人群数量</strong></td>
+        <td>19类</td>
+        <td>9类</td>
+        <td>8类</td>
+        <td>5类</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:32px">
+    <div class="matrix-title" style="font-size:18px;margin-bottom:16px">驱动类型图例</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px"><span class="pill pill-anxious" style="margin:0">焦虑驱动</span>有明确卡点，需解决问题，转化意向高</span>
+      <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px"><span class="pill pill-goal" style="margin:0">目标驱动</span>有外部目标（考试/职业/移民），需求清晰</span>
+      <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px"><span class="pill pill-growth" style="margin:0">成长驱动</span>主动学习意愿强，需要系统路径感</span>
+      <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px"><span class="pill pill-interest" style="margin:0">兴趣驱动</span>内容消费为主，转化门槛高</span>
+      <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px"><span class="pill pill-emotion" style="margin:0">情感驱动</span>情感投入触发，非学习目的，韩语特有</span>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+function toggleDetail(btn) {
+  const detail = btn.nextElementSibling;
+  if (detail.style.display === 'none') {
+    detail.style.display = 'block';
+    btn.textContent = '收起 ↑';
+  } else {
+    detail.style.display = 'none';
+    btn.textContent = '展开详情 ↓';
+  }
+}
+
+function switchTrack(track) {
+  ['lang','edu','fun'].forEach(t => {
+    document.getElementById('track-'+t+'-content').style.display = t===track?'block':'none';
+    const btn = document.getElementById('track-'+t);
+    btn.style.color = t===track?'#1A1A1A':'#888';
+    btn.style.borderBottom = t===track?'3px solid #B5625A':'3px solid transparent';
+  });
+  if(track==='edu') switchTabEdu('sec-edu-overview');
+  if(track==='fun') switchTabFun('sec-fun-overview');
+}
+
+
+function switchTabEdu(id, btn) {
+  document.querySelectorAll('#track-edu-content .section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('#track-edu-content .tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(btn) btn.classList.add('active');
+}
+function switchTabFun(id, btn) {
+  document.querySelectorAll('#track-fun-content .section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('#track-fun-content .tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(btn) btn.classList.add('active');
+}
+</script>
+
+<div id="track-edu-content" style="display:none;">
+<div style="max-width:1200px;margin:32px auto 0;padding:0 48px;display:flex;gap:32px;border-bottom:1px solid #EBEBEB;">
+  <button class="tab-btn active" onclick="switchTabEdu('sec-edu-overview', this)">全景总览</button>
+  <button class="tab-btn" onclick="switchTabEdu('sec-ke', this)">考研赛道<span class="count">(10)</span></button>
+  <button class="tab-btn" onclick="switchTabEdu('sec-zu', this)">专升本赛道<span class="count">(6)</span></button>
+</div>
+<div class="section active" id="sec-edu-overview">
+    <div class="section-header">
+    <span class="section-deco">全</span>
+    <div class="section-info"><h2>学历赛道特色人群全景</h2><p>考研 10类 + 专升本 6类 = 16类特色人群</p></div>
+  </div>
+  <div class="overview-grid" style="grid-template-columns:1fr 1fr;">
+    <div class="overview-col">
+      <h3>考研赛道</h3><div class="sec-num">10 类特色人群</div>
+      <div class="overview-group-label">备考冲刺型</div><a class="overview-chip" href="#ke-01">研路迷航者</a><a class="overview-chip" href="#ke-02">备考苦修族</a><a class="overview-chip" href="#ke-03">研场孤狼</a>
+      <div class="overview-group-label">决策迷茫型</div><a class="overview-chip" href="#ke-04">前途摇摆派</a><a class="overview-chip" href="#ke-05">考公摇摆者</a><a class="overview-chip" href="#ke-06">复试等待族</a>
+      <div class="overview-group-label">在读成长型</div><a class="overview-chip" href="#ke-07">学术追光者</a><a class="overview-chip" href="#ke-08">科研承压者</a>
+      <div class="overview-group-label">情绪疗愈型</div><a class="overview-chip" href="#ke-09">焦虑自救党</a><a class="overview-chip" href="#ke-10">败后重启者</a>
+    </div>
+    <div class="overview-col">
+      <h3>专升本赛道</h3><div class="sec-num">6 类特色人群</div>
+      <div class="overview-group-label">学历突围型</div><a class="overview-chip" href="#zu-01">学历突围者</a><a class="overview-chip" href="#zu-02">边工边读人</a>
+      <div class="overview-group-label">高效拿证型</div><a class="overview-chip" href="#zu-03">速成拿证党</a><a class="overview-chip" href="#zu-04">自学独行侠</a>
+      <div class="overview-group-label">自我证明型</div><a class="overview-chip" href="#zu-05">家人压力党</a><a class="overview-chip" href="#zu-06">机构警惕派</a>
+    </div>
+  </div>
+</div>
+<div class="section" id="sec-ke">
+  <div class="section-header">
+    <span class="section-deco">研</span>
+    <div class="section-info"><h2>考研赛道</h2><p>10 类特色人群 · 4 个分组 · 数据时间 2025-10-01 ～ 2026-04-13</p></div>
+  </div>
+  <div class="card-grid">
+  <div class="group-header">
+    <span class="group-header-label">备考冲刺型</span>
+    <span class="group-header-count">3 类</span>
+    <div class="group-header-line"></div>
+  </div>
+    <div class="card" id="ke-01">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">ke-01</span><span class="lang-badge lang-ja">考研</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">研路迷航者</div>
+        <span class="pill pill-anxious">焦虑驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">备考冲刺型</div>
+        <div class="card-scene">「初期信息过载，不知从何下手」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">信息不明确·选择困难·缺乏系统指导</div>
+        <div class="card-emotion-tag">不确定感 + 困惑</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">大三下/毕业后刚开始准备考研，面对海量信息不知从何下手</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">考研全流程地图</span><span class="card-detail-tag">择校择专工具</span><span class="card-detail-tag">导师选择攻略</span><span class="card-detail-tag">小白避坑指南</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">考研怎么选学校</span><span class="card-detail-tag">考研专业选择</span><span class="card-detail-tag">考研全流程</span><span class="card-detail-tag">考研导师怎么选</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="ke-02">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">ke-02</span><span class="lang-badge lang-ja">考研</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">备考苦修族</div>
+        <span class="pill pill-goal">目标驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">备考冲刺型</div>
+        <div class="card-scene">「日均10小时死磕，时间+竞争双压」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">时间紧张+压力大（2.55亿）·竞争激烈（2.36亿）</div>
+        <div class="card-emotion-tag">压力感 + 失败感</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">已进入系统性备考阶段，每日高强度学习8-12小时，背单词·听课·刷题循环</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">高效备考方法论</span><span class="card-detail-tag">时间规划攻略</span><span class="card-detail-tag">各科复习节奏</span><span class="card-detail-tag">学长经验贴</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">考研备考计划</span><span class="card-detail-tag">考研时间管理</span><span class="card-detail-tag">考研高效学习</span><span class="card-detail-tag">考研每日计划</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="ke-03">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">ke-03</span><span class="lang-badge lang-ja">考研</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">研场孤狼</div>
+        <span class="pill pill-emotion">情绪驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">备考冲刺型</div>
+        <div class="card-scene">「一个人备考，孤独中咬牙坚持」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">孤独感+压力大（0.96亿）·缺乏情感支持</div>
+        <div class="card-emotion-tag">孤独感 + 压力感</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">备考中后期，身边人有的放弃有的保研，独自在图书馆/出租屋坚持</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">一个人备考指南</span><span class="card-detail-tag">孤独感应对</span><span class="card-detail-tag">考研陪伴社区</span><span class="card-detail-tag">逆袭故事</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">一个人考研怎么办</span><span class="card-detail-tag">考研孤独感</span><span class="card-detail-tag">备考坚持不下去</span><span class="card-detail-tag">考研一个人好累</span></div>
+        </div>
+      </div>
+    </div>
+  <div class="group-header">
+    <span class="group-header-label">决策迷茫型</span>
+    <span class="group-header-count">3 类</span>
+    <div class="group-header-line"></div>
+  </div>
+    <div class="card" id="ke-04">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">ke-04</span><span class="lang-badge lang-ja">考研</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">前途摇摆派</div>
+        <span class="pill pill-anxious">焦虑驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">决策迷茫型</div>
+        <div class="card-scene">「考研vs就业，犹豫不决下不了决心」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">找工作难+不确定是否继续读博（1.94亿）·犹豫不决</div>
+        <div class="card-emotion-tag">不确定感 + 后悔感</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">站在人生十字路口，考研·就业·考公三条路同时摆在面前，机会成本极高</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">考研vs就业利弊分析</span><span class="card-detail-tag">双轨准备攻略</span><span class="card-detail-tag">职业规划指南</span><span class="card-detail-tag">保底方案设计</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">考研还是工作</span><span class="card-detail-tag">考研找工作两手准备</span><span class="card-detail-tag">考研失败怎么办</span><span class="card-detail-tag">考研和考公哪个好</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="ke-05">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">ke-05</span><span class="lang-badge lang-ja">考研</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">考公摇摆者</div>
+        <span class="pill pill-anxious">焦虑驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">决策迷茫型</div>
+        <div class="card-scene">「考研vs考公，稳定vs深造两条路纠结」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">两条路都有机会成本·方向迷茫·信息量大难以决策</div>
+        <div class="card-emotion-tag">纠结 + 焦虑</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">在考研和考公之间反复横跳，一个代表深造提升，一个代表稳定铁饭碗，难以取舍</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">考公备考攻略</span><span class="card-detail-tag">两手准备策略</span><span class="card-detail-tag">职业规划</span><span class="card-detail-tag">路径对比分析</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">考研和考公哪个好</span><span class="card-detail-tag">考公还是考研</span><span class="card-detail-tag">考研考公两手准备</span><span class="card-detail-tag">考公上岸经验</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="ke-06">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">ke-06</span><span class="lang-badge lang-ja">考研</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">复试等待族</div>
+        <span class="pill pill-emotion">情绪驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">决策迷茫型</div>
+        <div class="card-scene">「过线等复试，焦虑+期待双重煎熬」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">面试压力大（0.65亿）·等待结果焦虑·主动权不在自己手上</div>
+        <div class="card-emotion-tag">希望感 + 压力感交织</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">初试成绩已出，处于复试准备或调剂等待状态，情绪在希望和恐惧间剧烈波动</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">复试面试技巧</span><span class="card-detail-tag">调剂攻略</span><span class="card-detail-tag">联系导师话术</span><span class="card-detail-tag">复试心态调整</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">考研复试怎么准备</span><span class="card-detail-tag">考研调剂流程</span><span class="card-detail-tag">复试面试技巧</span><span class="card-detail-tag">考研联系导师</span></div>
+        </div>
+      </div>
+    </div>
+  <div class="group-header">
+    <span class="group-header-label">在读成长型</span>
+    <span class="group-header-count">2 类</span>
+    <div class="group-header-line"></div>
+  </div>
+    <div class="card" id="ke-07">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">ke-07</span><span class="lang-badge lang-ja">考研</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">学术追光者</div>
+        <span class="pill pill-growth">成长驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">在读成长型</div>
+        <div class="card-scene">「已上岸，追求论文科研学术成就」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">学业压力大+时间管理（0.87亿）·科研价值不明确</div>
+        <div class="card-emotion-tag">自我实现感 + 钦慕感</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">已有研究生身份，写论文·做实验·联系导师·发表论文是四大核心行为</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">论文写作指南</span><span class="card-detail-tag">实验方法论</span><span class="card-detail-tag">导师相处之道</span><span class="card-detail-tag">学术成长路径</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">研究生论文怎么写</span><span class="card-detail-tag">如何选导师</span><span class="card-detail-tag">研究生科研规划</span><span class="card-detail-tag">学术论文发表</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="ke-08">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">ke-08</span><span class="lang-badge lang-ja">考研</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">科研承压者</div>
+        <span class="pill pill-anxious">焦虑驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">在读成长型</div>
+        <div class="card-scene">「被导师关系和科研压力双重夹击」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">导师选择困难+科研压力（0.62亿）·导师关系是学术生涯命门</div>
+        <div class="card-emotion-tag">压力感 + 不确定感</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">在读期间遭遇导师关系困境，同时面临就业压力，在读期就开始焦虑毕业后出路</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">导师沟通技巧</span><span class="card-detail-tag">科研压力管理</span><span class="card-detail-tag">读研期间职业规划</span><span class="card-detail-tag">实验室生存指南</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">研究生导师关系</span><span class="card-detail-tag">科研压力大怎么办</span><span class="card-detail-tag">读研期间找工作</span><span class="card-detail-tag">研究生要不要读博</span></div>
+        </div>
+      </div>
+    </div>
+  <div class="group-header">
+    <span class="group-header-label">情绪疗愈型</span>
+    <span class="group-header-count">2 类</span>
+    <div class="group-header-line"></div>
+  </div>
+    <div class="card" id="ke-09">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">ke-09</span><span class="lang-badge lang-ja">考研</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">焦虑自救党</div>
+        <span class="pill pill-emotion">情绪驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">情绪疗愈型</div>
+        <div class="card-scene">「压力到临界点，疯狂找心理支撑」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">精神压力大（1.08亿）·难以集中精力·自我怀疑</div>
+        <div class="card-emotion-tag">压力感 + 释放感</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">在备考任何阶段遭遇情绪崩溃，大量消费心理支持/减压/情绪调节类内容</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">备考心理调适</span><span class="card-detail-tag">焦虑缓解方法</span><span class="card-detail-tag">备考逆袭故事</span><span class="card-detail-tag">陪伴式打卡</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">考研心态调整</span><span class="card-detail-tag">考研焦虑怎么办</span><span class="card-detail-tag">备考情绪管理</span><span class="card-detail-tag">考研压力大</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="ke-10">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">ke-10</span><span class="lang-badge lang-ja">考研</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">败后重启者</div>
+        <span class="pill pill-emotion">情绪驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">情绪疗愈型</div>
+        <div class="card-scene">「一战失败，在遗憾中重新出发」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">失败感（2952条）·后悔感（912条）·沉没成本高</div>
+        <div class="card-emotion-tag">失败感 → 重建感</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">初试/复试失利，面临"二战vs就业vs调剂"三重抉择，情绪从"天塌了"到重振</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">二战经验贴</span><span class="card-detail-tag">失败原因分析</span><span class="card-detail-tag">调剂攻略</span><span class="card-detail-tag">心理重建指南</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">考研失败怎么办</span><span class="card-detail-tag">考研二战值不值</span><span class="card-detail-tag">考研调剂院校推荐</span><span class="card-detail-tag">考研失败后的出路</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section" id="sec-zu">
+  <div class="section-header">
+    <span class="section-deco">升</span>
+    <div class="section-info"><h2>专升本赛道</h2><p>6 类特色人群 · 3 个分组 · 数据时间 2025-10-01 ～ 2026-04-13</p></div>
+  </div>
+  <div class="card-grid">
+  <div class="group-header">
+    <span class="group-header-label">学历突围型</span>
+    <span class="group-header-count">2 类</span>
+    <div class="group-header-line"></div>
+  </div>
+    <div class="card" id="zu-01">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">zu-01</span><span class="lang-badge lang-ko">专升本</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">学历突围者</div>
+        <span class="pill pill-anxious">焦虑驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">学历突围型</div>
+        <div class="card-scene">「被专科学历卡住，全力备考翻身」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">社会偏见+学历歧视（3.44亿）·学历不被认可</div>
+        <div class="card-emotion-tag">压力感 + 耻感 + 希望感</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">专科学历在求职中因学历被卡，决定全职备考专升本，情绪浓度最高</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">专升本逆袭故事</span><span class="card-detail-tag">学历提升价值解读</span><span class="card-detail-tag">专科生职场突破</span><span class="card-detail-tag">含金量科普</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">专升本有必要吗</span><span class="card-detail-tag">专升本含金量</span><span class="card-detail-tag">专科生找工作难</span><span class="card-detail-tag">专升本逆袭</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="zu-02">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">zu-02</span><span class="lang-badge lang-ko">专升本</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">边工边读人</div>
+        <span class="pill pill-goal">目标驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">学历突围型</div>
+        <div class="card-scene">「工作备考双线作战，时间钱都紧缺」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">时间紧张（3687万）·经济压力大（2961万）·两头兼顾</div>
+        <div class="card-emotion-tag">压力感 + 被剥夺感</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">已在工作但学历成为晋升瓶颈，时间严重碎片化，经济+备考双重压力</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">在职备考攻略</span><span class="card-detail-tag">碎片化学习方法</span><span class="card-detail-tag">工作学习平衡</span><span class="card-detail-tag">灵活课程推荐</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">在职专升本</span><span class="card-detail-tag">边工作边备考</span><span class="card-detail-tag">专升本时间安排</span><span class="card-detail-tag">成人本科</span></div>
+        </div>
+      </div>
+    </div>
+  <div class="group-header">
+    <span class="group-header-label">高效拿证型</span>
+    <span class="group-header-count">2 类</span>
+    <div class="group-header-line"></div>
+  </div>
+    <div class="card" id="zu-03">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">zu-03</span><span class="lang-badge lang-ko">专升本</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">速成拿证党</div>
+        <span class="pill pill-goal">目标驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">高效拿证型</div>
+        <div class="card-scene">「就是要拿证，愿意花钱买效率」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">知识点繁多+容易混淆（2869万）·信息过载需要有人划重点</div>
+        <div class="card-emotion-tag">希望感 + 急迫感</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">目标非常务实，就是拿到本科文凭，偏好高效复习，报班意愿强</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">专升本速成攻略</span><span class="card-detail-tag">高频考点总结</span><span class="card-detail-tag">报班选择指南</span><span class="card-detail-tag">考前冲刺技巧</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">专升本速成</span><span class="card-detail-tag">专升本高频考点</span><span class="card-detail-tag">专升本报班推荐</span><span class="card-detail-tag">专升本冲刺</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="zu-04">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">zu-04</span><span class="lang-badge lang-ko">专升本</span><span class="intention-dot dot-gray" title="低意向"></span></div>
+        <div class="card-name">自学独行侠</div>
+        <span class="pill pill-interest">兴趣驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">高效拿证型</div>
+        <div class="card-scene">「不想花钱报班，自己找资料死磕」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">缺乏系统学习规划（4349万）·缺乏专业指导（6381万）</div>
+        <div class="card-emotion-tag">不确定感 + 孤军奋战</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">经济条件有限或对机构不信任，选择自学备考，大量搜索免费资料和自考路线</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">自学攻略</span><span class="card-detail-tag">免费学习资源</span><span class="card-detail-tag">自考政策解读</span><span class="card-detail-tag">低成本备考方案</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">专升本自学</span><span class="card-detail-tag">自考本科攻略</span><span class="card-detail-tag">专升本免费资料</span><span class="card-detail-tag">专升本学习方法</span></div>
+        </div>
+      </div>
+    </div>
+  <div class="group-header">
+    <span class="group-header-label">自我证明型</span>
+    <span class="group-header-count">2 类</span>
+    <div class="group-header-line"></div>
+  </div>
+    <div class="card" id="zu-05">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">zu-05</span><span class="lang-badge lang-ko">专升本</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">家人压力党</div>
+        <span class="pill pill-emotion">情绪驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">自我证明型</div>
+        <div class="card-scene">「被家人推着升本，内心纠结但不得不走」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">难以向家人解释（4743万，第一大痛点）·家庭沟通不畅</div>
+        <div class="card-emotion-tag">压力感 + 后悔感</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">不是自己主动想升本，而是家人期望在推动，最亲近的人反而成了最大阻力</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">如何跟家人沟通专升本</span><span class="card-detail-tag">家庭支持获取策略</span><span class="card-detail-tag">专升本价值解读</span><span class="card-detail-tag">经济压力应对</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">怎么跟父母说专升本</span><span class="card-detail-tag">专升本家人不支持</span><span class="card-detail-tag">专升本经济压力</span><span class="card-detail-tag">专升本有必要吗</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="zu-06">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">zu-06</span><span class="lang-badge lang-ko">专升本</span><span class="intention-dot dot-gray" title="低意向"></span></div>
+        <div class="card-name">机构警惕派</div>
+        <span class="pill pill-emotion">情绪驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">自我证明型</div>
+        <div class="card-scene">「见过太多套路，对机构极度警惕」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">信息不对称+服务质量差（1645万）·中介失联+学校沟通不畅</div>
+        <div class="card-emotion-tag">厌恶感 + 后悔感</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">对培训机构有强烈不信任感，厌恶情绪367条："掏你的钱""画饼""别去报班"</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">机构避坑指南</span><span class="card-detail-tag">真实学员评价</span><span class="card-detail-tag">退款维权攻略</span><span class="card-detail-tag">透明定价解析</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">专升本机构避坑</span><span class="card-detail-tag">专升本报班值不值</span><span class="card-detail-tag">专升本退费</span><span class="card-detail-tag">专升本机构推荐</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="track-fun-content" style="display:none;">
+<div style="max-width:1200px;margin:32px auto 0;padding:0 48px;display:flex;gap:24px;border-bottom:1px solid #EBEBEB;flex-wrap:wrap;">
+  <button class="tab-btn active" onclick="switchTabFun('sec-fun-overview', this)">全景总览</button>
+  <button class="tab-btn" onclick="switchTabFun('sec-ai', this)">AI技能培训<span class="count">(3)</span></button>
+<button class="tab-btn" onclick="switchTabFun('sec-jy', this)">家庭教育<span class="count">(4)</span></button>
+<button class="tab-btn" onclick="switchTabFun('sec-yq', this)">乐器培训<span class="count">(3)</span></button>
+<button class="tab-btn" onclick="switchTabFun('sec-kc', this)">口才培训<span class="count">(3)</span></button>
+<button class="tab-btn" onclick="switchTabFun('sec-cs', this)">财商<span class="count">(3)</span></button>
+<button class="tab-btn" onclick="switchTabFun('sec-wu', this)">舞蹈培训<span class="count">(3)</span></button>
+<button class="tab-btn" onclick="switchTabFun('sec-sj', this)">设计培训<span class="count">(2)</span></button>
+<button class="tab-btn" onclick="switchTabFun('sec-xl', this)">心理测试<span class="count">(4)</span></button>
+<button class="tab-btn" onclick="switchTabFun('sec-zln', this)">中老年兴趣<span class="count">(3)</span></button>
+</div>
+<div class="section active" id="sec-fun-overview">
+    <div class="section-header">
+    <span class="section-deco">全</span>
+    <div class="section-info"><h2>兴趣赛道特色人群全景</h2><p>9个子赛道 · 28类特色人群</p></div>
+  </div>
+  <div class="overview-grid" style="grid-template-columns:repeat(3,1fr);">
+    <div class="overview-col"><h3>AI技能培训</h3><div class="sec-num">3 类特色人群</div><a class="overview-chip" href="#ai-01">职场增效族</a><a class="overview-chip" href="#ai-02">好奇探路者</a><a class="overview-chip" href="#ai-03">副业淘金党</a></div>
+<div class="overview-col"><h3>家庭教育</h3><div class="sec-num">4 类特色人群</div><a class="overview-chip" href="#jy-01">育儿焦虑族</a><a class="overview-chip" href="#jy-02">危机应对派</a><a class="overview-chip" href="#jy-03">觉察觉醒者</a><a class="overview-chip" href="#jy-04">启蒙规划家</a></div>
+<div class="overview-col"><h3>乐器培训</h3><div class="sec-num">3 类特色人群</div><a class="overview-chip" href="#yq-01">考级苦修族</a><a class="overview-chip" href="#yq-02">乐感享受派</a><a class="overview-chip" href="#yq-03">择器观望者</a></div>
+<div class="overview-col"><h3>口才培训</h3><div class="sec-num">3 类特色人群</div><a class="overview-chip" href="#kc-01">怯场突围者</a><a class="overview-chip" href="#kc-02">职场表达派</a><a class="overview-chip" href="#kc-03">少儿口才家</a></div>
+<div class="overview-col"><h3>财商</h3><div class="sec-num">3 类特色人群</div><a class="overview-chip" href="#cs-01">理财小白族</a><a class="overview-chip" href="#cs-02">副业搞钱党</a><a class="overview-chip" href="#cs-03">财商启蒙家</a></div>
+<div class="overview-col"><h3>舞蹈培训</h3><div class="sec-num">3 类特色人群</div><a class="overview-chip" href="#wu-01">舞悦爱好者</a><a class="overview-chip" href="#wu-02">艺考冲刺族</a><a class="overview-chip" href="#wu-03">形体改善派</a></div>
+<div class="overview-col"><h3>设计培训</h3><div class="sec-num">2 类特色人群</div><a class="overview-chip" href="#sj-01">设计转型者</a><a class="overview-chip" href="#sj-02">设计爱好者</a></div>
+<div class="overview-col"><h3>心理测试</h3><div class="sec-num">4 类特色人群</div><a class="overview-chip" href="#xl-01">自我探秘者</a><a class="overview-chip" href="#xl-02">情感解惑派</a><a class="overview-chip" href="#xl-03">职业迷航者</a><a class="overview-chip" href="#xl-04">趣味消遣控</a></div>
+<div class="overview-col"><h3>中老年兴趣</h3><div class="sec-num">3 类特色人群</div><a class="overview-chip" href="#zln-01">银发养生族</a><a class="overview-chip" href="#zln-02">银发社交派</a><a class="overview-chip" href="#zln-03">银发达梦者</a></div>
+  </div>
+</div>
+<div class="section" id="sec-ai">
+  <div class="section-header">
+    <span class="section-deco">AI</span>
+    <div class="section-info"><h2>AI技能培训赛道</h2><p>3 类特色人群</p></div>
+  </div>
+  <div class="card-grid" style="display:grid;grid-template-columns:repeat(3,1fr);"><div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">职场应用型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div></div>
+  <div class="group-card-grid">
+    <div class="card" id="ai-01">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">ai-01</span><span class="lang-badge lang-en">AI技能</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">职场增效族</div>
+        <span class="pill pill-goal">目标驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">职场应用型</div>
+        <div class="card-scene">「想用AI提效升职，卡在落地应用这一步」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">技能落地难·无法融入工作流</div>
+        <div class="card-emotion-tag">效率焦虑 + 落后恐慌</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">职场应用场景，会用工具但无法融入工作流，落后同事的焦虑</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">场景落地</span><span class="card-detail-tag">案例拆解</span><span class="card-detail-tag">效率工具</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">AI工具办公应用</span><span class="card-detail-tag">AI提升工作效率</span><span class="card-detail-tag">AI职场技能</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">入门探索型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="ai-02">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">ai-02</span><span class="lang-badge lang-en">AI技能</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">好奇探路者</div>
+        <span class="pill pill-interest">兴趣驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">入门探索型</div>
+        <div class="card-scene">「对AI充满好奇但不知从何学起」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">入门门槛高·工具适配难</div>
+        <div class="card-emotion-tag">好奇心 + 迷茫</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">学习初期探索阶段，概念太多不知先学哪个，面对海量信息的迷茫</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">入门指南</span><span class="card-detail-tag">工具对比</span><span class="card-detail-tag">趣味科普</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">AI入门学什么</span><span class="card-detail-tag">AI工具推荐</span><span class="card-detail-tag">零基础学AI</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">副业变现型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="ai-03">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">ai-03</span><span class="lang-badge lang-en">AI技能</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">副业淘金党</div>
+        <span class="pill pill-goal">目标驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">副业变现型</div>
+        <div class="card-scene">「想靠AI技能搞副业，卡在变现路径上」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">商业化路径不明·接单渠道缺失</div>
+        <div class="card-emotion-tag">收入焦虑 + 变现渴望</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">想通过AI接单或内容创作变现，有技能但不知怎么变现</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">变现案例</span><span class="card-detail-tag">接单攻略</span><span class="card-detail-tag">副业路径</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">AI副业怎么搞</span><span class="card-detail-tag">AI接单平台</span><span class="card-detail-tag">AI赚钱方法</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="section" id="sec-jy">
+  <div class="section-header">
+    <span class="section-deco">家</span>
+    <div class="section-info"><h2>家庭教育赛道</h2><p>4 类特色人群</p></div>
+  </div>
+  <div class="card-grid" style="display:grid;grid-template-columns:repeat(3,1fr);"><div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">科学育儿型</span>
+    <span class="group-header-count">2 类</span>
+    <div class="group-header-line"></div></div>
+  <div class="group-card-grid">
+    <div class="card" id="jy-01">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">jy-01</span><span class="lang-badge lang-ja">家庭教育</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">育儿焦虑族</div>
+        <span class="pill pill-anxious">焦虑驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">科学育儿型</div>
+        <div class="card-scene">「被海量育儿信息裹挟，焦虑中找方向」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">信息过载难筛选·认知偏差·教育理念冲突</div>
+        <div class="card-emotion-tag">持续焦虑 + 渴求科学方法</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">不同教育阶段，方法太多不知信哪个，"怕耽误孩子"的恐慌</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">分龄攻略</span><span class="card-detail-tag">专家解读</span><span class="card-detail-tag">避坑指南</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">科学育儿方法</span><span class="card-detail-tag">孩子不爱学习怎么办</span><span class="card-detail-tag">各年龄段教育方法</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="jy-02">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">jy-02</span><span class="lang-badge lang-ja">家庭教育</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">危机应对派</div>
+        <span class="pill pill-anxious">焦虑驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">科学育儿型</div>
+        <div class="card-scene">「孩子出了问题行为，急需有效干预」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">方法不奏效·沟通障碍</div>
+        <div class="card-emotion-tag">无助感 + 自责</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">行为问题场景（叛逆/沉迷手机/厌学），试过很多方法没用</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">问题解决</span><span class="card-detail-tag">沟通技巧</span><span class="card-detail-tag">专业干预</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">孩子叛逆怎么办</span><span class="card-detail-tag">孩子沉迷手机怎么管</span><span class="card-detail-tag">孩子厌学如何引导</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">自我成长型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="jy-03">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">jy-03</span><span class="lang-badge lang-ja">家庭教育</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">觉察觉醒者</div>
+        <span class="pill pill-growth">成长驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">自我成长型</div>
+        <div class="card-scene">「反思原生家庭，努力打破代际循环」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">惯性难改·心理障碍</div>
+        <div class="card-emotion-tag">内疚 + 觉醒渴望</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">代际教育反思，知道自己有问题但控制不住情绪，需要被理解</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">父母成长</span><span class="card-detail-tag">情绪觉察</span><span class="card-detail-tag">代际反思</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">父母如何控制情绪</span><span class="card-detail-tag">原生家庭对孩子的影响</span><span class="card-detail-tag">如何成为更好的父母</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">启蒙规划型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="jy-04">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">jy-04</span><span class="lang-badge lang-ja">家庭教育</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">启蒙规划家</div>
+        <span class="pill pill-goal">目标驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">启蒙规划型</div>
+        <div class="card-scene">「想给孩子最好的早期教育，资源筛选中纠结」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">资源筛选困难·认知局限</div>
+        <div class="card-emotion-tag">教育期待 + 不确定感</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">早期教育规划，机构太多不知选谁，"不能输在起跑线"的压力</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">启蒙攻略</span><span class="card-detail-tag">兴趣班对比</span><span class="card-detail-tag">能力培养</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">孩子几岁学什么好</span><span class="card-detail-tag">兴趣班怎么选</span><span class="card-detail-tag">早期教育方法</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="section" id="sec-yq">
+  <div class="section-header">
+    <span class="section-deco">乐</span>
+    <div class="section-info"><h2>乐器培训赛道</h2><p>3 类特色人群</p></div>
+  </div>
+  <div class="card-grid" style="display:grid;grid-template-columns:repeat(3,1fr);"><div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">考级攻坚型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div></div>
+  <div class="group-card-grid">
+    <div class="card" id="yq-01">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">yq-01</span><span class="lang-badge lang-ko">乐器</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">考级苦修族</div>
+        <span class="pill pill-goal">目标驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">考级攻坚型</div>
+        <div class="card-scene">「为考级死磕练琴，压力和成就感并存」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">练习瓶颈·时间管理困难·生理限制</div>
+        <div class="card-emotion-tag">考级压力 + 突破后的成就感</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">考级备考阶段，反复练没进步，时间管理困难，生理限制</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">考级攻略</span><span class="card-detail-tag">练习方法</span><span class="card-detail-tag">曲目解析</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">钢琴考级曲目</span><span class="card-detail-tag">乐器考级怎么准备</span><span class="card-detail-tag">考级练习方法</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">兴趣享受型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="yq-02">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">yq-02</span><span class="lang-badge lang-ko">乐器</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">乐感享受派</div>
+        <span class="pill pill-interest">兴趣驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">兴趣享受型</div>
+        <div class="card-scene">「成人学乐器自娱，碎片时间是最大敌人」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">时间碎片化·进步缓慢</div>
+        <div class="card-emotion-tag">愉悦感 + 进步慢的挫败</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">成人业余学习，下班没精力，进步缓慢易放弃</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">成人学琴</span><span class="card-detail-tag">速成曲目</span><span class="card-detail-tag">碎片练习</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">成人学钢琴晚不晚</span><span class="card-detail-tag">上班族怎么学乐器</span><span class="card-detail-tag">零基础乐器推荐</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">择器观望型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="yq-03">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">yq-03</span><span class="lang-badge lang-ko">乐器</span><span class="intention-dot dot-gray" title="低意向"></span></div>
+        <div class="card-name">择器观望者</div>
+        <span class="pill pill-interest">兴趣驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">择器观望型</div>
+        <div class="card-scene">「想学乐器但挑花眼，迟迟下不了手」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">选择困难·入门门槛认知不清</div>
+        <div class="card-emotion-tag">好奇 + 犹豫</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">学琴前决策阶段，乐器太多不知选哪个，对"选错了"的担忧</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">乐器推荐</span><span class="card-detail-tag">入门指南</span><span class="card-detail-tag">对比评测</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">初学者学什么乐器好</span><span class="card-detail-tag">各种乐器难度对比</span><span class="card-detail-tag">乐器入门推荐</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="section" id="sec-kc">
+  <div class="section-header">
+    <span class="section-deco">口</span>
+    <div class="section-info"><h2>口才培训赛道</h2><p>3 类特色人群</p></div>
+  </div>
+  <div class="card-grid" style="display:grid;grid-template-columns:repeat(3,1fr);"><div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">社交突破型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div></div>
+  <div class="group-card-grid">
+    <div class="card" id="kc-01">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">kc-01</span><span class="lang-badge lang-eu">口才</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">怯场突围者</div>
+        <span class="pill pill-anxious">焦虑驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">社交突破型</div>
+        <div class="card-scene">「怕上台怕发言，想克服社恐没突破口」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">心理障碍·性格障碍·练习机会少</div>
+        <div class="card-emotion-tag">社交焦虑 + 突破渴望</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">社交/公开发言场景，不自信/怕被评价，练习机会少</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">克服怯场</span><span class="card-detail-tag">社交技巧</span><span class="card-detail-tag">实战训练</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">怎么克服紧张</span><span class="card-detail-tag">不敢上台发言怎么办</span><span class="card-detail-tag">社交恐惧怎么改善</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">职场进阶型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="kc-02">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">kc-02</span><span class="lang-badge lang-eu">口才</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">职场表达派</div>
+        <span class="pill pill-goal">目标驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">职场进阶型</div>
+        <div class="card-scene">「汇报演讲要升级，缺系统表达训练」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">缺乏系统训练框架·实战场景不足</div>
+        <div class="card-emotion-tag">职业发展紧迫感 + 不满</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">职场汇报/演讲/谈判场景，缺乏系统训练框架，表达能力短板</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">汇报技巧</span><span class="card-detail-tag">演讲训练</span><span class="card-detail-tag">职场沟通</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">工作汇报怎么讲</span><span class="card-detail-tag">演讲技巧培训</span><span class="card-detail-tag">职场表达能力提升</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">少儿培养型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="kc-03">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">kc-03</span><span class="lang-badge lang-eu">口才</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">少儿口才家</div>
+        <span class="pill pill-goal">目标驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">少儿培养型</div>
+        <div class="card-scene">「想让孩子从小会表达，机构里反复对比」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">效果不确定·孩子性格适配</div>
+        <div class="card-emotion-tag">对孩子的期待 + 选择焦虑</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">少儿表达能力培养（家长决策视角），不知道哪家机构好，孩子性格适配问题</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">少儿口才</span><span class="card-detail-tag">机构对比</span><span class="card-detail-tag">培养方案</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">少儿口才哪家好</span><span class="card-detail-tag">孩子胆小怎么锻炼</span><span class="card-detail-tag">儿童演讲培训</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="section" id="sec-cs">
+  <div class="section-header">
+    <span class="section-deco">财</span>
+    <div class="section-info"><h2>财商赛道</h2><p>3 类特色人群</p></div>
+  </div>
+  <div class="card-grid" style="display:grid;grid-template-columns:repeat(3,1fr);"><div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">理财入门型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div></div>
+  <div class="group-card-grid">
+    <div class="card" id="cs-01">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">cs-01</span><span class="lang-badge lang-en">财商</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">理财小白族</div>
+        <span class="pill pill-goal">目标驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">理财入门型</div>
+        <div class="card-scene">「想理财没基础，信息过载无从下手」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">知识匮乏·信息过载</div>
+        <div class="card-emotion-tag">对财务自由的渴望 + 困惑</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">理财起步阶段，概念太多理解不了，怕被割韭菜的警惕</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">入门科普</span><span class="card-detail-tag">理财基础</span><span class="card-detail-tag">避坑指南</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">理财入门学什么</span><span class="card-detail-tag">小白怎么开始理财</span><span class="card-detail-tag">记账方法推荐</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">副业增收型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="cs-02">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">cs-02</span><span class="lang-badge lang-en">财商</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">副业搞钱党</div>
+        <span class="pill pill-goal">目标驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">副业增收型</div>
+        <div class="card-scene">「工资不够花，急寻副业增收路径」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">实践门槛高·信息真假难辨</div>
+        <div class="card-emotion-tag">收入焦虑 + 增收渴望</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">增收/副业场景，知道但做不了，信息真假难辨</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">副业攻略</span><span class="card-detail-tag">投资入门</span><span class="card-detail-tag">实操案例</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">副业怎么搞</span><span class="card-detail-tag">理财投资入门</span><span class="card-detail-tag">怎样增加收入</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">亲子财商型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="cs-03">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">cs-03</span><span class="lang-badge lang-en">财商</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">财商启蒙家</div>
+        <span class="pill pill-growth">成长驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">亲子财商型</div>
+        <div class="card-scene">「想培养孩子金钱观，不知怎么教」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">方法缺失·年龄适配困难</div>
+        <div class="card-emotion-tag">教育期待 + 责任感</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">育儿场景，儿童财商教育，不知道按什么方式教，年龄适配困难</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">亲子财商</span><span class="card-detail-tag">分龄教育</span><span class="card-detail-tag">书单推荐</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">儿童财商教育</span><span class="card-detail-tag">怎么教孩子理财</span><span class="card-detail-tag">少儿财商启蒙</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="section" id="sec-wu">
+  <div class="section-header">
+    <span class="section-deco">舞</span>
+    <div class="section-info"><h2>舞蹈培训赛道</h2><p>3 类特色人群</p></div>
+  </div>
+  <div class="card-grid" style="display:grid;grid-template-columns:repeat(3,1fr);"><div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">业余爱好型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div></div>
+  <div class="group-card-grid">
+    <div class="card" id="wu-01">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">wu-01</span><span class="lang-badge lang-ja">舞蹈</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">舞悦爱好者</div>
+        <span class="pill pill-interest">兴趣驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">业余爱好型</div>
+        <div class="card-scene">「爱跳舞当爱好，身体和时间是最大敌人」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">坚持困难·身体条件限制·时间管理</div>
+        <div class="card-emotion-tag">跳舞的快乐 + 学不会的挫败</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">业余学习场景，三分钟热度，身体条件限制（柔韧性/协调性）</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">跟练教程</span><span class="card-detail-tag">基本功</span><span class="card-detail-tag">社群活动</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">零基础舞蹈教学</span><span class="card-detail-tag">在家怎么练舞</span><span class="card-detail-tag">舞蹈基本功训练</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">专业备考型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="wu-02">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">wu-02</span><span class="lang-badge lang-ja">舞蹈</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">艺考冲刺族</div>
+        <span class="pill pill-goal">目标驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">专业备考型</div>
+        <div class="card-scene">「艺考倒计时，高强度训练咬牙坚持」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">身体瓶颈·时间紧迫·课程冲突</div>
+        <div class="card-emotion-tag">高压焦虑 + 成功渴望</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">艺考/考级备考阶段，身体瓶颈，时间紧迫，偶尔自我怀疑</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">艺考攻略</span><span class="card-detail-tag">技巧突破</span><span class="card-detail-tag">冲刺训练</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">舞蹈艺考怎么准备</span><span class="card-detail-tag">舞蹈集训选哪家</span><span class="card-detail-tag">艺考基本功训练</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">形体改善型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="wu-03">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">wu-03</span><span class="lang-badge lang-ja">舞蹈</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">形体改善派</div>
+        <span class="pill pill-goal">目标驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">形体改善型</div>
+        <div class="card-scene">「想通过舞蹈改善体态气质，怕学不会」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">身体僵硬·学习方式不适配</div>
+        <div class="card-emotion-tag">对体态改善的期待 + 不自信</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">塑形/体态改善场景，基础差跟不上，对身体不自信</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">形体改善</span><span class="card-detail-tag">气质提升</span><span class="card-detail-tag">零基础教程</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">跳舞能改善体态吗</span><span class="card-detail-tag">零基础学什么舞</span><span class="card-detail-tag">气质舞蹈教学</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="section" id="sec-sj">
+  <div class="section-header">
+    <span class="section-deco">设</span>
+    <div class="section-info"><h2>设计培训赛道</h2><p>2 类特色人群</p></div>
+  </div>
+  <div class="card-grid" style="display:grid;grid-template-columns:repeat(2,1fr);"><div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">职业转行型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div></div>
+  <div class="group-card-grid">
+    <div class="card" id="sj-01">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">sj-01</span><span class="lang-badge lang-ko">设计</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">设计转型者</div>
+        <span class="pill pill-goal">目标驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">职业转行型</div>
+        <div class="card-scene">「想转行做设计，技能缺口大很焦虑」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">技能缺口大·职业障碍</div>
+        <div class="card-emotion-tag">转行焦虑 + 职业前景渴望</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">转行/求职阶段，软件不熟/理论不足，学习资源匹配难</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">转行攻略</span><span class="card-detail-tag">技能路线</span><span class="card-detail-tag">作品集</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">怎么转行做设计</span><span class="card-detail-tag">UI设计入门</span><span class="card-detail-tag">设计作品集怎么做</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">兴趣入门型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="sj-02">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">sj-02</span><span class="lang-badge lang-ko">设计</span><span class="intention-dot dot-gray" title="低意向"></span></div>
+        <div class="card-name">设计爱好者</div>
+        <span class="pill pill-interest">兴趣驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">兴趣入门型</div>
+        <div class="card-scene">「对设计有兴趣被软件门槛劝退」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">软件操作门槛·资源质量差</div>
+        <div class="card-emotion-tag">创作热爱 + 受挫</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">业余自学场景，PS/AI/Figma太复杂，学习资源质量参差</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">入门教程</span><span class="card-detail-tag">工具推荐</span><span class="card-detail-tag">创意灵感</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">零基础学设计</span><span class="card-detail-tag">设计软件推荐</span><span class="card-detail-tag">自学设计怎么开始</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="section" id="sec-xl">
+  <div class="section-header">
+    <span class="section-deco">心</span>
+    <div class="section-info"><h2>心理测试赛道</h2><p>4 类特色人群</p></div>
+  </div>
+  <div class="card-grid" style="display:grid;grid-template-columns:repeat(4,1fr);"><div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">自我探索型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div></div>
+  <div class="group-card-grid">
+    <div class="card" id="xl-01">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">xl-01</span><span class="lang-badge lang-eu">心理</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">自我探秘者</div>
+        <span class="pill pill-growth">成长驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">自我探索型</div>
+        <div class="card-scene">「通过测试认识自己，追求认知突破」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">结果可信度疑虑·认知局限</div>
+        <div class="card-emotion-tag">好奇心 + 认知突破惊喜</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">自我探索场景（MBTI/人格测试），结果可信度疑虑，认知局限</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">深度解读</span><span class="card-detail-tag">人格分析</span><span class="card-detail-tag">自我成长</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">MBTI测试准吗</span><span class="card-detail-tag">人格测试推荐</span><span class="card-detail-tag">如何认识自己</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">情感解惑型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="xl-02">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">xl-02</span><span class="lang-badge lang-eu">心理</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">情感解惑派</div>
+        <span class="pill pill-anxious">焦虑驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">情感解惑型</div>
+        <div class="card-scene">「感情出了问题，靠测试找答案和共鸣」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">情感困局·信任障碍</div>
+        <div class="card-emotion-tag">情感困惑 + 共鸣渴望</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">关系问题场景（恋爱困惑/婚姻矛盾），测试结果给不了实际方案</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">情感测试</span><span class="card-detail-tag">关系分析</span><span class="card-detail-tag">共鸣内容</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">测测我们合适吗</span><span class="card-detail-tag">恋爱心理测试</span><span class="card-detail-tag">感情出了什么问题</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">职业迷航型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="xl-03">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">xl-03</span><span class="lang-badge lang-eu">心理</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">职业迷航者</div>
+        <span class="pill pill-anxious">焦虑驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">职业迷航型</div>
+        <div class="card-scene">「站在职业十字路口，期待测试给方向」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">方向迷茫·决策困难</div>
+        <div class="card-emotion-tag">职业焦虑 + 期待找到方向</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">职业困惑场景（转行/择业/职业倦怠），不知道自己适合什么</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">职业测评</span><span class="card-detail-tag">方向指引</span><span class="card-detail-tag">转型建议</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">适合什么职业测试</span><span class="card-detail-tag">职业方向迷茫怎么办</span><span class="card-detail-tag">MBTI职业匹配</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">趣味消遣型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="xl-04">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">xl-04</span><span class="lang-badge lang-eu">心理</span><span class="intention-dot dot-gray" title="低意向"></span></div>
+        <div class="card-name">趣味消遣控</div>
+        <span class="pill pill-interest">兴趣驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">趣味消遣型</div>
+        <div class="card-scene">「做测试就是图一乐，轻松社交谈资」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">无明显阻碍</div>
+        <div class="card-emotion-tag">好奇心 + 娱乐感</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">日常消遣场景，无聊刷测试/社交分享，无实质需求压力</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">趣味测试</span><span class="card-detail-tag">娱乐互动</span><span class="card-detail-tag">社交分享</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">趣味心理测试</span><span class="card-detail-tag">好玩的测试</span><span class="card-detail-tag">测测你是哪种人</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="section" id="sec-zln">
+  <div class="section-header">
+    <span class="section-deco">银</span>
+    <div class="section-info"><h2>中老年兴趣赛道</h2><p>3 类特色人群</p></div>
+  </div>
+  <div class="card-grid" style="display:grid;grid-template-columns:repeat(3,1fr);"><div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">健康养生型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div></div>
+  <div class="group-card-grid">
+    <div class="card" id="zln-01">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">zln-01</span><span class="lang-badge lang-en">中老年</span><span class="intention-dot dot-green" title="高意向"></span></div>
+        <div class="card-name">银发养生族</div>
+        <span class="pill pill-goal">目标驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">健康养生型</div>
+        <div class="card-scene">「退休后为健康学技能，身体和学习是双门槛」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">学习障碍·身体条件限制</div>
+        <div class="card-emotion-tag">对健康的关注 + 学习挫败感</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">健康养生场景（太极/瑜伽/养生操），接受慢/记不住，关节/体力限制</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">养生教学</span><span class="card-detail-tag">健康改善</span><span class="card-detail-tag">慢节奏课程</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">老年人适合的运动</span><span class="card-detail-tag">退休后学什么好</span><span class="card-detail-tag">中老年养生方法</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">社交消遣型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="zln-02">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">zln-02</span><span class="lang-badge lang-en">中老年</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">银发社交派</div>
+        <span class="pill pill-interest">社交驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">社交消遣型</div>
+        <div class="card-scene">「退休后想交友打发时间，缺社交场景」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">社交障碍·场地资源限制</div>
+        <div class="card-emotion-tag">孤独感 + 社交期待</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">社交需求场景（合唱团/广场舞/兴趣社团），不好意思加入，场地/资源限制</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">团体活动</span><span class="card-detail-tag">社区兴趣</span><span class="card-detail-tag">社交场景</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">退休后怎么交朋友</span><span class="card-detail-tag">老年大学报什么班</span><span class="card-detail-tag">附近兴趣社团</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group-section">
+  <div class="group-header">
+    <span class="group-header-label">自我实现型</span>
+    <span class="group-header-count">1 类</span>
+    <div class="group-header-line"></div>
+  </div>
+  <div class="group-card-grid">
+    <div class="card" id="zln-03">
+      <div class="card-body">
+        <div class="card-header"><span class="card-id">zln-03</span><span class="lang-badge lang-en">中老年</span><span class="intention-dot dot-yellow" title="中意向"></span></div>
+        <div class="card-name">银发达梦者</div>
+        <span class="pill pill-growth">成长驱动型</span>
+        <div class="card-divider"></div>
+        <div class="card-sub">自我实现型</div>
+        <div class="card-scene">「年轻时没机会的爱好，退休后终于圆梦」</div>
+        <div class="card-blocker-label">BLOCKER</div>
+        <div class="card-blocker">身体条件限制·学习资源不足</div>
+        <div class="card-emotion-tag">成就感渴望 + 终于有机会的满足</div>
+        <button class="card-toggle" onclick="toggleDetail(this)">展开详情 ↓</button>
+        <div class="card-detail" style="display:none">
+          <div class="card-detail-label">核心场景</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">自我实现场景（学乐器/绘画/书法），身体条件限制，适合中老年的课程少</span></div>
+          <div class="card-detail-label">内容方向</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">圆梦故事</span><span class="card-detail-tag">适老课程</span><span class="card-detail-tag">成果展示</span></div>
+          <div class="card-detail-label">搜索词</div>
+          <div class="card-detail-tags"><span class="card-detail-tag">五十岁学什么好</span><span class="card-detail-tag">中老年兴趣班推荐</span><span class="card-detail-tag">退休后学画画</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+</div>
+</div>
+</body>
+</html>
